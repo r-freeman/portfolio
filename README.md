@@ -1,0 +1,1 @@
+![sidewalk salmon](https://live.staticflickr.com/8476/8419151120_449207da34_b.jpg)
