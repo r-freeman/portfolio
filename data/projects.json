@@ -8,5 +8,10 @@
     "name": "Resume",
     "description": "A fully customisable online resume created with Next.js.",
     "href": "https://github.com/r-freeman/resume"
+  },
+  {
+    "name": "Super Mario Run",
+    "description": "Mobile game inspired by Super Mario Bros, built with Phaser.",
+    "href": "https://r-freeman.github.io/super-mario-run/"
   }
 ]
