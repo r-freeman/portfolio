@@ -33,7 +33,7 @@ export default function Home({projectData}) {
 }
 
 export async function getStaticProps() {
-    const projectData = await getCustomData('projects.json');
+    const projectData = getCustomData('projects.json');
 
     return {
         props: {
