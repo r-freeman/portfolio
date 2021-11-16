@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Intellagent",
+    "description": "Help desk application powered by AI and machine learning.",
+    "href": "https://github.com/r-freeman/intellagent-server"
+  },
+  {
+    "name": "Resume",
+    "description": "A fully customisable online resume created with Next.js.",
+    "href": "https://github.com/r-freeman/resume"
+  }
+]
