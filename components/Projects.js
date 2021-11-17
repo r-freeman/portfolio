@@ -4,9 +4,9 @@ import ExternalLink from './ExternalLink';
 export default function Projects({projectData}) {
     return (
         <>
-            <p className={styles.description}>
+            <h2 className={styles.description}>
                 Projects
-            </p>
+            </h2>
             <div className={styles.grid}>
                 {projectData.map((project, idx) => (
                     <a href={project.href}
