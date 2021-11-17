@@ -1,4 +1,4 @@
-import styles from '../styles/Home.module.css';
+import styles from '../styles/Home.module.scss';
 import ExternalLink from './ExternalLink';
 
 export default function Projects({projectData}) {
