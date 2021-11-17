@@ -21,7 +21,6 @@
 
 .title {
   margin: 0;
-  text-align: center;
   font-size: 2.5rem;
   line-height: 1.125;
   @include sm {
@@ -36,6 +35,10 @@
   font-size: 1.5rem;
   font-weight: normal;
   color: grey;
+}
+
+.title, .description {
+  text-align: center;
 }
 
 .description {
@@ -72,7 +75,7 @@
   border-color: #0070f3;
 }
 
-.card h2 {
+.card h3 {
   margin: 0 0 1rem 0;
   display: flex;
   justify-content: space-between;
@@ -88,7 +91,7 @@
   font-size: 1rem;
   line-height: 1.75;
   @include sm {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     line-height: 1.5;
   }
 }
