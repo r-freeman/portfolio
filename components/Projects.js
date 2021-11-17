@@ -3,7 +3,7 @@ import ExternalLink from './ExternalLink';
 
 export default function Projects({projectData}) {
     return (
-        <>
+        <section>
             <h2 className={styles.description}>
                 Projects
             </h2>
@@ -12,11 +12,11 @@ export default function Projects({projectData}) {
                     <a href={project.href}
                        className={styles.card}
                        key={idx}>
-                        <h2>{project.name}<ExternalLink/></h2>
+                        <h3>{project.name}<ExternalLink/></h3>
                         <p>{project.description}</p>
                     </a>
                 ))}
             </div>
-        </>
+        </section>
     )
 };
