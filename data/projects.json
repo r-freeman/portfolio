@@ -16,7 +16,12 @@
   },
   {
     "name": "ASOS Prototype",
-    "description": "Working prototype of ASOS' website built in Axure RP 8",
+    "description": "Working prototype of ASOS' website built in Axure RP 8.",
     "href": "https://github.com/r-freeman/ASOS-Axure-Prototype"
+  },
+  {
+    "name": "College App",
+    "description": "Full stack application built with Laravel 6, Vue.js and Tailwind CSS.",
+    "href": "https://github.com/r-freeman/college-app"
   }
 ]
