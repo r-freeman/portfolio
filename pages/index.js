@@ -22,8 +22,7 @@ export default function Home({projectData}) {
             </Head>
             <main className={styles.main}>
                 <h1 className={styles.title}>
-                    Ryan Freeman
-                    <span>Full Stack Developer</span>
+                    Ryan Freeman{' '}<span>Full Stack Developer</span>
                 </h1>
                 <div className={styles.links}>
                     <a href="https://github.com/r-freeman">
