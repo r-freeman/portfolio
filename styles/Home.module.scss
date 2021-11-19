@@ -82,17 +82,10 @@
   justify-content: space-between;
   align-items: center;
   font-size: 1.125rem;
-  @include sm {
-    font-size: 1.5rem;
-  }
 }
 
 .card p {
   margin: 0;
   font-size: 1rem;
-  line-height: 1.75;
-  @include sm {
-    font-size: 1.125rem;
-    line-height: 1.5;
-  }
+  line-height: 1.5;
 }
