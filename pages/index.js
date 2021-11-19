@@ -10,7 +10,13 @@ export default function Home({projectData}) {
             <Head>
                 <title>Ryan Freeman | Full Stack Developer in Dublin, Ireland</title>
                 <meta name="author" content="Ryan Freeman"/>
-                <meta name="description" content="Full Stack Developer in Dublin"/>
+                <meta name="description" content="Full Stack Developer in Dublin, Ireland"/>
+                <meta name="keywords" content="React, JavaScript, Developer"/>
+                <meta property="og:type" content="website"/>
+                <meta property="og:url" content="https://ryanfreeman.dev"/>
+                <meta property="og:site_name" content="Ryan Freeman"/>
+                <meta property="og:title" content="Ryan Freeman | Full Stack Developer in Dublin, Ireland"/>
+                <meta property="og:description" content="Full Stack Developer in Dublin, Ireland"/>
                 <link rel="icon"
                       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👋</text></svg>"/>
             </Head>
