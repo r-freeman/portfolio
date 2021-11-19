@@ -24,6 +24,9 @@ export default function Home({projectData}) {
                 <h1 className={styles.title}>
                     Ryan Freeman{' '}<span>Full Stack Developer</span>
                 </h1>
+                <p className={styles.bio}>
+                    I'm a computing graduate who builds cool things for the web.
+                </p>
                 <div className={styles.links}>
                     <a href="https://github.com/r-freeman">
                         <GitHub/>
