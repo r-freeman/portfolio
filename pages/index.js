@@ -25,7 +25,7 @@ export default function Home({projectData}) {
                     Ryan Freeman{' '}<span>Full Stack Developer</span>
                 </h1>
                 <p className={styles.bio}>
-                    I'm a computing graduate who builds cool things for the web.
+                    I'm currently working as a Software Engineer at Aer Lingus ✈️
                 </p>
                 <div className={styles.links}>
                     <a href="https://github.com/r-freeman">
