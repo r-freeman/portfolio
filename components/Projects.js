@@ -5,7 +5,7 @@ export default function Projects({projectData}) {
     return (
         <section>
             <h2 className={styles.description}>
-                Projects
+                Personal Projects
             </h2>
             <div className={styles.grid}>
                 {projectData.map((project, idx) => (
