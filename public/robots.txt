@@ -1,2 +1,3 @@
-User-agent: *
-Allow: /*
+User-Agent: *
+Allow: /
+Sitemap: https://ryanfreeman.dev/sitemap.xml
