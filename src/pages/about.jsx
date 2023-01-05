@@ -131,13 +131,15 @@ export default function About() {
                                 hello@ryanfreeman.dev
                             </SocialLink>
                         </ul>
-                        <Image
-                            src={awsCCPBadge}
-                            width="170"
-                            height="170"
-                            alt="AWS Certified Cloud Practitioner"
-                            className="mt-8"
-                        />
+                        <Link href="https://credly.com/badges/10bd0eae-b383-411c-beb9-dadda80124c8/public_url">
+                            <Image
+                                src={awsCCPBadge}
+                                width="170"
+                                height="170"
+                                alt="AWS Certified Cloud Practitioner"
+                                className="mt-8"
+                            />
+                        </Link>
                     </div>
                 </div>
             </Container>
