@@ -154,12 +154,6 @@ Song.Skeleton = function SongSkeleton({as: Component = 'div'}) {
     )
 }
 
-function CurrentlyPlaying(props) {
-    return (
-        <Song {...props}/>
-    )
-}
-
 function LastPlayed() {
     const {song, isLoading, isError} = usePlayerState('last-played')
 
@@ -186,7 +180,7 @@ export function SpotifyPlayer() {
             {isLoading
                 ? <Song.Skeleton/>
                 : song?.isPlaying
-                    ? <CurrentlyPlaying  {...song}/>
+                    ? <Song  {...song}/>
                     : <LastPlayed/>
             }
         </div>
