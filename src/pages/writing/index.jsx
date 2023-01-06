@@ -16,7 +16,7 @@ function Article({article}) {
                     as="time"
                     dateTime={article.date}
                     decorate={false}
-                    className="flex-shrink-0 order-last md:ml-4"
+                    className="flex-shrink-0"
                 >
                     {formatDate(article.date)}
                 </Card.Eyebrow>
