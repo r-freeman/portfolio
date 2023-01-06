@@ -152,7 +152,7 @@ export function SpotifyPlayer() {
     if (isError) return
 
     return (
-        <div className="grid place-items-center sm:place-items-start">
+        <div className="grid place-items-start">
             {isLoading
                 ? <SongSkeleton/>
                 : song?.isPlaying
