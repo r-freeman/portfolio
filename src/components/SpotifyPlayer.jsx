@@ -85,34 +85,64 @@ function usePlayerState(path, options) {
     }
 }
 
-function Song({artist, title, songUrl, album, albumImageUrl, isPlaying}) {
+function Song({as: Component = 'div', artist, title, songUrl, album, albumImageUrl, isPlaying}) {
     return (
-        <div className="flex items-center space-x-4">
+        <Component
+            className="flex items-center space-x-4">
             {isPlaying &&
                 <AnimatedBars/>
             }
-            <Image
-                width="64"
-                height="64"
-                alt={album}
-                src={albumImageUrl}
-                className="aspect-square rounded-2xl object-cover"
+            <Song.Album
+                album={album}
+                albumImageUrl={albumImageUrl}
             />
             <div>
-                <h2 className={clsx(isPlaying ? 'dark:text-green-950' : 'dark:text-zinc-100', 'text-sm font-semibold text-zinc-800')}>
-                    <Link href={songUrl}>
-                        {title}
-                    </Link>
-                </h2>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-1 lg:line-clamp-none">{artist}</p>
+                <Song.Title
+                    title={title}
+                    songUrl={songUrl}
+                    className={isPlaying
+                        ? 'dark:text-green-950'
+                        : 'dark:text-zinc-100'}
+                />
+                <Song.Artist artist={artist}/>
             </div>
-        </div>
+        </Component>
     )
 }
 
-function SongSkeleton() {
+Song.Album = function SongAlbum({album, albumImageUrl}) {
     return (
-        <div className="flex items-center space-x-4 animate-pulse">
+        <Image
+            width="64"
+            height="64"
+            alt={album}
+            src={albumImageUrl}
+            className="aspect-square rounded-2xl object-cover"
+        />
+    )
+}
+
+Song.Title = function SongTitle({as: Component = 'h2', title, songUrl, className}) {
+    return (
+        <Component className={clsx(className, 'text-sm font-semibold text-zinc-800')}>
+            <Link href={songUrl}>
+                {title}
+            </Link>
+        </Component>
+    )
+}
+
+Song.Artist = function SongArtist({as: Component = 'p', artist}) {
+    return (
+        <Component className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-1 lg:line-clamp-none">
+            {artist}
+        </Component>
+    )
+}
+
+Song.Skeleton = function SongSkeleton({as: Component = 'div'}) {
+    return (
+        <Component className="flex items-center space-x-4 animate-pulse">
             <div
                 className="w-[64px] h-[64px] bg-zinc-100 rounded-2xl dark:bg-zinc-900"
             />
@@ -120,7 +150,7 @@ function SongSkeleton() {
                 <p className="w-[128px] h-3 bg-zinc-100 rounded-2xl dark:bg-zinc-900"/>
                 <p className="mt-3 w-[128px] h-3 bg-zinc-100 rounded-2xl dark:bg-zinc-900"/>
             </div>
-        </div>
+        </Component>
     )
 }
 
@@ -138,7 +168,7 @@ function LastPlayed() {
     return (
         <>
             {isLoading
-                ? <SongSkeleton/>
+                ? <Song.Skeleton/>
                 : song?.title &&
                 <Song {...song} />
             }
@@ -154,7 +184,7 @@ export function SpotifyPlayer() {
     return (
         <div className="grid place-items-start">
             {isLoading
-                ? <SongSkeleton/>
+                ? <Song.Skeleton/>
                 : song?.isPlaying
                     ? <CurrentlyPlaying  {...song}/>
                     : <LastPlayed/>
