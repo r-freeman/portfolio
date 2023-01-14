@@ -6,32 +6,32 @@ import {writeFile} from 'fs/promises'
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL
 
 async function createSitemap(pages) {
-    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ${pages.map((url) => {
-        return `
-<url>
-    <loc>${url}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-</url>`
-    }).join("")}
-</urlset>`
+    const sitemap =
+        `<?xml version="1.0" encoding="UTF-8"?>
+            <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+              ${pages.map((url) =>
+            `<url>
+                <loc>${url}</loc>
+                <lastmod>${new Date().toISOString()}</lastmod>
+                <changefreq>monthly</changefreq>
+                <priority>1.0</priority>
+            </url>`).join('')}
+            </urlset>`.replace(/(\s\s+|\t)/g, ' ').trim()
 
     await writeFile('./public/sitemap.xml', sitemap, 'utf8')
 }
 
 async function createRobots() {
-    const robots = `# *
-User-agent: *
-Allow: /
-
-# Host
-Host: ${BASE_URL}
-
-# Sitemaps
-Sitemap: ${BASE_URL}/sitemap.xml`
+    const robots =
+        `# *
+        User-agent: *
+        Allow: /
+        
+        # Host
+        Host: ${BASE_URL}
+        
+        # Sitemaps
+        Sitemap: ${BASE_URL}/sitemap.xml`.replace(/(\s\s+|\t)/g, ' ').trim()
 
     await writeFile('./public/robots.txt', robots, 'utf8')
 }
