@@ -1,4 +1,4 @@
-export function formatDate(dateString) {
+export function formatDate(dateString: string) {
     return new Date(`${dateString}T00:00:00Z`).toLocaleDateString('en-IE', {
         day: 'numeric',
         month: 'long',
