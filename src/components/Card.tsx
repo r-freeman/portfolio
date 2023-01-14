@@ -1,7 +1,43 @@
 import Link from 'next/link'
 import clsx from 'clsx'
+import {ElementType, ReactNode} from 'react'
+import {Props} from 'types'
 
-function ChevronRightIcon(props) {
+type Card = {
+    as?: ElementType
+    className?: string
+    small?: boolean
+    children: ReactNode
+}
+
+type CardLink = {
+    href: string
+    children: ReactNode
+}
+
+type CardTitle = {
+    as?: ElementType
+    href: string
+    children: ReactNode
+}
+
+type CardDescription = {
+    children: ReactNode
+}
+
+type CardCta = {
+    children: ReactNode
+}
+
+type CardEyebrow = {
+    as: ElementType
+    dateTime: string
+    decorate: boolean
+    className?: string
+    children: ReactNode
+}
+
+function ChevronRightIcon(props: Props) {
     return (
         <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" {...props}>
             <path
@@ -14,7 +50,12 @@ function ChevronRightIcon(props) {
     )
 }
 
-export function Card({as: Component = 'div', className, small, children}) {
+export function Card({
+                         as: Component = 'div',
+                         className,
+                         small,
+                         children
+                     }: Card) {
     return (
         <Component
             className={clsx(className, 'group relative flex flex-col items-baseline', small && 'md:flex-row justify-between')}
@@ -24,12 +65,12 @@ export function Card({as: Component = 'div', className, small, children}) {
     )
 }
 
-Card.Link = function CardLink({children, ...props}) {
+Card.Link = function CardLink({href, children}: CardLink) {
     return (
         <>
             <div
                 className="absolute -inset-y-6 -inset-x-4 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 dark:bg-zinc-800/50 sm:-inset-x-6 sm:rounded-2xl"/>
-            <Link {...props}>
+            <Link href={href}>
                 <span className="absolute -inset-y-6 -inset-x-4 z-20 sm:-inset-x-6 sm:rounded-2xl"/>
                 <span className="relative z-10">{children}</span>
             </Link>
@@ -37,7 +78,7 @@ Card.Link = function CardLink({children, ...props}) {
     )
 }
 
-Card.Title = function CardTitle({as: Component = 'h2', href, children}) {
+Card.Title = function CardTitle({as: Component = 'h2', href, children}: CardTitle) {
     return (
         <Component className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
             {href ? <Card.Link href={href}>{children}</Card.Link> : children}
@@ -45,7 +86,7 @@ Card.Title = function CardTitle({as: Component = 'h2', href, children}) {
     )
 }
 
-Card.Description = function CardDescription({children}) {
+Card.Description = function CardDescription({children}: CardDescription) {
     return (
         <p className="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
             {children}
@@ -53,7 +94,7 @@ Card.Description = function CardDescription({children}) {
     )
 }
 
-Card.Cta = function CardCta({children}) {
+Card.Cta = function CardCta({children}: CardCta) {
     return (
         <div
             aria-hidden="true"
@@ -71,7 +112,7 @@ Card.Eyebrow = function CardEyebrow({
                                         className,
                                         children,
                                         ...props
-                                    }) {
+                                    }: CardEyebrow) {
     return (
         <Component
             className={clsx(

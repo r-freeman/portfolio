@@ -1,3 +1,4 @@
+import {GetStaticProps} from 'next'
 import Head from 'next/head'
 
 import {Card} from '@/components/Card'
@@ -5,7 +6,9 @@ import {SimpleLayout} from '@/components/SimpleLayout'
 import {getAllArticles} from '@/lib/getAllArticles'
 import {formatDate} from '@/lib/formatDate'
 
-function Article({article}) {
+import {Article} from 'types'
+
+function Article({article}: { article: Article }) {
     return (
         <article>
             <Card small={true}>
@@ -25,7 +28,7 @@ function Article({article}) {
     )
 }
 
-export default function ArticlesIndex({articles}) {
+export default function ArticlesIndex({articles}: { articles: Article[] }) {
     return (
         <>
             <Head>
@@ -60,10 +63,10 @@ export default function ArticlesIndex({articles}) {
     )
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
     return {
         props: {
             articles: (await getAllArticles()).map(({component, ...meta}) => meta),
-        },
+        }
     }
 }

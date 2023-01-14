@@ -1,9 +1,10 @@
 import Link from 'next/link'
+import {ReactNode} from 'react'
 
-import {Container} from '@/components/Container'
-import {SpotifyPlayer} from '@/components/SpotifyPlayer'
+import {OuterContainer, InnerContainer} from './Container'
+import {SpotifyPlayer} from './SpotifyPlayer'
 
-function NavLink({href, children}) {
+function NavLink({href, children}: { href: string, children: ReactNode }) {
     return (
         <Link
             href={href}
@@ -17,9 +18,9 @@ function NavLink({href, children}) {
 export function Footer() {
     return (
         <footer className="mt-32">
-            <Container.Outer>
+            <OuterContainer>
                 <div className="border-t border-zinc-100 pt-10 pb-16 dark:border-zinc-700/40">
-                    <Container.Inner>
+                    <InnerContainer>
                         <SpotifyPlayer/>
                         <div className="flex flex-col items-center justify-between gap-6 mt-12">
                             <div className="flex gap-6 text-sm font-medium text-zinc-800 dark:text-zinc-200">
@@ -29,9 +30,9 @@ export function Footer() {
                                 <NavLink href="/uses">Uses</NavLink>
                             </div>
                         </div>
-                    </Container.Inner>
+                    </InnerContainer>
                 </div>
-            </Container.Outer>
+            </OuterContainer>
         </footer>
     )
 }

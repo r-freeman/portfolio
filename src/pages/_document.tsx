@@ -1,7 +1,7 @@
-import {Head, Html, Main, NextScript} from 'next/document'
+import {Html, Head, Main, NextScript} from 'next/document'
 
 const modeScript = `
-  let darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+  darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
   updateMode()
   darkModeMediaQuery.addEventListener('change', updateModeWithoutTransitions)
@@ -67,10 +67,11 @@ export default function Document() {
                     href="/static/icons/apple-touch-icon.png"
                 />
             </Head>
+            <script dangerouslySetInnerHTML={{__html: modeScript}}/>
             <body className="flex h-full flex-col dark:bg-black">
             <Main/>
             <NextScript/>
             </body>
         </Html>
-    )
+    );
 }

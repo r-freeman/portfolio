@@ -1,6 +1,4 @@
 import {ArticleLayout} from '@/components/ArticleLayout'
-import Image from 'next/future/image'
-import forestForkingPath from './jens-lelie-u0vgcIOQG08-unsplash.jpg'
 
 export const meta = {
     author: 'Ryan Freeman',
@@ -8,16 +6,13 @@ export const meta = {
     title: 'A personal journey in software engineering',
     description:
         'Hello there! If you\'re reading this, you\'ve likely stumbled upon my website — welcome! My name is Ryan Freeman, and I\'m a full-stack developer with a passion for creating intuitive and dynamic web applications.',
-    ogImage: `/static/images/jens-lelie-u0vgcIOQG08-unsplash.jpg`
 }
 
-export default (props) => <ArticleLayout meta={meta} {...props} />
-
-<Image
-    src={forestForkingPath}
-    alt="Photo by Jens Lelie on Unsplash"
-    placeholder="blur"
-/>
+export default (props) => <ArticleLayout
+    author={meta.author}
+    date={meta.date}
+    title={meta.title}
+    description={meta.description} {...props} />
 
 Hello there!
 

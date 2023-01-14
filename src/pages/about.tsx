@@ -1,4 +1,5 @@
-import Image from 'next/future/image'
+import Image from 'next/image'
+import {ElementType, ReactNode} from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import clsx from 'clsx'
@@ -9,10 +10,22 @@ import {
     LinkedInIcon,
     TwitterIcon
 } from '@/components/SocialIcons'
+import {Props} from 'types'
 import photoOfMeLg from '@/images/photo-of-me-lg.jpg'
 import awsCCPBadge from '@/images/aws-certified-cloud-practitioner-badge.png'
 
-function SocialLink({className, href, children, icon: Icon}) {
+function SocialLink({
+                        className,
+                        href,
+                        children,
+                        icon: Icon
+                    }:
+                        {
+                            className: string,
+                            href: string,
+                            children: ReactNode,
+                            icon: ElementType
+                        }) {
     return (
         <li className={clsx(className, 'flex')}>
             <Link
@@ -26,7 +39,7 @@ function SocialLink({className, href, children, icon: Icon}) {
     )
 }
 
-function MailIcon(props) {
+function MailIcon(props: Props) {
     return (
         <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
             <path

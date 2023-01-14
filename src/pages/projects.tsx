@@ -2,8 +2,18 @@ import Head from 'next/head'
 
 import {Card} from '@/components/Card'
 import {SimpleLayout} from '@/components/SimpleLayout'
+import {Props} from 'types'
 
-const projects = [
+type Project = {
+    name: string
+    description: string
+    link: {
+        href: string
+        label: string
+    }
+}
+
+const projects: Project[] = [
     {
         name: 'Portfolio',
         description:
@@ -36,7 +46,7 @@ const projects = [
     }
 ]
 
-function LinkIcon(props) {
+function LinkIcon(props: Props) {
     return (
         <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
             <path

@@ -1,19 +1,41 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import {GetStaticProps} from 'next'
+import {ElementType} from 'react'
 
-import {Button} from '@/components/Button'
 import {Card} from '@/components/Card'
+import {Button} from '@/components/Button'
 import {Container} from '@/components/Container'
 import {
     GitHubIcon,
     LinkedInIcon,
     TwitterIcon
 } from '@/components/SocialIcons'
-import {generateRssFeed} from '@/lib/generateRssFeed'
-import {getAllArticles} from '@/lib/getAllArticles'
 import {formatDate} from '@/lib/formatDate'
+import {generateRssFeed} from '@/lib/generateRssFeed'
+import {generateSitemap} from '@/lib/generateSitemap'
+import {getAllArticles} from '@/lib/getAllArticles'
+import {Article} from 'types'
 
-function BriefcaseIcon(props) {
+type Work = {
+    company: string
+    title: string
+    start: {
+        label: string
+        dateTime: string
+    }
+    end: {
+        label: string
+        dateTime: string
+    }
+}
+
+type SocialLink = {
+    href: string
+    icon: ElementType
+}
+
+function BriefcaseIcon(props: { className: string }) {
     return (
         <svg
             viewBox="0 0 24 24"
@@ -36,7 +58,7 @@ function BriefcaseIcon(props) {
     )
 }
 
-function ArrowDownIcon(props) {
+function ArrowDownIcon(props: { className: string }) {
     return (
         <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" {...props}>
             <path
@@ -49,7 +71,7 @@ function ArrowDownIcon(props) {
     )
 }
 
-function Article({article}) {
+function Article(article: Article) {
     return (
         <Card as="article">
             <Card.Title href={`/writing/${article.slug}`}>
@@ -64,9 +86,9 @@ function Article({article}) {
     )
 }
 
-function SocialLink({icon: Icon, ...props}) {
+function SocialLink({icon: Icon, href}: SocialLink) {
     return (
-        <Link className="group -m-1 p-1" {...props}>
+        <Link className="group -m-1 p-1" href={href}>
             <Icon
                 className="h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-300"/>
         </Link>
@@ -74,21 +96,30 @@ function SocialLink({icon: Icon, ...props}) {
 }
 
 function Resume() {
-    let work = [
+    const work: Work[] = [
         {
             company: 'Aer Lingus',
             title: 'Software engineer',
-            start: '2022',
+            start: {
+                label: '2022',
+                dateTime: '2022'
+            },
             end: {
                 label: 'present',
-                dateTime: new Date().getFullYear(),
-            },
+                dateTime: new Date().getFullYear().toString(),
+            }
         },
         {
             company: 'Apple',
             title: 'At home advisor',
-            start: '2014',
-            end: '2018',
+            start: {
+                label: '2014',
+                dateTime: '2014'
+            },
+            end: {
+                label: '2018',
+                dateTime: '2018'
+            },
         }
     ]
 
@@ -139,7 +170,7 @@ function Resume() {
     )
 }
 
-export default function Home({articles}) {
+export default function Home({articles}: { articles: Article[] }) {
     return (
         <>
             <Head>
@@ -224,8 +255,14 @@ export default function Home({articles}) {
             <Container className="mt-24 md:mt-28">
                 <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
                     <div className="flex flex-col gap-16">
-                        {articles.map((article) => (
-                            <Article key={article.slug} article={article}/>
+                        {articles.map(({slug, title, description, date}) => (
+                            <Article
+                                key={slug}
+                                title={title}
+                                description={description}
+                                slug={slug}
+                                date={date}
+                            />
                         ))}
                     </div>
                     <div className="space-y-10 lg:pl-16 xl:pl-24">
@@ -237,9 +274,10 @@ export default function Home({articles}) {
     )
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
     if (process.env.NODE_ENV === 'production') {
         await generateRssFeed()
+        await generateSitemap()
     }
 
     return {
@@ -247,6 +285,6 @@ export async function getStaticProps() {
             articles: (await getAllArticles())
                 .slice(0, 1)
                 .map(({component, ...meta}) => meta),
-        },
+        }
     }
 }

@@ -4,12 +4,12 @@ import rehypePrism from '@mapbox/rehype-prism'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    pageExtensions: ['jsx', 'js', 'mdx'],
+    pageExtensions: ['jsx', 'js', 'tsx', 'mdx'],
     reactStrictMode: true,
     swcMinify: true,
     experimental: {
         newNextLinkBehavior: true,
-        scrollRestoration: true,
+        scrollRestoration: true
     },
     images: {
         domains: ['i.scdn.co']
@@ -29,7 +29,7 @@ const withMDX = nextMDX({
     options: {
         remarkPlugins: [remarkGfm],
         rehypePlugins: [rehypePrism],
-    },
+    }
 })
 
 export default withMDX(nextConfig)

@@ -1,7 +1,19 @@
-import {Container} from '@/components/Container'
+import {ReactNode} from 'react'
 import clsx from 'clsx'
+import {Container} from './Container'
 
-export function SimpleLayout({title, intro, children, gradient}) {
+export function SimpleLayout({
+                                 title,
+                                 intro,
+                                 children,
+                                 gradient
+                             }:
+                                 {
+                                     title: string,
+                                     intro: string,
+                                     children: ReactNode,
+                                     gradient: string
+                                 }) {
     return (
         <Container className="mt-16 sm:mt-32">
             <header className="max-w-2xl">

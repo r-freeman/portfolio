@@ -1,10 +1,43 @@
 import useSWR from 'swr'
 import fetcher from '@/lib/fetcher'
-import Image from 'next/future/image'
+import Image from 'next/image'
 import Link from 'next/link'
 import clsx from 'clsx'
-import {useEffect} from 'react'
+import {useEffect, ReactElement, ElementType} from 'react'
 import {animate} from 'motion'
+
+type PlayerStateParams = {
+    path: string
+    options?: {
+        refreshInterval: number
+    }
+}
+
+type Status = {
+    as?: ElementType
+    isPlaying: boolean
+}
+
+type Artist = {
+    as?: ElementType
+    artist: string
+}
+
+type Title = {
+    as?: ElementType
+    title: string
+    songUrl: string
+    className?: string
+}
+
+type Album = {
+    album: string
+    albumImageUrl: string
+}
+
+type Song = {
+    as?: ElementType
+} & Artist & Title & Album & Status
 
 function AnimatedBars() {
     useEffect(() => {
@@ -75,7 +108,7 @@ function AnimatedBars() {
     )
 }
 
-function usePlayerState(path, options) {
+function usePlayerState({path, options}: PlayerStateParams) {
     const {data, error, isLoading} = useSWR(`/api/spotify/${path}`, fetcher, options)
 
     return {
@@ -85,7 +118,7 @@ function usePlayerState(path, options) {
     }
 }
 
-function Song({as: Component = 'div', artist, title, songUrl, album, albumImageUrl, isPlaying}) {
+function Song({as: Component = 'div', artist, title, songUrl, album, albumImageUrl, isPlaying}: Song) {
     return (
         <Component
             className="flex items-center space-x-4">
@@ -110,7 +143,7 @@ function Song({as: Component = 'div', artist, title, songUrl, album, albumImageU
     )
 }
 
-Song.Album = function SongAlbum({album, albumImageUrl}) {
+Song.Album = function SongAlbum({album, albumImageUrl}: Album) {
     return (
         <Image
             width="64"
@@ -122,7 +155,7 @@ Song.Album = function SongAlbum({album, albumImageUrl}) {
     )
 }
 
-Song.Title = function SongTitle({as: Component = 'h2', title, songUrl, className}) {
+Song.Title = function SongTitle({as: Component = 'h2', title, songUrl, className}: Title) {
     return (
         <Component className={clsx(className, 'text-sm font-semibold text-zinc-800')}>
             <Link href={songUrl}>
@@ -132,7 +165,7 @@ Song.Title = function SongTitle({as: Component = 'h2', title, songUrl, className
     )
 }
 
-Song.Artist = function SongArtist({as: Component = 'p', artist}) {
+Song.Artist = function SongArtist({as: Component = 'p', artist}: Artist) {
     return (
         <Component className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-1 lg:line-clamp-none">
             {artist}
@@ -140,9 +173,9 @@ Song.Artist = function SongArtist({as: Component = 'p', artist}) {
     )
 }
 
-Song.Skeleton = function SongSkeleton({as: Component = 'div'}) {
+Song.Skeleton = function SongSkeleton() {
     return (
-        <Component className="flex items-center space-x-4 animate-pulse">
+        <div className="flex items-center space-x-4 animate-pulse">
             <div
                 className="w-[64px] h-[64px] bg-zinc-100 rounded-2xl dark:bg-zinc-900"
             />
@@ -150,14 +183,18 @@ Song.Skeleton = function SongSkeleton({as: Component = 'div'}) {
                 <p className="w-[128px] h-3 bg-zinc-100 rounded-2xl dark:bg-zinc-900"/>
                 <p className="mt-3 w-[128px] h-3 bg-zinc-100 rounded-2xl dark:bg-zinc-900"/>
             </div>
-        </Component>
+        </div>
     )
 }
 
-function LastPlayed() {
-    const {song, isLoading, isError} = usePlayerState('last-played')
+function LastPlayed(): ReactElement | null {
+    const {song, isLoading, isError} = usePlayerState(
+        {
+            path: 'last-played'
+        }
+    )
 
-    if (isError) return
+    if (isError) return null
 
     return (
         <>
@@ -170,13 +207,19 @@ function LastPlayed() {
     )
 }
 
-export function SpotifyPlayer() {
-    const {song, isLoading, isError} = usePlayerState('currently-playing', {refreshInterval: 30000})
+export function SpotifyPlayer(): ReactElement | null {
+    const {song, isLoading, isError} = usePlayerState(
+        {
+            path: 'currently-playing',
+            options: {
+                refreshInterval: 30000
+            }
+        })
 
-    if (isError) return
+    if (isError) return null
 
     return (
-        <div className="grid place-items-start">
+        <div className="grid">
             {isLoading
                 ? <Song.Skeleton/>
                 : song?.isPlaying

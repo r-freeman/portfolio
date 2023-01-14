@@ -7,7 +7,11 @@ export const meta = {
     description: 'Next.js includes support for TypeScript by default. To add TypeScript to an existing Next.js project create a tsconfig.json file in the project root with touch tsconfig.json.'
 }
 
-export default (props) => <ArticleLayout meta={meta} {...props} />
+export default (props) => <ArticleLayout
+    author={meta.author}
+    date={meta.date}
+    title={meta.title}
+    description={meta.description} {...props} />
 
 # Next.js includes support for TypeScript by default. To add TypeScript to an existing Next.js project create a _tsconfig.json_ file in the project root with `touch tsconfig.json`.
 Next, run `next dev` and the _tsconfig.json_ file will be populated with the default values, you may customise this configuration to your liking. A file called _next-env.d.ts_ will be created at the project root, this file **should not** be removed or edited.
