@@ -9,6 +9,14 @@ const SPOTIFY_RECENTLY_PLAYED = "https://api.spotify.com/v1/me/player/recently-p
 
 const basic = Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`).toString('base64')
 
+type Response = {
+    access_token: string
+    token_type: string
+    scope: string
+    expires_in: number
+    refresh_token: string
+}
+
 const getAccessToken = async () => {
     const response = await fetch(SPOTIFY_TOKEN, {
         method: 'POST',
@@ -26,7 +34,7 @@ const getAccessToken = async () => {
 }
 
 export const getCurrentlyPlaying = async () => {
-    const {access_token} = await getAccessToken()
+    const {access_token}: Response = await getAccessToken() as Response
 
     return await fetch(SPOTIFY_CURRENTLY_PLAYING, {
         headers: {
@@ -35,8 +43,9 @@ export const getCurrentlyPlaying = async () => {
     })
 }
 
+
 export const getRecentlyPlayed = async () => {
-    const {access_token} = await getAccessToken()
+    const {access_token}: Response = await getAccessToken() as Response
 
     return await fetch(SPOTIFY_RECENTLY_PLAYED, {
         headers: {
