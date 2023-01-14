@@ -7,7 +7,7 @@ well as provide information about me and my interests.
 
 - 📝 TypeScript.
 - 💨 Styled with Tailwind CSS.
-- 🌙Toggleable dark/light mode.
+- 🌙 Toggleable dark/light mode.
 - ✍️ Personal blog with MDX (JSX in Markdown).
 - 🎵 Shows what I'm listening to on Spotify.
 - 🤖 Automated RSS feed and sitemap generation.
