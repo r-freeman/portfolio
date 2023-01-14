@@ -17,7 +17,7 @@ const projects: Project[] = [
     {
         name: 'Portfolio',
         description:
-            'This is my personal website built using Tailwind and Next.js, it is a customised version of the Spotlight template from Tailwind UI.',
+            'This is my personal website built with TypeScript, Next.js, React and Tailwind CSS. It is a customised version of the Spotlight template from Tailwind UI.',
         link: {href: 'https://github.com/r-freeman/portfolio', label: 'r-freeman/portfolio'},
     },
     {
