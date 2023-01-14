@@ -2,18 +2,19 @@ import {ReactNode} from 'react'
 import clsx from 'clsx'
 import {Container} from './Container'
 
+type SimpleLayout = {
+    title: string
+    intro: string
+    children: ReactNode
+    gradient: string
+}
+
 export function SimpleLayout({
                                  title,
                                  intro,
                                  children,
                                  gradient
-                             }:
-                                 {
-                                     title: string,
-                                     intro: string,
-                                     children: ReactNode,
-                                     gradient: string
-                                 }) {
+                             }: SimpleLayout) {
     return (
         <Container className="mt-16 sm:mt-32">
             <header className="max-w-2xl">

@@ -5,6 +5,15 @@ import {formatDate} from '@/lib/formatDate'
 import {Prose} from './Prose'
 import {ReactNode} from 'react'
 
+type ArticleLayout = {
+    children?: ReactNode
+    isRssFeed: boolean
+    title: string
+    description: string
+    ogImage: string
+    date: string
+}
+
 export function ArticleLayout({
                                   children,
                                   isRssFeed = false,
@@ -12,15 +21,7 @@ export function ArticleLayout({
                                   description,
                                   ogImage,
                                   date
-                              }:
-                                  {
-                                      children?: ReactNode,
-                                      isRssFeed: boolean,
-                                      title: string,
-                                      description: string,
-                                      ogImage: string,
-                                      date: string
-                                  }) {
+                              }: ArticleLayout) {
     const pathname = usePathname()
 
     if (isRssFeed) {
