@@ -16,7 +16,7 @@ export async function generateRssFeed() {
         title: author.name,
         description: 'Hi. I\'m Ryan, a software engineer based in Dublin, Ireland. I\'m currently working in the aviation industry for Aer Lingus. I am passionate about personal growth and progressing in my career. This is my personal website where you can learn more about me, read articles Ive written and see projects I\'ve worked on.',
         author,
-        id: siteUrl,
+        id: siteUrl!,
         link: siteUrl,
         image: `${siteUrl}/static/icons/favicon.ico`,
         favicon: `${siteUrl}/static/icons/favicon.ico`,
