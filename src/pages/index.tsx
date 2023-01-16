@@ -231,9 +231,8 @@ export default function Home({articles}: { articles: Article[] }) {
                     <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
                         Hi. I&apos;m Ryan, a software engineer based in Dublin, Ireland. I&apos;m currently working in the
                         aviation industry for Aer Lingus. I am passionate about personal growth and progressing in my career. This
-                        is my personal website where you can <InlineLink href="/about">learn more about
-                        me</InlineLink>, <InlineLink href="/writing">read articles I&apos;ve written</InlineLink> and <InlineLink
-                        href="/projects">see projects I&apos;ve worked on</InlineLink>.
+                        is my personal website where you can learn more about me, read articles I&apos;ve written and see projects
+                        I&apos;ve worked on.
                     </p>
                     <div className="mt-6 flex gap-6">
                         <SocialLink
