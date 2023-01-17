@@ -97,7 +97,7 @@ export function ArticleLayout({
                                     <time dateTime={date}>
                                         <span>{formatDate(date)}</span>
                                     </time>
-                                    {' '}&middot;{' '}<Views slug={slug}/>
+                                    <Views slug={slug}/>
                                 </p>
                             </header>
                             <Prose className="mt-8">{children}</Prose>

@@ -13,7 +13,9 @@ type ViewsType = {
 }
 
 export function Views({as: Component = 'span', slug}: { as?: ElementType, slug: string }) {
-    const {data} = useSWR<ViewsType>(`/api/views/${slug}`, fetcher)
+    const {data} = useSWR<ViewsType>(`/api/views/${slug}`, fetcher, {
+        revalidateOnFocus: false
+    })
     const views = Number(data?.views)
 
     useEffect(() => {
@@ -27,7 +29,7 @@ export function Views({as: Component = 'span', slug}: { as?: ElementType, slug: 
 
     return (
         <Component>
-            {views > 0 ? `${numberFormat(views)} views` : ''}
+            {views > 0 ? ` · ${numberFormat(views)} views` : ''}
         </Component>
     )
 }
