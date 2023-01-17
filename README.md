@@ -10,6 +10,7 @@ well as provide information about me and my interests.
 - 🌙 Toggleable dark/light mode.
 - ✍️ Personal blog with MDX (JSX in Markdown).
 - 🎵 Shows what I'm listening to on Spotify.
+- 🧮 Dynamic page view counts with Prisma/Supabase.
 - 🤖 Automated RSS feed and sitemap generation.
 
 Additional features will be added in the future. Feel free to explore the different sections, and contact me if you have any
