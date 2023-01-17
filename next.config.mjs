@@ -4,8 +4,8 @@ import rehypePrism from '@mapbox/rehype-prism'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    pageExtensions: ['jsx', 'js', 'tsx', 'mdx'],
-    reactStrictMode: true,
+    pageExtensions: ['jsx', 'js', 'tsx', 'ts', 'mdx'],
+    reactStrictMode: false,
     swcMinify: true,
     experimental: {
         newNextLinkBehavior: true,
@@ -15,12 +15,16 @@ const nextConfig = {
         domains: ['i.scdn.co']
     },
     async rewrites() {
-        return [
-            {
-                source: '/api/:path',
-                destination: 'https://ryanfreeman.dev/:path/',
-            }
-        ]
+        if (process.env.NODE_ENV === 'production') {
+            return [
+                {
+                    source: '/api/:path',
+                    destination: 'https://ryanfreeman.dev/:path/',
+                }
+            ]
+        } else {
+            return []
+        }
     }
 }
 

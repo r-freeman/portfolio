@@ -1,9 +1,10 @@
+import {ReactNode} from 'react'
 import Head from 'next/head'
 import {usePathname} from 'next/navigation'
 import {Container} from './Container'
 import {formatDate} from '@/lib/formatDate'
 import {Prose} from './Prose'
-import {ReactNode} from 'react'
+import {Views} from '@/components/Views'
 
 type ArticleLayout = {
     children?: ReactNode
@@ -12,6 +13,7 @@ type ArticleLayout = {
     description: string
     ogImage: string
     date: string
+    slug: string
 }
 
 export function ArticleLayout({
@@ -20,7 +22,8 @@ export function ArticleLayout({
                                   title,
                                   description,
                                   ogImage,
-                                  date
+                                  date,
+                                  slug
                               }: ArticleLayout) {
     const pathname = usePathname()
 
@@ -90,12 +93,12 @@ export function ArticleLayout({
                                 <h1 className="mt-6 text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
                                     {title}
                                 </h1>
-                                <time
-                                    dateTime={date}
-                                    className="order-first flex items-center text-base text-zinc-500 dark:text-zinc-400"
-                                >
-                                    <span>{formatDate(date)}</span>
-                                </time>
+                                <p className="order-first text-base text-zinc-500 dark:text-zinc-400">
+                                    <time dateTime={date}>
+                                        <span>{formatDate(date)}</span>
+                                    </time>
+                                    {' '}&middot;{' '}<Views slug={slug}/>
+                                </p>
                             </header>
                             <Prose className="mt-8">{children}</Prose>
                         </article>

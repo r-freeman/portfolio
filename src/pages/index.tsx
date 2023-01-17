@@ -11,7 +11,6 @@ import {
     LinkedInIcon,
     TwitterIcon
 } from '@/components/SocialIcons'
-import {InlineLink} from '@/components/InlineLink';
 import {formatDate} from '@/lib/formatDate'
 import {generateRssFeed} from '@/lib/generateRssFeed'
 import {generateSitemap} from '@/lib/generateSitemap'

@@ -1,18 +1,20 @@
 import {ArticleLayout} from '@/components/ArticleLayout'
+import {createSlug} from '@/lib/createSlug'
 
 export const meta = {
     author: 'Ryan Freeman',
     date: '2022-12-04',
     title: 'A personal journey in software engineering',
-    description:
-        'Hello there! If you\'re reading this, you\'ve likely stumbled upon my website — welcome! My name is Ryan Freeman, and I\'m a full-stack developer with a passion for creating intuitive and dynamic web applications.',
+    description: 'Hello there! If you\'re reading this, you\'ve likely stumbled upon my website — welcome! My name is Ryan Freeman, and I\'m a full-stack developer with a passion for creating intuitive and dynamic web applications.',
 }
 
 export default (props) => <ArticleLayout
     author={meta.author}
     date={meta.date}
     title={meta.title}
-    description={meta.description} {...props} />
+    description={meta.description}
+    slug={createSlug(meta.title)}
+    {...props} />
 
 Hello there!
 
