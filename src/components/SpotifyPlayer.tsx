@@ -6,13 +6,6 @@ import clsx from 'clsx'
 import {useEffect, ReactElement, ElementType} from 'react'
 import {animate} from 'motion'
 
-type PlayerStateParams = {
-    path: string
-    options?: {
-        refreshInterval: number
-    }
-}
-
 type Status = {
     as?: ElementType
     isPlaying: boolean
@@ -108,8 +101,8 @@ function AnimatedBars() {
     )
 }
 
-function usePlayerState({path, options}: PlayerStateParams) {
-    const {data, error, isLoading} = useSWR(`/api/spotify/${path}`, fetcher, options)
+function usePlayerState(path: string) {
+    const {data, error, isLoading} = useSWR(`/api/spotify/${path}`, fetcher)
 
     return {
         song: data,
@@ -187,44 +180,22 @@ Song.Skeleton = function SongSkeleton() {
     )
 }
 
-function LastPlayed(): ReactElement | null {
-    const {song, isLoading, isError} = usePlayerState(
-        {
-            path: 'last-played'
-        }
-    )
-
-    if (isError) return null
-
-    return (
-        <>
-            {isLoading
-                ? <Song.Skeleton/>
-                : song?.title &&
-                <Song {...song} />
-            }
-        </>
-    )
-}
-
 export function SpotifyPlayer(): ReactElement | null {
-    const {song, isLoading, isError} = usePlayerState(
-        {
-            path: 'currently-playing',
-            options: {
-                refreshInterval: 30000
-            }
-        })
+    const currentlyPlaying = usePlayerState('currently-playing')
+    const lastPlayed = usePlayerState('last-played')
 
-    if (isError) return null
+    if (currentlyPlaying.isError) return null
+    if (lastPlayed.isError) return null
 
     return (
         <div className="grid">
-            {isLoading
+            {currentlyPlaying.isLoading
                 ? <Song.Skeleton/>
-                : song?.isPlaying
-                    ? <Song  {...song}/>
-                    : <LastPlayed/>
+                : currentlyPlaying.song?.isPlaying
+                    ? <Song  {...currentlyPlaying.song}/>
+                    : lastPlayed.isLoading
+                        ? <Song.Skeleton/>
+                        : <Song {...lastPlayed.song}/>
             }
         </div>
     )
