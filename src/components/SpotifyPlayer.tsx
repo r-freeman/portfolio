@@ -184,8 +184,7 @@ export function SpotifyPlayer(): ReactElement | null {
     const currentlyPlaying = usePlayerState('currently-playing')
     const lastPlayed = usePlayerState('last-played')
 
-    if (currentlyPlaying.isError) return null
-    if (lastPlayed.isError) return null
+    if (currentlyPlaying.isError || lastPlayed.isError) return null
 
     return (
         <div className="grid">
