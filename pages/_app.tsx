@@ -3,7 +3,7 @@ import type {AppProps} from 'next/app'
 import {Header} from '@/components/Header'
 import {Footer} from '@/components/Footer'
 
-import '../../styles/tailwind.css'
+import '../styles/tailwind.css'
 import 'focus-visible'
 
 function usePrevious(value: string): string | null {

@@ -4,7 +4,7 @@ import {usePathname} from 'next/navigation'
 import {Container} from './Container'
 import {formatDate} from '@/lib/formatDate'
 import {Prose} from './Prose'
-import {Views} from '@/components/Views'
+import {Views} from './Views'
 
 type ArticleLayout = {
     children?: ReactNode

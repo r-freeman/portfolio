@@ -6,7 +6,7 @@ import {Popover, Transition} from '@headlessui/react'
 import clsx from 'clsx'
 
 import {Container} from './Container'
-import avatar from '@/images/avatar.jpg'
+import avatar from '@/public/static/images/avatar.jpg'
 
 import type {Props} from 'types'
 

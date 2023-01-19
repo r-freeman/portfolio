@@ -11,8 +11,8 @@ import {
     TwitterIcon
 } from '@/components/SocialIcons'
 import {Props} from 'types'
-import photoOfMeLg from '@/images/photo-of-me-lg.jpg'
-import awsCCPBadge from '@/images/aws-certified-cloud-practitioner-badge.png'
+import photoOfMe from '@/public/static/images/photo-of-me.jpg'
+import awsCCPBadge from '@/public/static/images/aws-certified-cloud-practitioner-badge.png'
 
 function SocialLink({
                         className,
@@ -73,7 +73,7 @@ export default function About() {
                     <div className="lg:pl-20">
                         <div className="max-w-xs px-2.5 lg:max-w-none">
                             <Image
-                                src={photoOfMeLg}
+                                src={photoOfMe}
                                 alt=""
                                 sizes="(min-width: 1024px) 32rem, 20rem"
                                 className="aspect-square shadow-inner rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800 rotate-3"

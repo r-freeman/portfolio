@@ -199,7 +199,7 @@ export default function Home({articles}: { articles: Article[] }) {
                 />
                 <meta
                     property="og:image"
-                    content="/static/images/photo-of-me-lg.jpg"
+                    content="/static/images/photo-of-me-og.jpg"
                 />
                 <meta
                     name="twitter:card"
@@ -219,7 +219,7 @@ export default function Home({articles}: { articles: Article[] }) {
                     content="Full-stack software engineer who enjoys building cloud-native applications."/>
                 <meta
                     name="twitter:image"
-                    content="/static/images/photo-of-me-lg.jpg"
+                    content="/static/images/photo-of-me-og.jpg"
                 />
             </Head>
             <Container className="mt-9">
