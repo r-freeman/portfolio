@@ -36,6 +36,15 @@ const nextConfig = {
                         value: "s-maxage=1, stale-while-revalidate=59"
                     }
                 ]
+            },
+            {
+                source: '/api/views/:slug',
+                headers: [
+                    {
+                        key: "Cache-Control",
+                        value: "public, max-age=0, must-revalidate"
+                    }
+                ]
             }
         ]
     }
