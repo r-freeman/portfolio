@@ -1,7 +1,5 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import {GetStaticProps} from 'next'
-import {ElementType} from 'react'
 
 import {Card} from '@/components/Card'
 import {Button} from '@/components/Button'
@@ -11,6 +9,7 @@ import {
     LinkedInIcon,
     TwitterIcon
 } from '@/components/SocialIcons'
+import {SocialLink} from '@/components/SocialLink'
 import {formatDate} from '@/lib/formatDate'
 import {generateRssFeed} from '@/lib/generateRssFeed'
 import {generateSitemap} from '@/lib/generateSitemap'
@@ -28,11 +27,6 @@ type Work = {
         label: string
         dateTime: string
     }
-}
-
-type SocialLink = {
-    href: string
-    icon: ElementType
 }
 
 function BriefcaseIcon(props: { className: string }) {
@@ -86,14 +80,6 @@ function Article(article: Article) {
     )
 }
 
-function SocialLink({icon: Icon, href}: SocialLink) {
-    return (
-        <Link className="group -m-1 p-1" href={href}>
-            <Icon
-                className="h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-300"/>
-        </Link>
-    )
-}
 
 function Resume() {
     const work: Work[] = [
