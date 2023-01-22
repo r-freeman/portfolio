@@ -83,7 +83,7 @@ export default function Projects() {
                             <p className="relative z-10 mt-6 flex text-sm font-medium text-zinc-400 transition group-hover:text-indigo-500 dark:text-zinc-200">
                                 <SocialLink
                                     href={project.link.href}
-                                    aria-label={`Checkout ${project.name} on GitHub`}
+                                    ariaLabel={`Checkout ${project.name} on GitHub`}
                                     icon={GitHubIcon}
                                 />
                                 <span className="ml-2">{project.link.label}</span>

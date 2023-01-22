@@ -222,17 +222,17 @@ export default function Home({articles}: { articles: Article[] }) {
                     <div className="mt-6 flex gap-6">
                         <SocialLink
                             href="https://github.com/r-freeman"
-                            aria-label="Follow on GitHub"
+                            ariaLabel="Follow on GitHub"
                             icon={GitHubIcon}
                         />
                         <SocialLink
                             href="https://linkedin.com/in/r-freeman/"
-                            aria-label="Follow on LinkedIn"
+                            ariaLabel="Follow on LinkedIn"
                             icon={LinkedInIcon}
                         />
                         <SocialLink
                             href="https://twitter.com/freemry"
-                            aria-label="Follow on Twitter"
+                            ariaLabel="Follow on Twitter"
                             icon={TwitterIcon}
                         />
                     </div>
