@@ -13,9 +13,9 @@ and skills, as well as provide information about me and my interests.
 
 ## Project structure
 
-- `components/` - All the components on the website in tsx format.
+- `components/` - All the components of the website in tsx format.
 - `lib/` - Useful functions and scripts for connecting to external services and so on.
-- `pages/api/` - API routes for articles views and Spotify integrations.
+- `pages/api/` - API routes for article views and Spotify integrations.
 - `pages/writing/` - Blog posts written in MDX format (Markdown in JSX).
 - `pages/` - Contains all other static pages like about, projects and uses.
 - `prisma/` - Prisma schema which describes the structure of the Supabase postgres database.
