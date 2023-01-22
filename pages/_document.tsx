@@ -66,6 +66,12 @@ export default function Document() {
                     rel="apple-touch-icon"
                     href="/static/icons/apple-touch-icon.png"
                 />
+                <link
+                    rel="alternate"
+                    type="application/rss+xml"
+                    title="RSS feed for ryanfreeman.dev"
+                    href="/rss/"
+                />
             </Head>
             <script dangerouslySetInnerHTML={{__html: modeScript}}/>
             <body className="flex h-full flex-col dark:bg-black">
