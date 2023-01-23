@@ -44,11 +44,13 @@ export default function Document() {
                     rel="alternate"
                     type="application/rss+xml"
                     href="/rss/feed.xml"
+                    title="RSS feed for ryanfreeman.dev"
                 />
                 <link
                     rel="alternate"
                     type="application/feed+json"
                     href="/rss/feed.json"
+                    title="RSS feed for ryanfreeman.dev"
                 />
                 <link
                     rel="icon"
@@ -65,12 +67,6 @@ export default function Document() {
                 <link
                     rel="apple-touch-icon"
                     href="/static/icons/apple-touch-icon.png"
-                />
-                <link
-                    rel="alternate"
-                    type="application/rss+xml"
-                    title="RSS feed for ryanfreeman.dev"
-                    href="/rss/"
                 />
             </Head>
             <script dangerouslySetInnerHTML={{__html: modeScript}}/>
