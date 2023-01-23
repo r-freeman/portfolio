@@ -11,6 +11,9 @@ module.exports = {
             colors: {
                 green: {
                     950: '#1fdf64'
+                },
+                black: {
+                    950: '#0a0a0a'
                 }
             }
         },
