@@ -1,9 +1,9 @@
+import {GetStaticProps} from 'next'
 import Head from 'next/head'
 import {Card} from '@/components/Card'
 import {SimpleLayout} from '@/components/SimpleLayout'
-import {GitHubIcon} from '@/components/SocialIcons'
 import {SocialLink} from '@/components/SocialLink'
-import {GetStaticProps} from 'next'
+import {StarIcon} from '@/components/StarIcon'
 import {getPinnedRepos} from '@/lib/github'
 import type {Repo} from '@/types'
 
@@ -36,19 +36,29 @@ export default function Projects({pinnedRepos}: { pinnedRepos: Repo[] }) {
                 >
                     {pinnedRepos.map((repo) => (
                         <Card as="li" key={repo.name}>
-                            <h2 className="text-base font-semibold text-zinc-800 dark:text-zinc-100">
+                            <h2 className="text-base font-semibold transition group-hover:text-indigo-500 text-zinc-800 dark:text-zinc-100">
                                 <Card.Link href={repo.url}>{repo.name}</Card.Link>
                             </h2>
                             <Card.Description>{repo.description}</Card.Description>
-                            <p
-                                className="relative z-10 mt-6 flex text-sm font-medium text-zinc-400 transition group-hover:text-indigo-500 dark:text-zinc-200">
-                                <SocialLink
-                                    href={repo.url}
-                                    ariaLabel={`Checkout ${repo.name} on GitHub`}
-                                    icon={GitHubIcon}
-                                />
-                                <span className="ml-2">{`r-freeman/${repo.name}`}</span>
-                            </p>
+                            <div
+                                className="flex space-x-8 md:justify-between mt-6 items-center w-full group text-sm text-zinc-500 dark:text-zinc-400">
+                                <p
+                                    className="relative z-10 flex items-center">
+                                    <span className="ml-2">{repo.primaryLanguage.name}</span>
+                                    <span
+                                        className="w-4 h-4 rounded-full order-first"
+                                        style={{backgroundColor: repo.primaryLanguage.color}}/>
+                                </p>
+                                <p className="relative z-10 flex items-center">
+                                    <span className="ml-2">{repo.stargazerCount}</span>
+                                    <SocialLink
+                                        href={repo.url}
+                                        ariaLabel={`Star ${repo.name} on GitHub`}
+                                        icon={StarIcon}
+                                        className={'order-first m-0 p-0'}
+                                    />
+                                </p>
+                            </div>
                         </Card>
                     ))}
                 </ul>
@@ -58,11 +68,10 @@ export default function Projects({pinnedRepos}: { pinnedRepos: Repo[] }) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const pinnedRepos = await getPinnedRepos()
-
     return {
         props: {
-            pinnedRepos
+            pinnedRepos: (await getPinnedRepos())
+                .sort((a, b) => b.stargazerCount - a.stargazerCount)
         }
     }
 }
