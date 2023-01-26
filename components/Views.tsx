@@ -7,9 +7,16 @@ type ViewsType = {
     views: string
 }
 
+type ViewsProps = {
+    as?: ElementType
+    slug: string
+    className?: string
+    shouldUpdateViews?: boolean
+}
+
 const updateViews = (slug: string) => fetcher(`/api/views/${slug}`, {method: 'POST'})
 
-export function Views({as: Component = 'span', slug}: { as?: ElementType, slug: string }) {
+export function Views({as: Component = 'span', slug, className, shouldUpdateViews = true}: ViewsProps) {
     const {data} = useSWR<ViewsType>(`/api/views/${slug}`, fetcher, {
         revalidateOnFocus: false,
         revalidateOnMount: true
@@ -17,11 +24,13 @@ export function Views({as: Component = 'span', slug}: { as?: ElementType, slug: 
     const views = Number(data?.views)
 
     useEffect(() => {
-        updateViews(slug).then(r => r)
+        if (shouldUpdateViews) {
+            updateViews(slug).then(r => r);
+        }
     }, [slug])
 
     return (
-        <Component>
+        <Component className={className}>
             {` · ${views > 0 ? numberFormat(views) : '—'} views`}
         </Component>
     )

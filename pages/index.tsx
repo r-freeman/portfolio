@@ -10,6 +10,7 @@ import {
     TwitterIcon
 } from '@/components/SocialIcons'
 import {SocialLink} from '@/components/SocialLink'
+import {Views} from '@/components/Views'
 import {formatDate} from '@/lib/formatDate'
 import {generateRssFeed} from '@/lib/generateRssFeed'
 import {generateSitemap} from '@/lib/generateSitemap'
@@ -71,9 +72,12 @@ function Article(article: Article) {
             <Card.Title href={`/writing/${article.slug}`}>
                 {article.title}
             </Card.Title>
-            <Card.Eyebrow as="time" dateTime={article.date} decorate={false}>
-                {formatDate(article.date)}
-            </Card.Eyebrow>
+            <p className="flex order-first space-x-1 z-10">
+                <Card.Eyebrow as="time" dateTime={article.date} decorate={false}>
+                    {formatDate(article.date)}
+                </Card.Eyebrow>
+                <Views slug={article.slug} shouldUpdateViews={false} className="text-sm text-zinc-500 dark:text-zinc-400"/>
+            </p>
             <Card.Description>{article.description}</Card.Description>
             <Card.Cta>Read more</Card.Cta>
         </Card>
