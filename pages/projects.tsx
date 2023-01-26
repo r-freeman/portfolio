@@ -5,6 +5,7 @@ import {SimpleLayout} from '@/components/SimpleLayout'
 import {SocialLink} from '@/components/SocialLink'
 import {StarIcon} from '@/components/StarIcon'
 import {getPinnedRepos} from '@/lib/github'
+import {numberFormat} from '@/lib/numberFormat'
 import type {Repo} from '@/types'
 
 export default function Projects({pinnedRepos}: { pinnedRepos: Repo[] }) {
@@ -50,7 +51,7 @@ export default function Projects({pinnedRepos}: { pinnedRepos: Repo[] }) {
                                         style={{backgroundColor: repo.primaryLanguage.color}}/>
                                 </p>
                                 <p className="relative z-10 flex items-center">
-                                    <span className="ml-2 order-last">{repo.stargazerCount}</span>
+                                    <span className="ml-2 order-last">{numberFormat(repo.stargazerCount)}</span>
                                     <SocialLink
                                         href={repo.url}
                                         ariaLabel={`Star ${repo.name} on GitHub`}

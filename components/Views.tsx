@@ -1,15 +1,10 @@
+import useSWR from 'swr'
 import {ElementType, useEffect} from 'react'
 import fetcher from '@/lib/fetcher'
-import useSWR from 'swr'
+import {numberFormat} from '@/lib/numberFormat'
 
 type ViewsType = {
     views: string
-}
-
-function numberFormat(value: number) {
-    return new Intl.NumberFormat('en', {
-        notation: 'compact'
-    }).format(value)
 }
 
 const updateViews = (slug: string) => fetcher(`/api/views/${slug}`, {method: 'POST'})
