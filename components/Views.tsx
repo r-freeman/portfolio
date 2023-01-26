@@ -27,7 +27,7 @@ export function Views({as: Component = 'span', slug, className, shouldUpdateView
         if (shouldUpdateViews) {
             updateViews(slug).then(r => r);
         }
-    }, [slug])
+    }, [slug, shouldUpdateViews])
 
     return (
         <Component className={className}>
