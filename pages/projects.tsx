@@ -50,12 +50,12 @@ export default function Projects({pinnedRepos}: { pinnedRepos: Repo[] }) {
                                         style={{backgroundColor: repo.primaryLanguage.color}}/>
                                 </p>
                                 <p className="relative z-10 flex items-center">
-                                    <span className="ml-2">{repo.stargazerCount}</span>
+                                    <span className="ml-2 order-last">{repo.stargazerCount}</span>
                                     <SocialLink
                                         href={repo.url}
                                         ariaLabel={`Star ${repo.name} on GitHub`}
                                         icon={StarIcon}
-                                        className={'order-first m-0 p-0'}
+                                        className={'w-5 h-5'}
                                     />
                                 </p>
                             </div>
