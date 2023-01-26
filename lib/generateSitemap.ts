@@ -44,7 +44,7 @@ export async function generateSitemap() {
     ]
 
     const pages = (await glob(['*.tsx', '*.jsx'], {
-        cwd: path.join(process.cwd(), 'src/pages/'),
+        cwd: path.join(process.cwd(), '/pages/'),
     })).filter((page) => {
         return !excluded
             .includes(page)
