@@ -72,7 +72,7 @@ function Article(article: Article) {
             <Card.Title href={`/writing/${article.slug}`}>
                 {article.title}
             </Card.Title>
-            <p className="flex order-first space-x-1 z-10">
+            <p className="flex order-first space-x-1 z-10 mb-3">
                 <Card.Eyebrow as="time" dateTime={article.date} decorate={false}>
                     {formatDate(article.date)}
                 </Card.Eyebrow>
