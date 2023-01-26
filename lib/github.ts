@@ -31,6 +31,7 @@ export async function getPinnedRepos() {
                       description
                       url
                       stargazerCount
+                      forkCount
                       primaryLanguage {
                         name
                         color

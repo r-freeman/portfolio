@@ -4,6 +4,7 @@ import {Card} from '@/components/Card'
 import {SimpleLayout} from '@/components/SimpleLayout'
 import {SocialLink} from '@/components/SocialLink'
 import {StarIcon} from '@/components/StarIcon'
+import {ForkIcon} from '@/components/ForkIcon'
 import {getPinnedRepos} from '@/lib/github'
 import {numberFormat} from '@/lib/numberFormat'
 import type {Repo} from '@/types'
@@ -50,15 +51,26 @@ export default function Projects({pinnedRepos}: { pinnedRepos: Repo[] }) {
                                         className="w-4 h-4 rounded-full order-first"
                                         style={{backgroundColor: repo.primaryLanguage.color}}/>
                                 </p>
-                                <p className="relative z-10 flex items-center">
-                                    <span className="ml-2 order-last">{numberFormat(repo.stargazerCount)}</span>
-                                    <SocialLink
-                                        href={repo.url}
-                                        ariaLabel={`Star ${repo.name} on GitHub`}
-                                        icon={StarIcon}
-                                        className={'w-5 h-5'}
-                                    />
-                                </p>
+                                <div className="flex space-x-4">
+                                    <p className="relative z-10 flex items-center">
+                                        <span className="ml-2 order-last">{numberFormat(repo.stargazerCount)}</span>
+                                        <SocialLink
+                                            href={repo.url}
+                                            ariaLabel={`Star ${repo.name} on GitHub`}
+                                            icon={StarIcon}
+                                            className={'w-5 h-5'}
+                                        />
+                                    </p>
+                                    <p className="relative z-10 flex items-center">
+                                        <span className="ml-2 order-last">{numberFormat(repo.forkCount)}</span>
+                                        <SocialLink
+                                            href={repo.url}
+                                            ariaLabel={`Fork ${repo.name} on GitHub`}
+                                            icon={ForkIcon}
+                                            className={'w-5 h-5'}
+                                        />
+                                    </p>
+                                </div>
                             </div>
                         </Card>
                     ))}
