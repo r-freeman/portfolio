@@ -23,6 +23,7 @@ type CardTitle = {
 
 type CardDescription = {
     children: ReactNode
+    className?: string
 }
 
 type CardCta = {
@@ -86,9 +87,9 @@ Card.Title = function CardTitle({as: Component = 'h2', href, children}: CardTitl
     )
 }
 
-Card.Description = function CardDescription({children}: CardDescription) {
+Card.Description = function CardDescription({children, className}: CardDescription) {
     return (
-        <p className="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className={clsx(className ? className : "mt-2 text-sm text-zinc-600 dark:text-zinc-400", "relative z-10")}>
             {children}
         </p>
     )
