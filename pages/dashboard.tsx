@@ -2,10 +2,16 @@ import Head from 'next/head'
 import {SimpleLayout} from '@/components/SimpleLayout'
 import {Card} from '@/components/Card'
 import {numberFormat} from '@/lib/numberFormat'
-import {getTotalFollowers, getTotalRepos} from '@/lib/github'
+import {getTotalFollowers, getTotalRepos, getTotalStars} from '@/lib/github'
 import {GetStaticProps} from 'next'
 
-export default function Dashboard({totalRepos, totalFollowers}: { totalRepos: number, totalFollowers: number }) {
+type DashboardProps = {
+    totalRepos: number
+    totalFollowers: number
+    totalStars: number
+}
+
+export default function Dashboard({totalRepos, totalFollowers, totalStars}: DashboardProps) {
     return (
         <>
             <Head>
@@ -48,6 +54,14 @@ export default function Dashboard({totalRepos, totalFollowers}: { totalRepos: nu
                             {numberFormat(totalFollowers)}
                         </Card.Description>
                     </Card>
+                    <Card as="li">
+                        <h2 className="text-base font-semibold transition group-hover:text-indigo-500 text-zinc-800 dark:text-zinc-400">
+                            <Card.Link href="https://github.com/r-freeman">GitHub Stars</Card.Link>
+                        </h2>
+                        <Card.Description className="text-zinc-800 dark:text-zinc-100 font-semibold text-5xl">
+                            {numberFormat(totalStars)}
+                        </Card.Description>
+                    </Card>
                 </ul>
             </SimpleLayout>
         </>
@@ -55,13 +69,18 @@ export default function Dashboard({totalRepos, totalFollowers}: { totalRepos: nu
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const totalRepos = await getTotalRepos()
-    const totalFollowers = await getTotalFollowers()
+    const [totalRepos, totalFollowers] = await Promise.all([
+        getTotalRepos(),
+        getTotalFollowers()
+    ])
+
+    const totalStars = await getTotalStars(totalRepos)
 
     return {
         props: {
             totalRepos,
-            totalFollowers
+            totalFollowers,
+            totalStars
         }
     }
 }

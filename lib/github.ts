@@ -34,6 +34,22 @@ type TotalFollowersResponse = {
     }
 }
 
+type TotalStarsResponse = {
+    data: {
+        user: {
+            repositories: {
+                nodes: [
+                    {
+                        stargazers: {
+                            totalCount: number
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
+
 export async function getPinnedRepos() {
     const response = await fetch(GITHUB_GRAPHQL, {
         method: 'POST',
@@ -107,4 +123,30 @@ export async function getTotalFollowers() {
     }).then(r => r.json()) as TotalFollowersResponse
 
     return response.data.user.followers.totalCount
+}
+
+export async function getTotalStars(totalRepos: number) {
+    const response = await fetch(GITHUB_GRAPHQL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${GITHUB_ACCESS_TOKEN}`
+        },
+        body: JSON.stringify({
+            query: `{
+              user(login: "r-freeman") {
+                repositories(first: ${totalRepos}) {
+                  nodes {
+                    stargazers {
+                      totalCount
+                    }
+                  }
+                }
+              }
+            }`
+        })
+    }).then(r => r.json()) as TotalStarsResponse
+
+    return response.data.user.repositories.nodes
+        .reduce((acc, node) => acc + node.stargazers.totalCount, 0)
 }
