@@ -1,4 +1,6 @@
 import {getTotalFollowers, getTotalRepos, getTotalStars} from '@/lib/github'
+import {getAllArticles} from '@/lib/getAllArticles'
+import {getViews} from '@/lib/views'
 
 export async function dashboard() {
     const [totalRepos, totalFollowers] = await Promise.all([
@@ -7,6 +9,8 @@ export async function dashboard() {
     ])
 
     const totalStars = await getTotalStars(totalRepos)
+    const articles = await getAllArticles()
+    const {views} = await getViews()
 
     return [
         {
@@ -23,6 +27,16 @@ export async function dashboard() {
             title: "GitHub Stars",
             total: totalStars,
             href: "https://github.com/r-freeman/"
+        },
+        {
+            title: "Total Articles",
+            total: articles.length,
+            href: "/writing"
+        },
+        {
+            title: "Total Article Views",
+            total: views,
+            href: "/writing"
         }
     ]
 }
