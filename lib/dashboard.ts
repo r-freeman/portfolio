@@ -16,12 +16,12 @@ export async function dashboard() {
         {
             title: "GitHub Repos",
             total: totalRepos,
-            href: "https://github.com/r-freeman/"
+            href: "https://github.com/r-freeman?tab=repositories"
         },
         {
             title: "GitHub Followers",
             total: totalFollowers,
-            href: "https://github.com/r-freeman/"
+            href: "https://github.com/r-freeman?tab=followers"
         },
         {
             title: "GitHub Stars",
