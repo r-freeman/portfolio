@@ -13,7 +13,7 @@ async function createSitemap(pages: string[]) {
             `<url>
                 <loc>${url}</loc>
                 <lastmod>${new Date().toISOString()}</lastmod>
-                <changefreq>monthly</changefreq>
+                <changefreq>daily</changefreq>
                 <priority>1.0</priority>
             </url>`).join('')}
             </urlset>`.replace(/(\s\s+|\t)/g, ' ').trim()
