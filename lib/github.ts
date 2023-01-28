@@ -1,5 +1,5 @@
-import fetch from 'node-fetch'
 import type {Repo} from '@/types'
+import fetcher from "@/lib/fetcher";
 
 const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN
 const GITHUB_GRAPHQL = "https://api.github.com/graphql"
@@ -51,7 +51,7 @@ type TotalStarsResponse = {
 }
 
 export async function getPinnedRepos() {
-    const response = await fetch(GITHUB_GRAPHQL, {
+    const response = await fetcher(GITHUB_GRAPHQL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -78,13 +78,13 @@ export async function getPinnedRepos() {
               }
             }`
         })
-    }).then(r => r.json()) as PinnedReposResponse
+    }) as PinnedReposResponse
 
     return response.data.user.pinnedItems.nodes
 }
 
 export async function getTotalRepos() {
-    const response = await fetch(GITHUB_GRAPHQL, {
+    const response = await fetcher(GITHUB_GRAPHQL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -99,13 +99,13 @@ export async function getTotalRepos() {
               }
             }`
         })
-    }).then(r => r.json()) as TotalReposResponse
+    }) as TotalReposResponse
 
     return response.data.user.repositories.totalCount
 }
 
 export async function getTotalFollowers() {
-    const response = await fetch(GITHUB_GRAPHQL, {
+    const response = await fetcher(GITHUB_GRAPHQL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -120,13 +120,13 @@ export async function getTotalFollowers() {
               }
             }`
         })
-    }).then(r => r.json()) as TotalFollowersResponse
+    }) as TotalFollowersResponse
 
     return response.data.user.followers.totalCount
 }
 
 export async function getTotalStars(totalRepos: number) {
-    const response = await fetch(GITHUB_GRAPHQL, {
+    const response = await fetcher(GITHUB_GRAPHQL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ export async function getTotalStars(totalRepos: number) {
               }
             }`
         })
-    }).then(r => r.json()) as TotalStarsResponse
+    }) as TotalStarsResponse
 
     return response.data.user.repositories.nodes
         .reduce((acc, node) => acc + node.stargazers.totalCount, 0)
