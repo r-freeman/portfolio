@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import {GetStaticProps} from 'next'
-import useSWR from "swr";
+import useSWR from 'swr'
 import {SimpleLayout} from '@/components/SimpleLayout'
 import {Card} from '@/components/Card'
 import {numberFormat} from '@/lib/numberFormat'
@@ -53,7 +53,7 @@ export default function Dashboard({cards}: { cards: CardProps[] }) {
                             </Card.Description>
                         </Card>
                     ))}
-                    <Card as="li" key="Total Article Views">
+                    <Card as="li">
                         <h2 className="text-base font-semibold transition group-hover:text-indigo-500 text-zinc-800 dark:text-zinc-400">
                             <Card.Link href="/writing">Total Article Views</Card.Link>
                         </h2>
