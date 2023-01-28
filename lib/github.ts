@@ -2,6 +2,7 @@ import type {Repo} from '@/types'
 import fetcher from "@/lib/fetcher";
 
 const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN
+const GITHUB_USERNAME = process.env.GITHUB_USERNAME
 const GITHUB_GRAPHQL = "https://api.github.com/graphql"
 
 type PinnedReposResponse = {
@@ -59,7 +60,7 @@ export async function getPinnedRepos() {
         },
         body: JSON.stringify({
             query: `{
-              user(login: "r-freeman") {
+              user(login: "${GITHUB_USERNAME}") {
                 pinnedItems(first: 6, types: REPOSITORY) {
                   nodes {
                     ... on Repository {
@@ -92,7 +93,7 @@ export async function getTotalRepos() {
         },
         body: JSON.stringify({
             query: `{
-              user(login: "r-freeman") {
+              user(login: "${GITHUB_USERNAME}") {
                 repositories {
                   totalCount
                 }
@@ -113,7 +114,7 @@ export async function getTotalFollowers() {
         },
         body: JSON.stringify({
             query: `{
-              user(login: "r-freeman") {
+              user(login: "${GITHUB_USERNAME}") {
                 followers {
                   totalCount
                 }
@@ -134,7 +135,7 @@ export async function getTotalStars(totalRepos: number) {
         },
         body: JSON.stringify({
             query: `{
-              user(login: "r-freeman") {
+              user(login: "${GITHUB_USERNAME}") {
                 repositories(first: ${totalRepos}) {
                   nodes {
                     stargazers {
