@@ -1,9 +1,11 @@
 import Head from 'next/head'
+import {GetStaticProps} from 'next'
+import useSWR from 'swr'
 import {SimpleLayout} from '@/components/SimpleLayout'
 import {Card} from '@/components/Card'
 import {numberFormat} from '@/lib/numberFormat'
+import fetcher from '@/lib/fetcher'
 import {getTotalFollowers, getTotalRepos, getTotalStars} from '@/lib/github'
-import {GetStaticProps} from 'next'
 
 type DashboardProps = {
     totalRepos: number
@@ -12,6 +14,9 @@ type DashboardProps = {
 }
 
 export default function Dashboard({totalRepos, totalFollowers, totalStars}: DashboardProps) {
+    const {data} = useSWR('/api/views/', fetcher)
+    const totalArticleViews = Number(data?.views)
+
     return (
         <>
             <Head>
@@ -60,6 +65,14 @@ export default function Dashboard({totalRepos, totalFollowers, totalStars}: Dash
                         </h2>
                         <Card.Description className="text-zinc-800 dark:text-zinc-100 font-semibold text-5xl">
                             {numberFormat(totalStars)}
+                        </Card.Description>
+                    </Card>
+                    <Card as="li">
+                        <h2 className="text-base font-semibold transition group-hover:text-indigo-500 text-zinc-800 dark:text-zinc-400">
+                            <Card.Link href="https://github.com/r-freeman">Total Article Views</Card.Link>
+                        </h2>
+                        <Card.Description className="text-zinc-800 dark:text-zinc-100 font-semibold text-5xl">
+                            {totalArticleViews > 0 ? numberFormat(totalArticleViews) : '—'}
                         </Card.Description>
                     </Card>
                 </ul>
