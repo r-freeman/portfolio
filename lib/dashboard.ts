@@ -1,6 +1,7 @@
 import {getTotalFollowers, getTotalRepos, getTotalStars} from '@/lib/github'
 import {getAllArticles} from '@/lib/getAllArticles'
 import {getViews} from '@/lib/views'
+import {CardProps} from '@/types'
 
 export async function getDashboardData() {
     const [totalRepos, totalFollowers] = await Promise.all([
@@ -12,7 +13,7 @@ export async function getDashboardData() {
     const totalArticles = (await getAllArticles()).length
     const totalArticleViews = (await getViews()).views
 
-    const data = [
+    const data: CardProps[] = [
         {
             title: "Repos",
             metric: totalRepos,
@@ -45,11 +46,10 @@ export async function getDashboardData() {
         }
     ]
 
-    const groups = data.reduce((acc, item) => {
-        // @ts-ignore
+    const groups = data.reduce((acc: { [key: string]: CardProps[] }, item) => {
         (acc[item.group] = acc[item.group] || []).push(item);
-        return acc;
-    }, {})
+        return acc
+    }, {} as { [key: string]: CardProps[] })
 
     return Object.entries(groups).map(([groupName, groupItems]) => {
         return {groupName, groupItems}
