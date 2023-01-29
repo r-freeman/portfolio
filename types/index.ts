@@ -24,16 +24,16 @@ export type Repo = {
     }
 }
 
-export type CardProps = {
+export type Metric = {
     title: string
-    metric: number | string
+    value: number | string
     group: string
     href: string
 }
 
-export type CardGroupProps = [
+export type MetricGroup = [
     {
         groupName: string,
-        groupItems: CardProps[]
+        groupItems: Metric[]
     }
 ]

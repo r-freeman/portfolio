@@ -1,7 +1,7 @@
 import {getTotalFollowers, getTotalRepos, getTotalStars} from '@/lib/github'
 import {getAllArticles} from '@/lib/getAllArticles'
 import {getViews} from '@/lib/views'
-import {CardProps} from '@/types'
+import {Metric} from '@/types'
 
 export async function getDashboardData() {
     const [totalRepos, totalFollowers] = await Promise.all([
@@ -13,43 +13,44 @@ export async function getDashboardData() {
     const totalArticles = (await getAllArticles()).length
     const totalArticleViews = (await getViews()).views
 
-    const data: CardProps[] = [
+    const metrics: Metric[] = [
         {
             title: "Repos",
-            metric: totalRepos,
+            value: totalRepos,
             group: "GitHub",
             href: "https://github.com/r-freeman?tab=repositories"
         },
         {
             title: "Followers",
-            metric: totalFollowers,
+            value: totalFollowers,
             group: "GitHub",
             href: "https://github.com/r-freeman?tab=followers"
         },
         {
             title: "Stars",
-            metric: totalStars,
+            value: totalStars,
             group: "GitHub",
             href: "https://github.com/r-freeman/"
         },
         {
             title: "Total Articles",
-            metric: totalArticles,
+            value: totalArticles,
             group: "Website",
             href: "/writing"
         },
         {
             title: "Total Article Views",
-            metric: totalArticleViews,
+            value: totalArticleViews,
             group: "Website",
             href: "/writing"
         }
     ]
 
-    const groups = data.reduce((acc: { [key: string]: CardProps[] }, item) => {
+    // sort metrics into named groups
+    const groups = metrics.reduce((acc: { [key: string]: Metric[] }, item) => {
         (acc[item.group] = acc[item.group] || []).push(item);
         return acc
-    }, {} as { [key: string]: CardProps[] })
+    }, {} as { [key: string]: Metric[] })
 
     return Object.entries(groups).map(([groupName, groupItems]) => {
         return {groupName, groupItems}
