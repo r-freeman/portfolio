@@ -7,7 +7,7 @@ import {dashboard} from '@/lib/dashboard'
 
 type CardProps = {
     title: string
-    total: number
+    metric: number
     href: string
 }
 
@@ -44,7 +44,7 @@ export default function Dashboard({cards}: { cards: CardProps[] }) {
                                 <Card.Link href={card.href}>{card.title}</Card.Link>
                             </h2>
                             <Card.Description className="text-zinc-800 dark:text-zinc-100 font-semibold text-5xl">
-                                {numberFormat(card.total)}
+                                {numberFormat(card.metric)}
                             </Card.Description>
                         </Card>
                     ))}
@@ -57,7 +57,7 @@ export default function Dashboard({cards}: { cards: CardProps[] }) {
 export const getStaticProps: GetStaticProps = async () => {
     return {
         props: {
-            cards: (await dashboard())
+            cards: await dashboard()
         }
     }
 }

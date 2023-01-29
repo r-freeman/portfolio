@@ -9,33 +9,33 @@ export async function dashboard() {
     ])
 
     const totalStars = await getTotalStars(totalRepos)
-    const articles = await getAllArticles()
-    const {views} = await getViews()
+    const totalArticles = (await getAllArticles()).length
+    const totalArticleViews = (await getViews()).views
 
     return [
         {
             title: "GitHub Repos",
-            total: totalRepos,
+            metric: totalRepos,
             href: "https://github.com/r-freeman?tab=repositories"
         },
         {
             title: "GitHub Followers",
-            total: totalFollowers,
+            metric: totalFollowers,
             href: "https://github.com/r-freeman?tab=followers"
         },
         {
             title: "GitHub Stars",
-            total: totalStars,
+            metric: totalStars,
             href: "https://github.com/r-freeman/"
         },
         {
             title: "Total Articles",
-            total: articles.length,
+            metric: totalArticles,
             href: "/writing"
         },
         {
             title: "Total Article Views",
-            total: views,
+            metric: totalArticleViews,
             href: "/writing"
         }
     ]
