@@ -2,7 +2,7 @@ import {getTotalFollowers, getTotalRepos, getTotalStars} from '@/lib/github'
 import {getAllArticles} from '@/lib/getAllArticles'
 import {getViews} from '@/lib/views'
 
-export async function dashboard() {
+export async function getDashboardData() {
     const [totalRepos, totalFollowers] = await Promise.all([
         getTotalRepos(),
         getTotalFollowers()
@@ -12,31 +12,46 @@ export async function dashboard() {
     const totalArticles = (await getAllArticles()).length
     const totalArticleViews = (await getViews()).views
 
-    return [
+    const data = [
         {
-            title: "GitHub Repos",
+            title: "Repos",
             metric: totalRepos,
+            group: "GitHub",
             href: "https://github.com/r-freeman?tab=repositories"
         },
         {
-            title: "GitHub Followers",
+            title: "Followers",
             metric: totalFollowers,
+            group: "GitHub",
             href: "https://github.com/r-freeman?tab=followers"
         },
         {
-            title: "GitHub Stars",
+            title: "Stars",
             metric: totalStars,
+            group: "GitHub",
             href: "https://github.com/r-freeman/"
         },
         {
             title: "Total Articles",
             metric: totalArticles,
+            group: "Website",
             href: "/writing"
         },
         {
             title: "Total Article Views",
             metric: totalArticleViews,
+            group: "Website",
             href: "/writing"
         }
     ]
+
+    const groups = data.reduce((acc, item) => {
+        // @ts-ignore
+        (acc[item.group] = acc[item.group] || []).push(item);
+        return acc;
+    }, {})
+
+    return Object.entries(groups).map(([groupName, groupItems]) => {
+        return {groupName, groupItems}
+    })
 }

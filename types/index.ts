@@ -23,3 +23,17 @@ export type Repo = {
         color: string
     }
 }
+
+export type CardProps = {
+    title: string
+    metric: number | string
+    group: string
+    href: string
+}
+
+export type CardGroupProps = [
+    {
+        groupName: string,
+        groupItems: CardProps[]
+    }
+]
