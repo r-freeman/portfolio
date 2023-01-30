@@ -1,6 +1,7 @@
 import {getTotalFollowers, getTotalRepos, getTotalStars} from '@/lib/github'
 import {getAllArticles} from '@/lib/getAllArticles'
 import {getViews} from '@/lib/views'
+import {getLocalData} from '@/lib/localData'
 import {Metric} from '@/types'
 
 export async function getDashboardData() {
@@ -12,8 +13,15 @@ export async function getDashboardData() {
     const totalStars = await getTotalStars(totalRepos)
     const totalArticles = (await getAllArticles()).length
     const totalArticleViews = (await getViews()).views
+    const {statsfm} = JSON.parse(await getLocalData())
 
     const metrics: Metric[] = [
+        {
+            title: "Top genre",
+            value: statsfm.top_genre,
+            group: "Spotify",
+            href: "https://spotify.com/"
+        },
         {
             title: "Repos",
             value: totalRepos,
@@ -33,17 +41,18 @@ export async function getDashboardData() {
             href: "https://github.com/r-freeman/"
         },
         {
-            title: "Total Articles",
+            title: "Total articles",
             value: totalArticles,
             group: "Website",
             href: "/writing"
         },
         {
-            title: "Total Article Views",
+            title: "Total article views",
             value: totalArticleViews,
             group: "Website",
             href: "/writing"
-        }
+        },
+
     ]
 
     // sort metrics into named groups
