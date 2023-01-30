@@ -17,6 +17,18 @@ export async function getDashboardData() {
 
     const metrics: Metric[] = [
         {
+            title: "Top genre",
+            value: statsfm.top_genre,
+            group: "Spotify",
+            href: "https://spotify.com/"
+        },
+        {
+            title: "Top artist",
+            value: statsfm.top_artist,
+            group: "Spotify",
+            href: "https://spotify.com/"
+        },
+        {
             title: "Repos",
             value: totalRepos,
             group: "GitHub",
@@ -35,18 +47,6 @@ export async function getDashboardData() {
             href: "https://github.com/r-freeman/"
         },
         {
-            title: "Top genre",
-            value: statsfm.top_genre,
-            group: "Spotify",
-            href: "https://spotify.com/"
-        },
-        {
-            title: "Top artist",
-            value: statsfm.top_artist,
-            group: "Spotify",
-            href: "https://spotify.com/"
-        },
-        {
             title: "Total articles",
             value: totalArticles,
             group: "Website",
@@ -57,8 +57,7 @@ export async function getDashboardData() {
             value: totalArticleViews,
             group: "Website",
             href: "/writing"
-        },
-
+        }
     ]
 
     // sort metrics into named groups
