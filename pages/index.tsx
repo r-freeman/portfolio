@@ -73,7 +73,7 @@ function Article(article: Article) {
                 {article.title}
             </Card.Title>
             <p className="flex order-first space-x-1 z-10 mb-3">
-                <Card.Eyebrow as="time" dateTime={article.date} decorate={false}>
+                <Card.Eyebrow as="time" dateTime={article.date} decorate>
                     {formatDate(article.date)}
                 </Card.Eyebrow>
                 <Views slug={article.slug} shouldUpdateViews={false} className="text-sm text-zinc-500 dark:text-zinc-400"/>
