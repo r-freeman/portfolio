@@ -9,7 +9,7 @@ import {
     GitHubIcon,
     LinkedInIcon,
     TwitterIcon
-} from '@/components/SocialIcons'
+} from '@/components/icons/SocialIcons'
 import {Props} from 'types'
 import photoOfMe from '@/public/static/images/photo-of-me.jpg'
 import awsCCPBadge from '@/public/static/images/aws-certified-cloud-practitioner-badge.png'
