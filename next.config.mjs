@@ -37,15 +37,15 @@ const nextConfig = {
                     }
                 ]
             },
-            {
-                source: '/api/views/:slug',
-                headers: [
-                    {
-                        key: "Cache-Control",
-                        value: "public, max-age=0, must-revalidate"
-                    }
-                ]
-            }
+            // {
+            //     source: '/api/views/:slug',
+            //     headers: [
+            //         {
+            //             key: "Cache-Control",
+            //             value: "public, max-age=0, must-revalidate"
+            //         }
+            //     ]
+            // }
         ]
     }
 }
