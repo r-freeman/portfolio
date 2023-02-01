@@ -1,7 +1,7 @@
 import {getTotalFollowers, getTotalRepos, getTotalStars} from '@/lib/github'
 import {getAllArticles} from '@/lib/getAllArticles'
+import {getTopArtist, getTopGenre} from '@/lib/spotify'
 import {getViews} from '@/lib/views'
-import {getLocalData} from '@/lib/localData'
 import {Metric} from '@/types'
 
 export async function getDashboardData() {
@@ -13,20 +13,21 @@ export async function getDashboardData() {
     const totalStars = await getTotalStars(totalRepos)
     const totalArticles = (await getAllArticles()).length
     const totalArticleViews = (await getViews()).views
-    const {statsfm} = JSON.parse(await getLocalData())
+    const topArtist = await getTopArtist()
+    const topGenre = await getTopGenre()
 
     const metrics: Metric[] = [
         {
             title: "Top genre",
-            value: statsfm.top_genre,
+            value: topGenre.genre,
             group: "Spotify",
-            href: "https://spotify.com/"
+            href: "https://open.spotify.com/?"
         },
         {
             title: "Top artist",
-            value: statsfm.top_artist,
+            value: topArtist.artist,
             group: "Spotify",
-            href: "https://spotify.com/"
+            href: topArtist.uri
         },
         {
             title: "Repos",
