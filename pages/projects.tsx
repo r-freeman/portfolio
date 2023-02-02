@@ -58,7 +58,7 @@ export default function Projects({pinnedRepos}: { pinnedRepos: Repo[] }) {
                                             href={repo.url}
                                             ariaLabel={`Star ${repo.name} on GitHub`}
                                             icon={StarIcon}
-                                            className={'w-5 h-5'}
+                                            className={'w-5 h-5 group-hover:fill-zinc-500 dark:group-hover:fill-zinc-400'}
                                         />
                                     </p>
                                     <p className="relative z-10 flex items-center">
@@ -67,7 +67,7 @@ export default function Projects({pinnedRepos}: { pinnedRepos: Repo[] }) {
                                             href={repo.url}
                                             ariaLabel={`Fork ${repo.name} on GitHub`}
                                             icon={ForkIcon}
-                                            className={'w-5 h-5'}
+                                            className={'w-5 h-5 group-hover:fill-zinc-500 dark:group-hover:fill-zinc-400'}
                                         />
                                     </p>
                                 </div>
