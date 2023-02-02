@@ -2,7 +2,7 @@ import {GetStaticProps} from 'next'
 import Head from 'next/head'
 
 import {Card} from '@/components/Card'
-import {SimpleLayout} from '@/components/SimpleLayout'
+import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 import {getAllArticles} from '@/lib/getAllArticles'
 import {formatDate} from '@/lib/formatDate'
 

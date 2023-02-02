@@ -1,10 +1,10 @@
 import {ReactNode} from 'react'
 import Head from 'next/head'
 import {usePathname} from 'next/navigation'
-import {Container} from './Container'
+import {Container} from '@/components/Container'
 import {formatDate} from '@/lib/formatDate'
-import {Prose} from './Prose'
-import {Views} from './Views'
+import {Prose} from '@/components/Prose'
+import {Views} from '@/components/Views'
 
 type ArticleLayout = {
     children?: ReactNode

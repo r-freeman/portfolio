@@ -1,6 +1,6 @@
 import {ReactNode} from 'react'
 import clsx from 'clsx'
-import {Container} from './Container'
+import {Container} from '@/components/Container'
 
 type SimpleLayout = {
     title: string
