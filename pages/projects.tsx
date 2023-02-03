@@ -43,16 +43,16 @@ export default function Projects({pinnedRepos}: { pinnedRepos: Repo[] }) {
                             </h2>
                             <Card.Description>{repo.description}</Card.Description>
                             <div
-                                className="flex space-x-8 md:justify-between mt-6 items-center w-full group text-sm text-zinc-500 dark:text-zinc-400">
+                                className="z-10 flex space-x-8 md:justify-between mt-6 items-center w-full group text-sm text-zinc-500 dark:text-zinc-400">
                                 <p
-                                    className="relative z-10 flex items-center">
+                                    className="flex items-center">
                                     <span className="ml-2">{repo.primaryLanguage.name}</span>
                                     <span
                                         className="w-4 h-4 rounded-full order-first"
                                         style={{backgroundColor: repo.primaryLanguage.color}}/>
                                 </p>
                                 <div className="flex space-x-4">
-                                    <p className="relative z-10 flex items-center">
+                                    <p className="flex items-center">
                                         <span className="ml-2 order-last">{numberFormat(repo.stargazerCount)}</span>
                                         <SocialLink
                                             href={repo.url}
@@ -61,7 +61,7 @@ export default function Projects({pinnedRepos}: { pinnedRepos: Repo[] }) {
                                             className={'w-5 h-5 group-hover:fill-zinc-500 dark:group-hover:fill-zinc-400'}
                                         />
                                     </p>
-                                    <p className="relative z-10 flex items-center">
+                                    <p className="flex items-center">
                                         <span className="ml-2 order-last">{numberFormat(repo.forkCount)}</span>
                                         <SocialLink
                                             href={repo.url}
