@@ -118,7 +118,7 @@ export default function Home({articles}: { articles: Article[] }) {
             </Container>
             <Container className="mt-24 md:mt-28">
                 <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
-                    <div className="flex flex-col gap-16">
+                    <div className="flex flex-col gap-16 mt-6">
                         {articles.map(({slug, title, description, date}) => (
                             <Article
                                 key={slug}
