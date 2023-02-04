@@ -1,3 +1,4 @@
+import React from 'react'
 import Head from 'next/head'
 import {GetStaticProps} from 'next'
 import {Card} from '@/components/Card'
@@ -18,19 +19,19 @@ import {Article} from 'types'
 
 function Article(article: Article) {
     return (
-        <Card as="article">
-            <Card.Title href={`/writing/${article.slug}`}>
-                {article.title}
-            </Card.Title>
-            <p className="flex order-first space-x-1 z-10 mb-3">
-                <Card.Eyebrow as="time" dateTime={article.date} decorate={false}>
-                    {formatDate(article.date)}
-                </Card.Eyebrow>
-                <Views slug={article.slug} shouldUpdateViews={false} className="text-sm text-zinc-500 dark:text-zinc-400"/>
-            </p>
-            <Card.Description>{article.description}</Card.Description>
-            <Card.Cta>Read more</Card.Cta>
-        </Card>
+        <article>
+            <Card>
+                <Card.Title href={`/writing/${article.slug}`}>
+                    {article.title}
+                </Card.Title>
+                <p className="flex order-first space-x-1 z-10 mb-3">
+                    <Card.Eyebrow as="time" dateTime={article.date} decorate={false}>
+                        {formatDate(article.date)}
+                    </Card.Eyebrow>
+                    <Views slug={article.slug} shouldUpdateViews={false} className="text-sm text-zinc-500 dark:text-zinc-400"/>
+                </p>
+            </Card>
+        </article>
     )
 }
 
@@ -147,7 +148,7 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
         props: {
             articles: (await getAllArticles())
-                .slice(0, 1)
+                .slice(0, 3)
                 .map(({component, ...meta}) => meta),
         }
     }

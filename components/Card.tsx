@@ -6,7 +6,6 @@ import {Props} from 'types'
 type Card = {
     as?: ElementType
     className?: string
-    small?: boolean
     children: ReactNode
 }
 
@@ -54,12 +53,11 @@ function ChevronRightIcon(props: Props) {
 export function Card({
                          as: Component = 'div',
                          className,
-                         small,
                          children
                      }: Card) {
     return (
         <Component
-            className={clsx(className, 'group relative flex flex-col items-baseline', small && 'md:flex-row justify-between')}
+            className={clsx(className, 'group relative flex flex-col items-baseline')}
         >
             {children}
         </Component>
