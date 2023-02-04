@@ -1,6 +1,7 @@
 import {BriefcaseIcon} from '@/components/icons/BriefcaseIcon'
 import {ArrowDownIcon} from '@/components/icons/ArrowDownIcon'
 import {Button} from '@/components/Button'
+import {Feature} from '@/components/Feature'
 
 type Work = {
     company: string
@@ -44,15 +45,10 @@ export function Resume() {
     ]
 
     return (
-        <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
-            <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-                <BriefcaseIcon className="h-6 w-6 flex-none"/>
-                <span className="ml-3">Work</span>
-            </h2>
+        <Feature icon={BriefcaseIcon} title="Work">
             <ol className="mt-6 space-y-4">
                 {work.map((role, roleIndex) => (
                     <li key={roleIndex} className="flex gap-4">
-
                         <dl className="flex flex-auto flex-wrap gap-x-2">
                             <dt className="sr-only">Company</dt>
                             <dd className="w-full flex-none text-sm font-medium text-zinc-900 dark:text-zinc-100">
@@ -86,6 +82,6 @@ export function Resume() {
                 <ArrowDownIcon
                     className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50"/>
             </Button>
-        </div>
+        </Feature>
     )
 }

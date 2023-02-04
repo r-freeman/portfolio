@@ -10,7 +10,7 @@ type VariantStyles = {
 type Button = {
     variant?: string
     className: string
-    href: string
+    href?: string
     children: ReactNode
 }
 
