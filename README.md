@@ -1,3 +1,5 @@
+[![Portfolio of Ryan Freeman](https://user-images.githubusercontent.com/30879081/216763956-c29264db-a15d-44b9-9cfd-8cd6828ca527.jpeg)](https://ryanfreeman.dev/)
+
 # Portfolio
 
 This website was built using TypeScript, React, Next.js and Tailwind CSS. It is designed to showcase my professional experience
