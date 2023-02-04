@@ -1,4 +1,4 @@
-[![Portfolio of Ryan Freeman](https://user-images.githubusercontent.com/30879081/216763956-c29264db-a15d-44b9-9cfd-8cd6828ca527.jpeg)](https://ryanfreeman.dev/)
+[![Portfolio of Ryan Freeman](https://user-images.githubusercontent.com/30879081/216793827-c480404a-3d91-4f9b-ba4a-26eed9cadb37.jpeg)](https://ryanfreeman.dev/)
 
 # Portfolio
 
