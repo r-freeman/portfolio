@@ -1,7 +1,7 @@
 import {BriefcaseIcon} from '@/components/icons/BriefcaseIcon'
 import {ArrowDownIcon} from '@/components/icons/ArrowDownIcon'
 import {Button} from '@/components/Button'
-import {Feature} from '@/components/Feature'
+import {Cta} from '@/components/Cta'
 
 type Work = {
     company: string
@@ -45,7 +45,7 @@ export function Resume() {
     ]
 
     return (
-        <Feature icon={BriefcaseIcon} title="Work">
+        <Cta icon={BriefcaseIcon} title="Work">
             <ol className="mt-6 space-y-4">
                 {work.map((role, roleIndex) => (
                     <li key={roleIndex} className="flex gap-4">
@@ -82,6 +82,6 @@ export function Resume() {
                 <ArrowDownIcon
                     className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50"/>
             </Button>
-        </Feature>
+        </Cta>
     )
 }

@@ -31,6 +31,6 @@ export function Button({variant = 'primary', className, href, ...props}: Button)
     return href ? (
         <Link href={href} className={className} {...props} />
     ) : (
-        <button className={className} {...props} />
+        <button type="submit" className={className} {...props} />
     )
 }

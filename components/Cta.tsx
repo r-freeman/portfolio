@@ -1,14 +1,14 @@
 import {ElementType, ReactNode} from 'react'
 import {twMerge} from 'tailwind-merge'
 
-type FeatureProps = {
+type CtaProps = {
     icon: ElementType
     title: String
     children: ReactNode
     className?: string
 }
 
-export function Feature({icon: Icon, title, children, className}: FeatureProps) {
+export function Cta({icon: Icon, title, children, className}: CtaProps) {
     return (
         <div className={twMerge(`
             rounded-2xl 
