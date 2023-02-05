@@ -125,13 +125,13 @@ export default function About() {
                             <SocialLink href="https://twitter.com/freemry" icon={TwitterIcon} className="mt-4">
                                 Follow on Twitter
                             </SocialLink>
-                            <SocialLink
-                                href="mailto:hello@ryanfreeman.dev"
-                                icon={MailIcon}
-                                className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"
-                            >
-                                hello@ryanfreeman.dev
-                            </SocialLink>
+                            {/*<SocialLink*/}
+                            {/*    href="mailto:hello@ryanfreeman.dev"*/}
+                            {/*    icon={MailIcon}*/}
+                            {/*    className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"*/}
+                            {/*>*/}
+                            {/*    hello@ryanfreeman.dev*/}
+                            {/*</SocialLink>*/}
                         </ul>
                         <Link href="https://credly.com/badges/10bd0eae-b383-411c-beb9-dadda80124c8/public_url">
                             <Image
