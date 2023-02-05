@@ -2,6 +2,7 @@ import {useRef, SyntheticEvent, MutableRefObject, useState} from 'react'
 import {Cta} from '@/components/Cta'
 import {MailIcon} from '@/components/icons/MailIcon'
 import {Button} from '@/components/Button'
+import {InboxIcon} from "@/components/icons/InboxIcon";
 
 export function Subscribe() {
     const inputRef = useRef() as MutableRefObject<HTMLInputElement>
@@ -14,7 +15,7 @@ export function Subscribe() {
     }
 
     return (
-        <Cta icon={MailIcon} title="Subscribe">
+        <Cta icon={InboxIcon} title="Subscribe">
             <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
                 Get notified when I publish something new, and unsubscribe at any time.
             </p>
