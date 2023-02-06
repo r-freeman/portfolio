@@ -58,13 +58,13 @@ export async function getDashboardData() {
         {
             title: "Total articles",
             value: totalArticles,
-            group: "Website",
+            group: "Blog",
             href: "/writing"
         },
         {
             title: "Total article views",
             value: totalArticleViews,
-            group: "Website",
+            group: "Blog",
             href: "/writing"
         }
     ]
