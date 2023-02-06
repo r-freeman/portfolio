@@ -1,6 +1,5 @@
 import {useRef, SyntheticEvent, MutableRefObject, useState} from 'react'
 import {Cta} from '@/components/Cta'
-import {MailIcon} from '@/components/icons/MailIcon'
 import {Button} from '@/components/Button'
 import {InboxIcon} from "@/components/icons/InboxIcon";
 
