@@ -4,7 +4,6 @@ import Head from 'next/head'
 import {Card} from '@/components/Card'
 import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 import {Views} from '@/components/Views'
-import {Subscribe} from '@/components/Subscribe'
 import {getAllArticles} from '@/lib/getAllArticles'
 import {formatDate} from '@/lib/formatDate'
 import {Article} from 'types'
@@ -12,11 +11,11 @@ import {Article} from 'types'
 function Article({article}: { article: Article }) {
     return (
         <article>
-            <Card>
+            <Card variant="inline">
                 <Card.Title href={`/writing/${article.slug}`}>
                     {article.title}
                 </Card.Title>
-                <p className="flex order-first space-x-1 z-10 mb-3">
+                <p className="flex order-first space-x-1 z-10 mb-3 md:mb-0 md:ml-4 md:order-last">
                     <Card.Eyebrow as="time" dateTime={article.date} decorate={false}>
                         {formatDate(article.date)}
                     </Card.Eyebrow>
@@ -50,14 +49,11 @@ export default function ArticlesIndex({articles}: { articles: Article[] }) {
                 intro="All of my long-form thoughts on software engineering, and more, displayed in chronological order."
                 gradient="bg-gradient-to-r from-pink-500 to-violet-500"
             >
-                <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
+                <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none">
                     <div className="max-w-3xl space-y-16 mt-6">
                         {articles.map((article) => (
                             <Article key={article.slug} article={article}/>
                         ))}
-                    </div>
-                    <div className="lg:pl-16 xl:pl-24">
-                        <Subscribe/>
                     </div>
                 </div>
             </SimpleLayout>

@@ -1,10 +1,12 @@
 import Link from 'next/link'
 import clsx from 'clsx'
 import {ElementType, ReactNode} from 'react'
+import {twMerge} from 'tailwind-merge'
 import {Props} from 'types'
 
 type Card = {
     as?: ElementType
+    variant?: string
     className?: string
     children: ReactNode
 }
@@ -52,12 +54,33 @@ function ChevronRightIcon(props: Props) {
 
 export function Card({
                          as: Component = 'div',
+                         variant = 'normal',
                          className,
                          children
                      }: Card) {
+
+    type VariantStyles = {
+        normal: string
+        inline: string
+    }
+
+    const variantStyles: VariantStyles = {
+        normal:
+            'flex-col',
+        inline:
+            'flex-col md:flex-row md:justify-between',
+    }
+
     return (
         <Component
-            className={clsx(className, 'group relative flex flex-col items-baseline')}
+            className={twMerge(`
+                group
+                relative
+                flex
+                items-baseline
+                ${variantStyles[variant as keyof VariantStyles]}
+                ${className ?? ""}
+            `)}
         >
             {children}
         </Component>
