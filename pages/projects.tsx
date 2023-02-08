@@ -2,7 +2,6 @@ import {GetStaticProps} from 'next'
 import Head from 'next/head'
 import {Card} from '@/components/Card'
 import {SimpleLayout} from '@/components/layouts/SimpleLayout'
-import {SocialLink} from '@/components/SocialLink'
 import {StarIcon} from '@/components/icons/StarIcon'
 import {ForkIcon} from '@/components/icons/ForkIcon'
 import {getPinnedRepos} from '@/lib/github'
@@ -43,32 +42,22 @@ export default function Projects({pinnedRepos}: { pinnedRepos: Repo[] }) {
                             </h2>
                             <Card.Description>{repo.description}</Card.Description>
                             <div
-                                className="z-10 flex space-x-8 md:justify-between mt-6 items-center w-full group text-sm text-zinc-500 dark:text-zinc-400">
+                                className="z-10 flex space-x-16 sm:space-x-0 sm:justify-between mt-8 items-center w-full group text-sm text-zinc-500 dark:text-zinc-400">
                                 <p
                                     className="flex items-center">
-                                    <span className="ml-2">{repo.primaryLanguage.name}</span>
+                                    <span>{repo.primaryLanguage.name}</span>
                                     <span
-                                        className="w-4 h-4 rounded-full order-first"
+                                        className="mr-2 w-4 h-4 rounded-full order-first"
                                         style={{backgroundColor: repo.primaryLanguage.color}}/>
                                 </p>
-                                <div className="flex space-x-4">
+                                <div className="flex space-x-6">
                                     <p className="flex items-center">
-                                        <span className="ml-2 order-last">{numberFormat(repo.stargazerCount)}</span>
-                                        <SocialLink
-                                            href={repo.url}
-                                            ariaLabel={`Star ${repo.name} on GitHub`}
-                                            icon={StarIcon}
-                                            className={'w-5 h-5 fill-zinc-400 dark:fill-zinc-500'}
-                                        />
+                                        {numberFormat(repo.stargazerCount)}
+                                        <StarIcon className="order-first mr-2 w-5 h-5 fill-zinc-400 dark:fill-zinc-500"/>
                                     </p>
                                     <p className="flex items-center">
-                                        <span className="ml-2 order-last">{numberFormat(repo.forkCount)}</span>
-                                        <SocialLink
-                                            href={repo.url}
-                                            ariaLabel={`Fork ${repo.name} on GitHub`}
-                                            icon={ForkIcon}
-                                            className={'w-5 h-5 fill-zinc-400 dark:fill-zinc-500'}
-                                        />
+                                        {numberFormat(repo.forkCount)}
+                                        <ForkIcon className="order-first mr-2 w-5 h-5 fill-zinc-400 dark:fill-zinc-500"/>
                                     </p>
                                 </div>
                             </div>

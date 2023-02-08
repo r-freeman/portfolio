@@ -110,7 +110,16 @@ Card.Title = function CardTitle({as: Component = 'h2', href, children}: CardTitl
 
 Card.Description = function CardDescription({children, className}: CardDescription) {
     return (
-        <p className={clsx(className ? className : "mt-2 text-sm text-zinc-600 dark:text-zinc-400", "relative z-10")}>
+        <p className={
+            twMerge(`
+                mt-2
+                text-sm 
+                text-zinc-600 
+                dark:text-zinc-400
+                relative 
+                z-10
+                ${className ?? ""}
+            `)}>
             {children}
         </p>
     )
