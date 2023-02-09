@@ -39,7 +39,7 @@ export default function Dashboard({metrics}: { metrics: MetricGroup }) {
                                 <h2 className="text-base font-semibold transition group-hover:text-indigo-500 text-zinc-800 dark:text-zinc-400">
                                     <Card.Link href={item.href}>{item.title}</Card.Link>
                                 </h2>
-                                <Card.Description className="text-zinc-800 dark:text-zinc-100 font-semibold text-3xl">
+                                <Card.Description className="mt-0 text-zinc-800 dark:text-zinc-100 font-semibold text-3xl">
                                     {typeof item.value === "number" ? numberFormat(item.value) : item.value}
                                 </Card.Description>
                             </Card>
