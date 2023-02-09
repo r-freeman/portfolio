@@ -1,15 +1,20 @@
 import React from 'react'
 import Head from 'next/head'
 import {GetStaticProps} from 'next'
+import useSWR from 'swr'
 import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 import {Card} from '@/components/Card'
 import {CardGroup} from '@/components/CardGroup'
 import {numberFormat} from '@/lib/numberFormat'
 import {getDashboardData} from '@/lib/dashboard'
+import fetcher from '@/lib/fetcher'
 import type {MetricGroup} from '@/types'
 
-
 export default function Dashboard({metrics}: { metrics: MetricGroup }) {
+    const {data: tempData} = useSWR('api/grafana/temp', fetcher, {
+        refreshInterval: 30000
+    })
+
     return (
         <>
             <Head>
@@ -46,6 +51,16 @@ export default function Dashboard({metrics}: { metrics: MetricGroup }) {
                         ))}
                     </CardGroup>
                 ))}
+                <CardGroup title="Raspberry Pi">
+                    <Card as="li">
+                        <h2 className="text-base font-semibold transition group-hover:text-indigo-500 text-zinc-800 dark:text-zinc-400">
+                            <Card.Link href="#">Temperature</Card.Link>
+                        </h2>
+                        <Card.Description className="mt-0 text-zinc-800 dark:text-zinc-100 font-semibold text-3xl">
+                            {tempData ? `${tempData.temp} ℃` : "—"}
+                        </Card.Description>
+                    </Card>
+                </CardGroup>
             </SimpleLayout>
         </>
     )
