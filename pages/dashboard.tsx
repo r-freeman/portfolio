@@ -16,6 +16,8 @@ const config = {
 
 export default function Dashboard({metrics}: { metrics: MetricGroup }) {
     const {data: tempData} = useSWR('api/grafana/temp', fetcher, config)
+    const {data: sysLoadData} = useSWR('api/grafana/sysload', fetcher, config)
+    const {data: ramData} = useSWR('api/grafana/ram', fetcher, config)
     const {data: rootFsData} = useSWR('api/grafana/rootfs', fetcher, config)
     const {data: uptimeData} = useSWR('api/grafana/uptime', fetcher, config)
 
@@ -61,7 +63,23 @@ export default function Dashboard({metrics}: { metrics: MetricGroup }) {
                             <Card.Link href="#">Temperature</Card.Link>
                         </h2>
                         <Card.Description className="mt-0 text-zinc-800 dark:text-zinc-100 font-semibold text-3xl">
-                            {tempData ? `${tempData.temp} ℃` : "—"}
+                            {tempData ? `${tempData.temp}℃` : "—"}
+                        </Card.Description>
+                    </Card>
+                    <Card as="li">
+                        <h2 className="text-base font-semibold transition group-hover:text-indigo-500 text-zinc-800 dark:text-zinc-400">
+                            <Card.Link href="#">Sys load (5m avg)</Card.Link>
+                        </h2>
+                        <Card.Description className="mt-0 text-zinc-800 dark:text-zinc-100 font-semibold text-3xl">
+                            {sysLoadData ? `${sysLoadData.sysLoad}%` : "—"}
+                        </Card.Description>
+                    </Card>
+                    <Card as="li">
+                        <h2 className="text-base font-semibold transition group-hover:text-indigo-500 text-zinc-800 dark:text-zinc-400">
+                            <Card.Link href="#">RAM usage</Card.Link>
+                        </h2>
+                        <Card.Description className="mt-0 text-zinc-800 dark:text-zinc-100 font-semibold text-3xl">
+                            {ramData ? `${ramData.ramUsage}%` : "—"}
                         </Card.Description>
                     </Card>
                     <Card as="li">
@@ -69,15 +87,15 @@ export default function Dashboard({metrics}: { metrics: MetricGroup }) {
                             <Card.Link href="#">Root FS usage</Card.Link>
                         </h2>
                         <Card.Description className="mt-0 text-zinc-800 dark:text-zinc-100 font-semibold text-3xl">
-                            {rootFsData ? `${rootFsData.usage} %` : "—"}
+                            {rootFsData ? `${rootFsData.rootFsUsage}%` : "—"}
                         </Card.Description>
                     </Card>
                     <Card as="li">
                         <h2 className="text-base font-semibold transition group-hover:text-indigo-500 text-zinc-800 dark:text-zinc-400">
-                            <Card.Link href="#">Uptime minutes</Card.Link>
+                            <Card.Link href="#">Uptime days</Card.Link>
                         </h2>
                         <Card.Description className="mt-0 text-zinc-800 dark:text-zinc-100 font-semibold text-3xl">
-                            {uptimeData ? `${numberFormat(uptimeData.minutes)}` : "—"}
+                            {uptimeData ? `${numberFormat(uptimeData.days)}` : "—"}
                         </Card.Description>
                     </Card>
                 </CardGroup>
