@@ -10,10 +10,14 @@ import {getDashboardData} from '@/lib/dashboard'
 import fetcher from '@/lib/fetcher'
 import type {MetricGroup} from '@/types'
 
+const config = {
+    refreshInterval: 30000
+}
+
 export default function Dashboard({metrics}: { metrics: MetricGroup }) {
-    const {data: tempData} = useSWR('api/grafana/temp', fetcher, {
-        refreshInterval: 30000
-    })
+    const {data: tempData} = useSWR('api/grafana/temp', fetcher, config)
+    const {data: rootFsData} = useSWR('api/grafana/rootfs', fetcher, config)
+    const {data: uptimeData} = useSWR('api/grafana/uptime', fetcher, config)
 
     return (
         <>
@@ -58,6 +62,22 @@ export default function Dashboard({metrics}: { metrics: MetricGroup }) {
                         </h2>
                         <Card.Description className="mt-0 text-zinc-800 dark:text-zinc-100 font-semibold text-3xl">
                             {tempData ? `${tempData.temp} ℃` : "—"}
+                        </Card.Description>
+                    </Card>
+                    <Card as="li">
+                        <h2 className="text-base font-semibold transition group-hover:text-indigo-500 text-zinc-800 dark:text-zinc-400">
+                            <Card.Link href="#">Root FS usage</Card.Link>
+                        </h2>
+                        <Card.Description className="mt-0 text-zinc-800 dark:text-zinc-100 font-semibold text-3xl">
+                            {rootFsData ? `${rootFsData.usage} %` : "—"}
+                        </Card.Description>
+                    </Card>
+                    <Card as="li">
+                        <h2 className="text-base font-semibold transition group-hover:text-indigo-500 text-zinc-800 dark:text-zinc-400">
+                            <Card.Link href="#">Uptime minutes</Card.Link>
+                        </h2>
+                        <Card.Description className="mt-0 text-zinc-800 dark:text-zinc-100 font-semibold text-3xl">
+                            {uptimeData ? `${numberFormat(uptimeData.minutes)}` : "—"}
                         </Card.Description>
                     </Card>
                 </CardGroup>
