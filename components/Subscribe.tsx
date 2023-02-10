@@ -1,7 +1,7 @@
 import {useRef, SyntheticEvent, MutableRefObject, useState} from 'react'
 import {Cta} from '@/components/Cta'
 import {Button} from '@/components/Button'
-import {InboxIcon} from "@/components/icons/InboxIcon";
+import {InboxIcon} from '@/components/icons/InboxIcon'
 
 export function Subscribe() {
     const inputRef = useRef() as MutableRefObject<HTMLInputElement>
