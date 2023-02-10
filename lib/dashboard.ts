@@ -21,7 +21,7 @@ export async function getDashboardData() {
     const metrics: Metric[] = [
         {
             title: "Minutes listened",
-            value: minutesListened,
+            value: +minutesListened,
             group: "Spotify",
             href: "https://open.spotify.com/?"
         },
@@ -39,31 +39,31 @@ export async function getDashboardData() {
         },
         {
             title: "Repos",
-            value: totalRepos,
+            value: +totalRepos,
             group: "GitHub",
             href: "https://github.com/r-freeman?tab=repositories"
         },
         {
             title: "Followers",
-            value: totalFollowers,
+            value: +totalFollowers,
             group: "GitHub",
             href: "https://github.com/r-freeman?tab=followers"
         },
         {
             title: "Stars",
-            value: totalStars,
+            value: +totalStars,
             group: "GitHub",
             href: "https://github.com/r-freeman/"
         },
         {
             title: "Total articles",
-            value: totalArticles,
+            value: +totalArticles,
             group: "Blog",
             href: "/writing"
         },
         {
             title: "Total article views",
-            value: totalArticleViews,
+            value: +totalArticleViews,
             group: "Blog",
             href: "/writing"
         }
