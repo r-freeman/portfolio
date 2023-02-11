@@ -2,8 +2,8 @@ import {GetStaticProps} from 'next'
 import Head from 'next/head'
 import {Card} from '@/components/Card'
 import {SimpleLayout} from '@/components/layouts/SimpleLayout'
-import {StarIcon} from '@/components/icons/StarIcon'
-import {ForkIcon} from '@/components/icons/ForkIcon'
+import {SparklesIcon} from '@/components/icons/SparklesIcon'
+import {ShareIcon} from '@/components/icons/ShareIcon'
 import {getPinnedRepos} from '@/lib/github'
 import {numberFormat} from '@/lib/numberFormat'
 import type {Repo} from '@/types'
@@ -53,11 +53,12 @@ export default function Projects({pinnedRepos}: { pinnedRepos: Repo[] }) {
                                 <div className="flex space-x-6">
                                     <p className="flex items-center">
                                         {numberFormat(repo.stargazerCount)}
-                                        <StarIcon className="order-first mr-2 w-5 h-5 fill-zinc-400 dark:fill-zinc-500"/>
+                                        <SparklesIcon className="order-first mr-2 w-5 h-5 fill-zinc-400 dark:fill-zinc-500"/>
                                     </p>
                                     <p className="flex items-center">
                                         {numberFormat(repo.forkCount)}
-                                        <ForkIcon className="order-first mr-2 w-5 h-5 fill-zinc-400 dark:fill-zinc-500"/>
+                                        <ShareIcon
+                                            className="order-first mr-2 w-5 h-5 fill-zinc-400 dark:fill-zinc-500 -rotate-90"/>
                                     </p>
                                 </div>
                             </div>
