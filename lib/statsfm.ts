@@ -6,6 +6,7 @@ const STATSFM_LIFETIME_STATS = `https://beta-api.stats.fm/api/v1/users/${STATSFM
 type StatsFmResponse = {
     items: {
         durationMs: number
+        count: number
     }
 }
 
@@ -18,8 +19,10 @@ export const getStats = async () => {
     }).then(r => r.json()) as StatsFmResponse
 
     const minutesListened = ((response.items.durationMs / 1000) / 60).toFixed(0)
+    const streams = response.items.count
 
     return {
-        minutesListened
+        minutesListened,
+        streams
     }
 }
