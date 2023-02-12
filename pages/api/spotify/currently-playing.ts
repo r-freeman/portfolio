@@ -1,6 +1,30 @@
 import {getCurrentlyPlaying} from '@/lib/spotify'
+import {NextApiRequest, NextApiResponse} from 'next'
 
-export default async function handler(req, res) {
+type Song = {
+    item: {
+        album: {
+            name: string
+            images: [
+                {
+                    url: string
+                }
+            ]
+        }
+        artists: [
+            {
+                name: string
+            }
+        ]
+        external_urls: {
+            spotify: string
+        }
+        name: string
+    }
+    is_playing: boolean
+}
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const response = await getCurrentlyPlaying()
 
     if (response.status === 204 || response.status > 400) {
@@ -9,7 +33,7 @@ export default async function handler(req, res) {
         })
     }
 
-    const song = await response.json()
+    const song = await response.json() as Song
     const {item} = song
 
     if (item === null) {
