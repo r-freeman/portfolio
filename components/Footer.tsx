@@ -1,8 +1,9 @@
 import Link from 'next/link'
-import {ReactNode} from 'react'
-
+import React, {ReactNode} from 'react'
 import {OuterContainer, InnerContainer} from './Container'
 import {SpotifyPlayer} from './SpotifyPlayer'
+import {SocialLink} from '@/components/SocialLink'
+import {GitHubIcon, LinkedInIcon, TwitterIcon} from '@/components/icons/SocialIcons'
 
 function NavLink({href, children}: { href: string, children: ReactNode }) {
     return (
@@ -29,6 +30,28 @@ export function Footer() {
                                 <NavLink href="/writing">Writing</NavLink>
                                 <NavLink href="/projects">Projects</NavLink>
                                 <NavLink href="/uses">Uses</NavLink>
+                            </div>
+                            <div className="flex flex-col">
+                                <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                                    &copy; {(new Date).getFullYear()} Ryan Freeman. All rights reserved.
+                                </p>
+                                <div className="mx-auto mt-6 flex gap-6">
+                                    <SocialLink
+                                        href="https://github.com/r-freeman"
+                                        ariaLabel="Follow on GitHub"
+                                        icon={GitHubIcon}
+                                    />
+                                    <SocialLink
+                                        href="https://linkedin.com/in/r-freeman/"
+                                        ariaLabel="Follow on LinkedIn"
+                                        icon={LinkedInIcon}
+                                    />
+                                    <SocialLink
+                                        href="https://twitter.com/freemry"
+                                        ariaLabel="Follow on Twitter"
+                                        icon={TwitterIcon}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </InnerContainer>
