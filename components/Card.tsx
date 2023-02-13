@@ -1,8 +1,8 @@
+import {ElementType, ReactNode} from 'react'
 import Link from 'next/link'
 import clsx from 'clsx'
-import {ElementType, ReactNode} from 'react'
 import {twMerge} from 'tailwind-merge'
-import {Props} from 'types'
+import {ChevronRightIcon} from '@/components/icons/ChevronRightIcon'
 
 type Card = {
     as?: ElementType
@@ -37,19 +37,6 @@ type CardEyebrow = {
     decorate: boolean
     className?: string
     children: ReactNode
-}
-
-function ChevronRightIcon(props: Props) {
-    return (
-        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" {...props}>
-            <path
-                d="M6.75 5.75 9.25 8l-2.5 2.25"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-        </svg>
-    )
 }
 
 export function Card({
