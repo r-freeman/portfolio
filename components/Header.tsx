@@ -5,23 +5,13 @@ import {Fragment, useEffect, useRef} from 'react'
 import {Popover, Transition} from '@headlessui/react'
 import clsx from 'clsx'
 import {Container} from './Container'
-import {CloseIcon} from '@/components/icons/CloseIcon'
-import {ChevronDownIcon} from '@/components/icons/ChevronDownIcon'
-import {MoonIcon} from '@/components/icons/MoonIcon'
-import {SunIcon} from '@/components/icons/SunIcon'
+import {MobileNavItem} from './MobileNavItem'
+import {CloseIcon} from './icons/CloseIcon'
+import {ChevronDownIcon} from './icons/ChevronDownIcon'
+import {MoonIcon} from './icons/MoonIcon'
+import {SunIcon} from './icons/SunIcon'
 import avatar from '@/public/static/images/avatar.jpg'
 import type {Props} from 'types'
-
-
-function MobileNavItem({href, children}: { href: string } & Props) {
-    return (
-        <li>
-            <Popover.Button as={Link} href={href} className="block py-2">
-                {children}
-            </Popover.Button>
-        </li>
-    )
-}
 
 function MobileNavigation(props: Props) {
     return (
