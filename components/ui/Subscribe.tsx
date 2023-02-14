@@ -1,6 +1,6 @@
 import {useRef, SyntheticEvent, MutableRefObject, useState} from 'react'
-import {Cta} from '@/components/Cta'
-import {Button} from '@/components/Button'
+import {Cta} from '@/components/ui/Cta'
+import {Button} from '@/components/ui/Button'
 import {InboxIcon} from '@/components/icons/InboxIcon'
 
 export function Subscribe() {

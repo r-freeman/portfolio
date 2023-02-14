@@ -1,16 +1,16 @@
 import React from 'react'
 import Head from 'next/head'
 import {GetStaticProps} from 'next'
-import {Card} from '@/components/Card'
-import {Resume} from '@/components/Resume'
+import {Card} from '@/components/ui/Card'
+import {Resume} from '@/components/ui/Resume'
 import {Container} from '@/components/Container'
 import {
     GitHubIcon,
     LinkedInIcon,
     TwitterIcon
 } from '@/components/icons/SocialIcons'
-import {SocialLink} from '@/components/SocialLink'
-import {Views} from '@/components/Views'
+import {SocialLink} from '@/components/ui/SocialLink'
+import {Views} from '@/components/ui/Views'
 import {formatDate} from '@/lib/formatDate'
 import {generateRssFeed} from '@/lib/generateRssFeed'
 import {generateSitemap} from '@/lib/generateSitemap'

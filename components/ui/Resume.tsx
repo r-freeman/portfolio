@@ -1,7 +1,7 @@
 import {BriefcaseIcon} from '@/components/icons/BriefcaseIcon'
 import {ArrowDownIcon} from '@/components/icons/ArrowDownIcon'
-import {Button} from '@/components/Button'
-import {Cta} from '@/components/Cta'
+import {Button} from './Button'
+import {Cta} from './Cta'
 
 type Work = {
     company: string

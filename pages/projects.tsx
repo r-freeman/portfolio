@@ -1,6 +1,6 @@
 import {GetStaticProps} from 'next'
 import Head from 'next/head'
-import {Card} from '@/components/Card'
+import {Card} from '@/components/ui/Card'
 import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 import {SparklesIcon} from '@/components/icons/SparklesIcon'
 import {ShareIcon} from '@/components/icons/ShareIcon'

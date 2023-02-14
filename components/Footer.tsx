@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import React, {ReactNode} from 'react'
 import {OuterContainer, InnerContainer} from './Container'
-import {SpotifyPlayer} from './SpotifyPlayer'
-import {SocialLink} from '@/components/SocialLink'
+import {SpotifyPlayer} from './ui/SpotifyPlayer'
+import {SocialLink} from '@/components/ui/SocialLink'
 import {GitHubIcon, LinkedInIcon, TwitterIcon} from '@/components/icons/SocialIcons'
 
 function NavLink({href, children}: { href: string, children: ReactNode }) {

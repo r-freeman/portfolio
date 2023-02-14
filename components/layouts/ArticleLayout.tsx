@@ -3,8 +3,8 @@ import Head from 'next/head'
 import {usePathname} from 'next/navigation'
 import {Container} from '@/components/Container'
 import {formatDate} from '@/lib/formatDate'
-import {Prose} from '@/components/Prose'
-import {Views} from '@/components/Views'
+import {Prose} from '@/components/ui/Prose'
+import {Views} from '@/components/ui/Views'
 
 type ArticleLayout = {
     children?: ReactNode

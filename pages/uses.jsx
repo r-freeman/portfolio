@@ -1,7 +1,7 @@
 import Head from 'next/head'
 
-import {Card} from '@/components/Card'
-import {Section} from '@/components/Section'
+import {Card} from '@/components/ui/Card'
+import {Section} from '@/components/ui/Section'
 import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 
 function ToolsSection({children, ...props}) {
