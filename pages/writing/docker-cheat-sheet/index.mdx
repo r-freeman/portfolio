@@ -35,9 +35,9 @@ I'll kick off this Docker cheat sheet with cleaning up Docker images, let's get 
 
 If you update your Docker container images regularly using something like [watchtower](https://containrrr.dev/watchtower/), you might have dangling images which are out-of-date and no longer associated with some of your running containers.
 
-So why not use `docker images prune` to reclaim that valuable disk space. For example, running this command on my Raspberry Pi shaved off about 9.66Gb of disk usage.
+So why not use `docker image prune` to reclaim that valuable disk space. For example, running this command on my Raspberry Pi shaved off about 9.66Gb of disk usage.
 
-As a bonus, you can save some additional space using `docker images prune --all`, which removes all unused Docker images.
+As a bonus, you can save some additional space using `docker image prune --all`, which removes all unused Docker images.
 
 ## Restarting all containers
 
