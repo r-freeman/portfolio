@@ -18,10 +18,13 @@ export const getStats = async () => {
         }
     }).then(r => r.json()) as StatsFmResponse
 
-    const minutesListened = ((response.items.durationMs / 1000) / 60).toFixed(0)
+    const {durationMs} = response.items
+    const hoursListened = (durationMs / 3_600_000).toFixed(0)
+    const minutesListened = (durationMs / 60_000).toFixed(0)
     const streams = response.items.count
 
     return {
+        hoursListened,
         minutesListened,
         streams
     }

@@ -16,12 +16,18 @@ export async function getDashboardData() {
     const totalArticleViews = (await getViews()).views
     const topArtist = await getTopArtist()
     const {genre} = await getTopGenre()
-    const {minutesListened, streams} = await getStats()
+    const {hoursListened, minutesListened, streams} = await getStats()
 
     const metrics: Metric[] = [
         {
             title: "Streams",
             value: +streams,
+            group: "Spotify",
+            href: "https://open.spotify.com/?"
+        },
+        {
+            title: "Hours listened",
+            value: +hoursListened,
             group: "Spotify",
             href: "https://open.spotify.com/?"
         },
