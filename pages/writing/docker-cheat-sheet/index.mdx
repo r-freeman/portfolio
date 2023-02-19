@@ -44,3 +44,7 @@ As a bonus, you can save some additional space using `docker image prune --all`,
 Sometimes you want to restart all your containers at once, such as after you've pulled the latest images for your containers.
 
 To do this, use `docker restart $(docker ps -q)`, this command instructs Docker to restart all containers using the container ids which are returned from `docker ps -q`.
+
+## Stopping all containers
+
+Need to stop all containers? Simply use `docker stop $(docker ps -q)`. As above, this uses the container ids from `docker ps` to stop each running container.
