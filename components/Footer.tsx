@@ -1,20 +1,10 @@
-import Link from 'next/link'
-import React, {ReactNode} from 'react'
+import React from 'react'
 import {OuterContainer, InnerContainer} from './Container'
+import {NavLink} from '@/components/ui/Navigation'
 import {SpotifyPlayer} from './ui/SpotifyPlayer'
 import {SocialLink} from '@/components/ui/SocialLink'
 import {GitHubIcon, LinkedInIcon, TwitterIcon} from '@/components/icons/SocialIcons'
 
-function NavLink({href, children}: { href: string, children: ReactNode }) {
-    return (
-        <Link
-            href={href}
-            className="transition hover:text-indigo-500 dark:hover:text-indigo-400"
-        >
-            {children}
-        </Link>
-    )
-}
 
 export function Footer() {
     return (
@@ -24,7 +14,8 @@ export function Footer() {
                     <InnerContainer>
                         <SpotifyPlayer/>
                         <div className="flex flex-col items-center justify-between gap-6 mt-12">
-                            <div className="flex gap-6 text-sm font-medium text-zinc-800 dark:text-zinc-200">
+                            <div
+                                className="flex flex-wrap justify-center gap-6 text-sm font-medium text-zinc-800 dark:text-zinc-200">
                                 <NavLink href="/about">About</NavLink>
                                 <NavLink href="/dashboard">Dashboard</NavLink>
                                 <NavLink href="/writing">Writing</NavLink>

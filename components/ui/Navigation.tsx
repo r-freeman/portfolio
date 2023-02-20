@@ -1,4 +1,4 @@
-import {Fragment} from 'react'
+import React, {Fragment, ReactNode} from 'react'
 import {usePathname} from 'next/navigation'
 import {Popover, Transition} from '@headlessui/react'
 import clsx from 'clsx'
@@ -110,6 +110,17 @@ export function DesktopNavigation(props: Props) {
                 <NavItem href="/uses">Uses</NavItem>
             </ul>
         </nav>
+    )
+}
+
+export function NavLink({href, children}: { href: string, children: ReactNode }) {
+    return (
+        <Link
+            href={href}
+            className="transition hover:text-indigo-500 dark:hover:text-indigo-400"
+        >
+            {children}
+        </Link>
     )
 }
 
