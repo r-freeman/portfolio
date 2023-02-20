@@ -1,5 +1,5 @@
 import type {Repo} from '@/types'
-import fetcher from "@/lib/fetcher";
+import fetcher from '@/lib/fetcher'
 
 const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN
 const GITHUB_USERNAME = process.env.GITHUB_USERNAME
