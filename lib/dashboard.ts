@@ -1,4 +1,4 @@
-import {getTotalFollowers, getTotalRepos, getTotalStars} from '@/lib/github'
+import {getTotalFollowers, getTotalForks, getTotalRepos, getTotalStars} from '@/lib/github'
 import {getAllArticles} from '@/lib/getAllArticles'
 import {getTopArtist, getTopGenre} from '@/lib/spotify'
 import {getViews} from '@/lib/views'
@@ -12,6 +12,7 @@ export async function getDashboardData() {
     ])
 
     const totalStars = await getTotalStars(totalRepos)
+    const totalForks = await getTotalForks(totalRepos)
     const totalArticles = (await getAllArticles()).length
     const totalArticleViews = (await getViews()).views
     const topArtist = await getTopArtist()
@@ -64,6 +65,12 @@ export async function getDashboardData() {
         {
             title: "Stars",
             value: +totalStars,
+            group: "GitHub",
+            href: "https://github.com/r-freeman/"
+        },
+        {
+            title: "Forks",
+            value: +totalForks,
             group: "GitHub",
             href: "https://github.com/r-freeman/"
         },
