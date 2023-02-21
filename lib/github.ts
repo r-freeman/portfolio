@@ -67,6 +67,21 @@ type TotalForksResponse = {
     }
 }
 
+type TopRepoResponse = {
+    data: {
+        user: {
+            repositories: {
+                nodes: [
+                    {
+                        name: string
+                        url: string
+                    }
+                ]
+            }
+        }
+    }
+}
+
 export async function getPinnedRepos() {
     const response = await fetcher(GITHUB_GRAPHQL, {
         method: 'POST',
@@ -192,4 +207,33 @@ export async function getTotalForks(totalRepos: number) {
 
     return response.data.user.repositories.nodes
         .reduce((acc, node) => acc + node.forks.totalCount, 0)
+}
+
+export async function getTopRepo() {
+    const response = await fetcher(GITHUB_GRAPHQL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${GITHUB_ACCESS_TOKEN}`
+        },
+        body: JSON.stringify({
+            query: `{
+              user(login: "${GITHUB_USERNAME}") {
+                repositories(first: 1, orderBy: {field: STARGAZERS, direction: DESC}) {
+                  nodes {
+                    name
+                    url
+                  }
+                }
+              }
+            }`
+        })
+    }) as TopRepoResponse
+
+    const {name, url} = response.data.user.repositories.nodes[0]
+
+    return {
+        name,
+        url
+    }
 }
