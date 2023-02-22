@@ -1,6 +1,6 @@
-import fetch from 'node-fetch'
+import fetcher from './fetcher'
 
-const STATSFM_USERNAME = process.env.STATSFM_USERNAME
+const STATSFM_USERNAME: string = process.env.STATSFM_USERNAME ?? ""
 const STATSFM_LIFETIME_STATS = `https://beta-api.stats.fm/api/v1/users/${STATSFM_USERNAME}/streams/stats?range=lifetime`
 
 type StatsFmResponse = {
@@ -11,12 +11,12 @@ type StatsFmResponse = {
 }
 
 export const getStats = async () => {
-    const response = await fetch(STATSFM_LIFETIME_STATS, {
+    const response = await fetcher(STATSFM_LIFETIME_STATS, {
         method: 'GET',
         headers: {
             'Accept': 'application/json'
         }
-    }).then(r => r.json()) as StatsFmResponse
+    }) as StatsFmResponse
 
     const {durationMs} = response.items
     const hoursListened = (durationMs / 3_600_000).toFixed(0)

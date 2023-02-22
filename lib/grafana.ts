@@ -1,6 +1,6 @@
 import fetcher from '@/lib/fetcher'
 
-const GRAFANA_URL = process.env.GRAFANA_URL
+const GRAFANA_URL: string = process.env.GRAFANA_URL ?? ""
 const GRAFANA_TOKEN = process.env.GRAFANA_TOKEN
 
 export const getTemp = async () => {
