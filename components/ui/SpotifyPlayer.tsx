@@ -156,7 +156,7 @@ Song.Album = function SongAlbum({album, albumImageUrl}: Album) {
 
 Song.Title = function SongTitle({as: Component = 'h2', title, songUrl, className}: Title) {
     return (
-        <Component className={clsx(className, 'text-sm font-semibold text-zinc-800')}>
+        <Component className={clsx(className, 'text-sm font-semibold text-zinc-800 line-clamp-1 lg:line-clamp-none')}>
             <Link href={songUrl}>
                 {title}
             </Link>
