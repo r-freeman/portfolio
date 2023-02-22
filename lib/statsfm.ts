@@ -1,6 +1,6 @@
 import fetcher from './fetcher'
 
-const STATSFM_USERNAME: string = process.env.STATSFM_USERNAME ?? ""
+const STATSFM_USERNAME = process.env.STATSFM_USERNAME
 const STATSFM_LIFETIME_STATS = `https://beta-api.stats.fm/api/v1/users/${STATSFM_USERNAME}/streams/stats?range=lifetime`
 
 type StatsFmResponse = {
