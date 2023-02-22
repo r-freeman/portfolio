@@ -101,8 +101,14 @@ function AnimatedBars() {
     )
 }
 
+type PlayerStateResponse = {
+    data: Song
+    error: string
+    isLoading: boolean
+}
+
 function usePlayerState(path: string) {
-    const {data, error, isLoading} = useSWR(`/api/spotify/${path}`, fetcher)
+    const {data, error, isLoading} = useSWR(`/api/spotify/${path}`, fetcher) as PlayerStateResponse
 
     return {
         song: data,

@@ -15,11 +15,11 @@ const config = {
 }
 
 export default function Dashboard({metrics}: { metrics: MetricGroup }) {
-    const {data: tempData} = useSWR('api/grafana/temp', fetcher, config)
-    const {data: sysLoadData} = useSWR('api/grafana/sysload', fetcher, config)
-    const {data: ramData} = useSWR('api/grafana/ram', fetcher, config)
-    const {data: rootFsData} = useSWR('api/grafana/rootfs', fetcher, config)
-    const {data: uptimeData} = useSWR('api/grafana/uptime', fetcher, config)
+    const tempData = (useSWR('api/grafana/temp', fetcher, config)).data as { temp: string }
+    const sysLoadData = (useSWR('api/grafana/sysload', fetcher, config)).data as { sysLoad: string }
+    const ramData = (useSWR('api/grafana/ram', fetcher, config)).data as { ramUsage: string }
+    const rootFsData = (useSWR('api/grafana/rootfs', fetcher, config)).data as { rootFsUsage: string }
+    const uptimeData = (useSWR('api/grafana/uptime', fetcher, config)).data as { days: number }
 
     return (
         <>
