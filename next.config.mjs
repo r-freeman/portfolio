@@ -8,8 +8,7 @@ const nextConfig = {
     reactStrictMode: true,
     swcMinify: true,
     experimental: {
-        newNextLinkBehavior: true,
-        scrollRestoration: true
+        mdxRs: true
     },
     images: {
         domains: ['i.scdn.co']
