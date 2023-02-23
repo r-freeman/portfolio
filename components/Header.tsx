@@ -1,4 +1,4 @@
-import {usePathname} from 'next/navigation'
+import {useRouter} from 'next/router'
 import {useEffect, useRef} from 'react'
 import {Container} from './Container'
 import {MobileNavigation, DesktopNavigation} from './ui/Navigation'
@@ -50,7 +50,8 @@ function clamp(num: number, a: number, b: number) {
 }
 
 export function Header() {
-    const isHomePage = usePathname() === '/'
+    const router = useRouter()
+    const isHomePage = router.pathname === '/'
 
     const headerRef = useRef<HTMLDivElement>(null)
     const avatarRef = useRef<HTMLImageElement>(null)

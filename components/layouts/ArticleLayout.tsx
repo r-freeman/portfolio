@@ -1,12 +1,11 @@
 import React, {ReactNode} from 'react'
 import Head from 'next/head'
-import {usePathname} from 'next/navigation'
+import Link from 'next/link'
 import {Container} from '@/components/Container'
 import {Prose} from '@/components/ui/Prose'
 import {Views} from '@/components/ui/Views'
 import {ArrowDownIcon} from '@/components/icons/ArrowDownIcon'
 import {formatDate} from '@/lib/formatDate'
-import Link from 'next/link'
 
 type ArticleLayout = {
     children?: ReactNode
@@ -27,8 +26,6 @@ export function ArticleLayout({
                                   date,
                                   slug
                               }: ArticleLayout) {
-    const pathname = usePathname()
-
     if (isRssFeed) {
         return children
     }
@@ -40,7 +37,7 @@ export function ArticleLayout({
                 <meta name="description" content={description}/>
                 <meta
                     property="og:url"
-                    content={`${process.env.NEXT_PUBLIC_SITE_URL}${pathname}`}
+                    content={`${process.env.NEXT_PUBLIC_SITE_URL}/writing/${slug}`}
                 />
                 <meta
                     property="og:type"
@@ -76,7 +73,7 @@ export function ArticleLayout({
                 />
                 <meta
                     property="twitter:url"
-                    content={`${process.env.NEXT_PUBLIC_SITE_URL}${pathname}`}
+                    content={`${process.env.NEXT_PUBLIC_SITE_URL}/writing/${slug}`}
                 />
                 <meta
                     name="twitter:title"
