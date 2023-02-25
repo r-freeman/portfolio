@@ -16,6 +16,7 @@ export function Footer() {
                         <div className="flex flex-col items-center justify-between gap-6 mt-12">
                             <div
                                 className="flex flex-wrap justify-center gap-6 text-sm font-medium text-zinc-800 dark:text-zinc-200">
+                                <NavLink href="/">Home</NavLink>
                                 <NavLink href="/about">About</NavLink>
                                 <NavLink href="/dashboard">Dashboard</NavLink>
                                 <NavLink href="/writing">Writing</NavLink>
