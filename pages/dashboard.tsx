@@ -27,7 +27,7 @@ export default function Dashboard({metrics}: { metrics: MetricGroup }) {
                 <title>Dashboard - Ryan Freeman</title>
                 <meta
                     name="description"
-                    content="This is my digital life in numbers which is updated daily. I use this dashboard to keep track of various metrics across platforms like Spotify, GitHub, Twitter and for monitoring the performance of my Raspberry Pi using Grafana."
+                    content="This is my digital life in numbers which is updated daily. I use this dashboard to keep track of various metrics across platforms like Spotify, GitHub, Twitter and for monitoring the performance of my Raspberry Pi using Grafana and Prometheus."
                 />
                 <meta
                     property="og:title"
@@ -35,12 +35,12 @@ export default function Dashboard({metrics}: { metrics: MetricGroup }) {
                 />
                 <meta
                     property="og:description"
-                    content="This is my digital life in numbers which is updated daily. I use this dashboard to keep track of various metrics across platforms like Spotify, GitHub, Twitter and for monitoring the performance of my Raspberry Pi using Grafana."
+                    content="This is my digital life in numbers which is updated daily. I use this dashboard to keep track of various metrics across platforms like Spotify, GitHub, Twitter and for monitoring the performance of my Raspberry Pi using Grafana and Prometheus."
                 />
             </Head>
             <SimpleLayout
                 title="Dashboard."
-                intro="This is my digital life in numbers which is updated daily. I use this dashboard to keep track of various metrics across platforms like Spotify, GitHub, Twitter and for monitoring the performance of my Raspberry Pi using Grafana."
+                intro="This is my digital life in numbers which is updated daily. I use this dashboard to keep track of various metrics across platforms like Spotify, GitHub, Twitter and for monitoring the performance of my Raspberry Pi using Grafana and Prometheus."
                 gradient="bg-gradient-to-r from-orange-300 to-rose-300"
             >
                 {metrics.map(({groupName, groupItems}) => (
