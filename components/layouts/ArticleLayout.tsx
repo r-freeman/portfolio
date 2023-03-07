@@ -1,4 +1,5 @@
 import React, {ReactNode} from 'react'
+import * as process from 'process'
 import Head from 'next/head'
 import Link from 'next/link'
 import {Container} from '@/components/Container'
@@ -16,6 +17,8 @@ type ArticleLayout = {
     date: string
     slug: string
 }
+
+const isProd = process.env.NODE_ENV === 'production'
 
 export function ArticleLayout({
                                   children,
@@ -106,7 +109,7 @@ export function ArticleLayout({
                                     <time dateTime={date}>
                                         <span>{formatDate(date)}</span>
                                     </time>
-                                    <Views slug={slug}/>
+                                    <Views slug={slug} shouldUpdateViews={isProd}/>
                                 </p>
                             </header>
                             <Prose className="mt-8">{children}</Prose>
