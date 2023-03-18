@@ -51,9 +51,9 @@ export default function Uses() {
                 <div className="space-y-20">
                     <ToolsSection title="Workstation">
                         <Tool title="PC Build 2022" href="https://pcpartpicker.com/b/KXfPxr">
-                            This is my main Intel-based computer which I built in 2022. This build is composed of some new and old
-                            parts which I have gathered over the years. Click here to see a comprehensive listing of all the parts
-                            used in this build on PCPartPicker.
+                            This is my main Intel-based computer which I built in 2022. I&apos;ve recently added more storage and
+                            a new monitor. Click here to see a comprehensive listing of all the parts used in this build on
+                            PCPartPicker.
                         </Tool>
                         <Tool title="Herman Miller Aeron Chair"
                               href="https://hermanmiller.com/en_eur/products/seating/office-chairs/aeron-chairs/">
