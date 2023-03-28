@@ -1,10 +1,10 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import type {Config} from 'tailwindcss'
+
+export default {
     content: ['./pages/**/*.{js,jsx,tsx}', './components/**/*.{js,jsx,tsx}'],
     darkMode: 'class',
     plugins: [
-        require('@tailwindcss/typography'),
-        require('@tailwindcss/line-clamp')
+        require('@tailwindcss/typography')
     ],
     theme: {
         extend: {
@@ -32,7 +32,7 @@ module.exports = {
             '8xl': ['6rem', {lineHeight: '1'}],
             '9xl': ['8rem', {lineHeight: '1'}],
         },
-        typography: (theme) => ({
+        typography: (theme: any) => ({
             invert: {
                 css: {
                     '--tw-prose-body': 'var(--tw-prose-invert-body)',
@@ -313,4 +313,5 @@ module.exports = {
             },
         }),
     },
-}
+} satisfies Config
+
