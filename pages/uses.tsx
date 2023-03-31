@@ -73,6 +73,12 @@ export default function Uses() {
                             cluttered and prefer the simplicity of Insomnia.
                         </Tool>
                     </ToolsSection>
+                    <ToolsSection title="Productivity">
+                        <Tool title="RegionToShare" href="https://github.com/tom-englert/RegionToShare">
+                            Great app for Windows which allows you share a region of the screen, handy for single monitor
+                            set ups such as ultrawides when you don't want to share the entire screen.
+                        </Tool>
+                    </ToolsSection>
                     <ToolsSection title="Design">
                         <Tool title="Balsamiq Wireframes" href="https://balsamiq.com/">
                             I use this software for creating low-fidelity wireframes and interfaces. It&apos;s great for
