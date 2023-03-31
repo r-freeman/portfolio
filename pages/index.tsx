@@ -89,7 +89,7 @@ export default function Home({articles}: { articles: Article[] }) {
             </Head>
             <Container className="mt-9">
                 <div className="max-w-2xl">
-                    <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl bg-clip-text dark:text-transparent bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500">
+                    <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl bg-clip-text dark:text-transparent bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500">
                         Full-stack software engineer who enjoys building cloud-native applications.
                     </h1>
                     <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">

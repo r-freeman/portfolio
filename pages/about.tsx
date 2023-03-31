@@ -71,7 +71,7 @@ export default function About() {
                         </div>
                     </div>
                     <div className="lg:order-first lg:row-span-2">
-                        <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl bg-clip-text dark:text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">
+                        <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl bg-clip-text dark:text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">
                             I’m Ryan. I live in Dublin, Ireland where I work as a software engineer.
                         </h1>
                         <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
