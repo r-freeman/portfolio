@@ -13,11 +13,10 @@ datasource db {
   schemas           = ["public", "auth"]
 }
 
-model View {
+model Views {
     slug String @id
     count BigInt @default(1)
     @@schema("public")
-    @@map("Views")
 }
 
 model Account {
