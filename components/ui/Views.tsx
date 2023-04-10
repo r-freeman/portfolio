@@ -16,6 +16,7 @@ export function Views({as: Component = 'span', slug, className, shouldUpdateView
     const [views, setViews] = useState(0)
 
     useEffect(() => {
+        // subscribe to view updates at the row level
         const sub = supabase
             .channel('any')
             .on('postgres_changes', {
@@ -26,7 +27,7 @@ export function Views({as: Component = 'span', slug, className, shouldUpdateView
             }, payload => {
                 setViews(payload.new.views)
             })
-            .subscribe();
+            .subscribe()
 
         return () => {
             sub.unsubscribe()
@@ -51,7 +52,7 @@ export function Views({as: Component = 'span', slug, className, shouldUpdateView
                         method: 'POST'
                     }
                 )
-            };
+            }
 
             registerView()
         }
