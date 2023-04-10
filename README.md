@@ -7,8 +7,7 @@ and skills, as well as provide information about me and my interests.
 
 - Language: [TypeScript](https://www.typescriptlang.org/)
 - Framework: [Next.js](https://nextjs.org/)
-- Database: [Supabase](https://supabase.com/) (Postgres)
-- ORM: [Prisma](https://www.prisma.io/)
+- Database: [Supabase](https://supabase.com/)
 - Deployment: [Vercel](https://vercel.com/)
 - Styling: [Tailwind CSS](https://tailwindcss.com/)
 - Integrations: [Spotify](https://spotify.com/)
@@ -20,7 +19,6 @@ and skills, as well as provide information about me and my interests.
 - `pages/api/` - API routes for article views and Spotify integrations.
 - `pages/writing/` - Blog posts written in MDX format (Markdown in JSX).
 - `pages/` - Contains all other static pages like about, projects and uses.
-- `prisma/` - Prisma schema which describes the structure of the Supabase postgres database.
 - `public/` - Used for static files such as icons and images.
 - `styles/` - Contains the stylesheets for Tailwind and Prism.
 - `types/` - Types for various components in the project.
