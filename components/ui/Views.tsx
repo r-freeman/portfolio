@@ -1,11 +1,7 @@
-import useSWR from 'swr'
-import {ElementType, useEffect} from 'react'
+import {ElementType, useEffect, useState} from 'react'
 import fetcher from '@/lib/fetcher'
 import {numberFormat} from '@/lib/numberFormat'
-
-type ViewsResponse = {
-    views: string
-}
+import {supabase} from '@/lib/supabase'
 
 type ViewsProps = {
     as?: ElementType
@@ -14,20 +10,52 @@ type ViewsProps = {
     shouldUpdateViews?: boolean
 }
 
-const updateViews = (slug: string) => fetcher(`/api/views/${slug}`, {method: 'POST'})
+const NEXT_PUBLIC_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL
 
-export function Views({as: Component = 'span', slug, className, shouldUpdateViews = true}: ViewsProps) {
-    const {data} = useSWR<ViewsResponse>(`/api/views/${slug}`, fetcher, {
-        revalidateOnFocus: false,
-        revalidateOnMount: true
-    })
-    const views = Number(data?.views)
+export function Views({as: Component = 'span', slug, className, shouldUpdateViews = false}: ViewsProps) {
+    const [views, setViews] = useState(0)
+
+    useEffect(() => {
+        const sub = supabase
+            .channel('any')
+            .on('postgres_changes', {
+                event: 'UPDATE',
+                schema: 'public',
+                table: 'analytics',
+                filter: `slug=eq.${slug}`
+            }, payload => {
+                setViews(payload.new.views)
+            })
+            .subscribe();
+
+        return () => {
+            sub.unsubscribe()
+        }
+    }, [])
+
+    useEffect(() => {
+        const getViews = async () => {
+            const {views} = await fetcher(`${NEXT_PUBLIC_SITE_URL}/api/views/${slug}`)
+
+            setViews(views)
+        };
+
+        getViews()
+    }, [])
 
     useEffect(() => {
         if (shouldUpdateViews) {
-            updateViews(slug).then(r => r);
+            const registerView = async () => {
+                const {views} = await fetcher(`${NEXT_PUBLIC_SITE_URL}/api/views/${slug}`,
+                    {
+                        method: 'POST'
+                    }
+                )
+            };
+
+            registerView()
         }
-    }, [slug, shouldUpdateViews])
+    }, [])
 
     return (
         <Component className={className}>

@@ -19,7 +19,7 @@ function Article({article}: { article: Article }) {
                     <Card.Eyebrow as="time" dateTime={article.date} decorate={false}>
                         {formatDate(article.date)}
                     </Card.Eyebrow>
-                    <Views slug={article.slug} shouldUpdateViews={false} className="text-sm text-zinc-500 dark:text-zinc-400"/>
+                    <Views slug={article.slug} className="text-sm text-zinc-500 dark:text-zinc-400"/>
                 </p>
             </Card>
         </article>

@@ -18,8 +18,6 @@ type ArticleLayout = {
     slug: string
 }
 
-const isProd = process.env.NODE_ENV === 'production'
-
 export function ArticleLayout({
                                   children,
                                   isRssFeed = false,
@@ -109,7 +107,7 @@ export function ArticleLayout({
                                     <time dateTime={date}>
                                         <span>{formatDate(date)}</span>
                                     </time>
-                                    <Views slug={slug} shouldUpdateViews={isProd}/>
+                                    <Views slug={slug} shouldUpdateViews={true}/>
                                 </p>
                             </header>
                             <Prose className="mt-8">{children}</Prose>

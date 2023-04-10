@@ -7,7 +7,6 @@ import {
 } from '@/lib/github'
 import {getAllArticles} from '@/lib/getAllArticles'
 import {getTopArtist, getTopGenre} from '@/lib/spotify'
-import {getViews} from '@/lib/views'
 import {getStats} from '@/lib/statsfm'
 import {Metric} from '@/types'
 
@@ -21,7 +20,7 @@ export async function getDashboardData() {
     const totalStars = await getTotalStars(totalRepos)
     const totalForks = await getTotalForks(totalRepos)
     const totalArticles = (await getAllArticles()).length
-    const totalArticleViews = (await getViews()).views
+    // const totalArticleViews = (await getViews()).views
     const topArtist = await getTopArtist()
     const {genre} = await getTopGenre()
     const {hoursListened, minutesListened, streams} = await getStats()
@@ -93,12 +92,12 @@ export async function getDashboardData() {
             group: "Blog",
             href: "/writing"
         },
-        {
-            title: "Total article views",
-            value: +totalArticleViews,
-            group: "Blog",
-            href: "/writing"
-        }
+        // {
+        //     title: "Total article views",
+        //     value: +totalArticleViews,
+        //     group: "Blog",
+        //     href: "/writing"
+        // }
     ]
 
     // sort metrics into named groups
