@@ -1,7 +1,8 @@
-import {ElementType, useEffect, useState} from 'react'
+import {ElementType, useEffect} from 'react'
 import fetcher from '@/lib/fetcher'
 import {numberFormat} from '@/lib/numberFormat'
 import {supabase} from '@/lib/supabase'
+import useSWR, {useSWRConfig} from 'swr'
 
 type ViewsProps = {
     as?: ElementType
@@ -10,44 +11,35 @@ type ViewsProps = {
     shouldUpdateViews?: boolean
 }
 
-const NEXT_PUBLIC_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL
-
 export function Views({as: Component = 'span', slug, className, shouldUpdateViews = false}: ViewsProps) {
-    const [views, setViews] = useState(0)
+    const {data} = useSWR(`/api/views/${slug}`, fetcher) as { data: { views: number } }
+    const {mutate} = useSWRConfig()
 
     useEffect(() => {
-        // subscribe to view updates at the row level
-        const sub = supabase
-            .channel('any')
-            .on('postgres_changes', {
-                event: 'UPDATE',
-                schema: 'public',
-                table: 'analytics',
-                filter: `slug=eq.${slug}`
-            }, payload => {
-                setViews(payload.new.views)
-            })
-            .subscribe()
+        if (shouldUpdateViews) {
+            // subscribe to analytics table and react to updates at row level
+            const sub = supabase
+                .channel('any')
+                .on('postgres_changes', {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: 'analytics',
+                    filter: `slug=eq.${slug}`
+                }, () => {
+                    mutate(`/api/views/${slug}`)
+                })
+                .subscribe();
 
-        return () => {
-            sub.unsubscribe()
+            return () => {
+                sub.unsubscribe()
+            }
         }
-    }, [])
-
-    useEffect(() => {
-        const getViews = async () => {
-            const {views} = await fetcher(`${NEXT_PUBLIC_SITE_URL}/api/views/${slug}`)
-
-            setViews(views)
-        };
-
-        getViews()
     }, [])
 
     useEffect(() => {
         if (shouldUpdateViews) {
             const registerView = async () => {
-                const {views} = await fetcher(`${NEXT_PUBLIC_SITE_URL}/api/views/${slug}`,
+                await fetcher(`/api/views/${slug}`,
                     {
                         method: 'POST'
                     }
@@ -60,7 +52,7 @@ export function Views({as: Component = 'span', slug, className, shouldUpdateView
 
     return (
         <Component className={className}>
-            {` · ${views > 0 ? numberFormat(views) : '—'} views`}
+            {` · ${data?.views > 0 ? numberFormat(data.views) : '—'} views`}
         </Component>
     )
 }
