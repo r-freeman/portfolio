@@ -1,11 +1,18 @@
+import {createServerSupabaseClient} from '@supabase/auth-helpers-nextjs'
 import {NextApiRequest, NextApiResponse} from 'next'
-import {supabase} from '@/lib/supabase'
+import {Database} from '@/types/database.types'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    const supabaseServerClient = createServerSupabaseClient<Database>({
+        req,
+        res,
+    })
+
     if (req.method === 'POST') {
         if (req.query.slug !== undefined) {
             const slug: string = req.query.slug.toString()
-            await supabase.rpc('increment_views', {page_slug: slug})
+            // @ts-ignore
+            await supabaseServerClient.rpc('increment_views', {page_slug: slug})
 
             return res.status(200).json({})
         }
@@ -14,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } else if (req.method === 'GET') {
         if (req.query.slug !== undefined) {
             const slug: string = req.query.slug.toString()
-            const response = await supabase
+            const response = await supabaseServerClient
                 .from('analytics')
                 .select('views')
                 .eq('slug', slug)
