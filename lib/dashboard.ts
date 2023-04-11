@@ -1,3 +1,4 @@
+import {GetServerSidePropsContext} from 'next'
 import {
     getTopRepo,
     getTotalFollowers,
@@ -10,7 +11,7 @@ import {getTopArtist, getTopGenre} from '@/lib/spotify'
 import {getStats} from '@/lib/statsfm'
 import {Metric} from '@/types'
 
-export async function getDashboardData() {
+export async function getDashboardData(context: GetServerSidePropsContext) {
     const [totalRepos, totalFollowers] = await Promise.all([
         getTotalRepos(),
         getTotalFollowers()

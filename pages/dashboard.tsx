@@ -1,6 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
-import {GetStaticProps} from 'next'
+import {GetServerSideProps} from 'next'
 import useSWR from 'swr'
 import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 import {Card} from '@/components/ui/Card'
@@ -104,10 +104,10 @@ export default function Dashboard({metrics}: { metrics: MetricGroup }) {
     )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
         props: {
-            metrics: await getDashboardData()
+            metrics: await getDashboardData(context)
         }
     }
 }
