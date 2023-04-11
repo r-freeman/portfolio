@@ -9,9 +9,12 @@ type ViewsProps = {
     slug: string
     className?: string
     shouldUpdateViews?: boolean
+    shouldRender?: boolean
 }
 
-export function Views({as: Component = 'span', slug, className, shouldUpdateViews = false}: ViewsProps) {
+const isProd = process.env.NODE_ENV === 'production'
+
+export function Views({as: Component = 'span', slug, className, shouldUpdateViews = true, shouldRender = true}: ViewsProps) {
     const {data} = useSWR(`/api/views/${slug}`, fetcher) as { data: { views: number } }
     const {mutate} = useSWRConfig()
 
@@ -37,7 +40,7 @@ export function Views({as: Component = 'span', slug, className, shouldUpdateView
     }, [])
 
     useEffect(() => {
-        if (shouldUpdateViews) {
+        if (shouldUpdateViews && isProd) {
             const registerView = async () => {
                 await fetcher(`/api/views/${slug}`,
                     {
@@ -49,6 +52,8 @@ export function Views({as: Component = 'span', slug, className, shouldUpdateView
             registerView()
         }
     }, [])
+
+    if (!shouldRender) return null
 
     return (
         <Component className={className}>
