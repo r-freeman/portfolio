@@ -1,4 +1,5 @@
 import {GetServerSidePropsContext} from 'next'
+import {createServerSupabaseClient} from '@supabase/auth-helpers-nextjs'
 import {
     getTopRepo,
     getTotalFollowers,
@@ -12,6 +13,8 @@ import {getStats} from '@/lib/statsfm'
 import {Metric} from '@/types'
 
 export async function getDashboardData(context: GetServerSidePropsContext) {
+    const supabaseClient = createServerSupabaseClient(context)
+    const {data: views} = await supabaseClient.rpc('total_views')
     const [totalRepos, totalFollowers] = await Promise.all([
         getTotalRepos(),
         getTotalFollowers()
@@ -21,7 +24,7 @@ export async function getDashboardData(context: GetServerSidePropsContext) {
     const totalStars = await getTotalStars(totalRepos)
     const totalForks = await getTotalForks(totalRepos)
     const totalArticles = (await getAllArticles()).length
-    // const totalArticleViews = (await getViews()).views
+    const totalViews = views
     const topArtist = await getTopArtist()
     const {genre} = await getTopGenre()
     const {hoursListened, minutesListened, streams} = await getStats()
@@ -90,15 +93,15 @@ export async function getDashboardData(context: GetServerSidePropsContext) {
         {
             title: "Total articles",
             value: +totalArticles,
-            group: "Blog",
+            group: "Website",
             href: "/writing"
         },
-        // {
-        //     title: "Total article views",
-        //     value: +totalArticleViews,
-        //     group: "Blog",
-        //     href: "/writing"
-        // }
+        {
+            title: "Total views",
+            value: +totalViews,
+            group: "Website",
+            href: "/"
+        }
     ]
 
     // sort metrics into named groups
