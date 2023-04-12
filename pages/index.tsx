@@ -138,7 +138,6 @@ export default function Home({articles}: { articles: Article[] }) {
                         <Resume/>
                     </div>
                 </div>
-                <Views slug='home' shouldRender={false}/>
             </Container>
         </>
     )
