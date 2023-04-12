@@ -24,7 +24,6 @@ export async function getDashboardData(context: GetServerSidePropsContext) {
     const totalStars = await getTotalStars(totalRepos)
     const totalForks = await getTotalForks(totalRepos)
     const totalArticles = (await getAllArticles()).length
-    const totalViews = views
     const topArtist = await getTopArtist()
     const {genre} = await getTopGenre()
     const {hoursListened, minutesListened, streams} = await getStats()
@@ -93,13 +92,13 @@ export async function getDashboardData(context: GetServerSidePropsContext) {
         {
             title: "Total articles",
             value: +totalArticles,
-            group: "Website",
+            group: "Blog",
             href: "/writing"
         },
         {
-            title: "Total views",
-            value: +totalViews,
-            group: "Website",
+            title: "Total article views",
+            value: +views,
+            group: "Blog",
             href: "/"
         }
     ]
