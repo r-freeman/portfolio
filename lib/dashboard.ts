@@ -99,7 +99,7 @@ export async function getDashboardData(context: GetServerSidePropsContext) {
             title: "Total article views",
             value: +views,
             group: "Blog",
-            href: "/"
+            href: "/writing"
         }
     ]
 
