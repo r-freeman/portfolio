@@ -1,8 +1,8 @@
+import {useSupabaseClient} from '@supabase/auth-helpers-react'
 import {ElementType, useEffect} from 'react'
+import useSWR, {useSWRConfig} from 'swr'
 import fetcher from '@/lib/fetcher'
 import {numberFormat} from '@/lib/numberFormat'
-import {supabase} from '@/lib/supabase'
-import useSWR, {useSWRConfig} from 'swr'
 
 type ViewsProps = {
     as?: ElementType
@@ -12,16 +12,15 @@ type ViewsProps = {
     shouldRender?: boolean
 }
 
-const isProd = process.env.NODE_ENV === 'production'
-
 export function Views({as: Component = 'span', slug, className, shouldUpdateViews = true, shouldRender = true}: ViewsProps) {
+    const supabaseClient = useSupabaseClient()
     const {data} = useSWR(`/api/views/${slug}`, fetcher) as { data: { views: number } }
     const {mutate} = useSWRConfig()
 
     useEffect(() => {
         if (shouldUpdateViews) {
             // subscribe to analytics table and react to updates at row level
-            const sub = supabase
+            const sub = supabaseClient
                 .channel('any')
                 .on('postgres_changes', {
                     event: 'UPDATE',
@@ -40,7 +39,7 @@ export function Views({as: Component = 'span', slug, className, shouldUpdateView
     }, [])
 
     useEffect(() => {
-        if (shouldUpdateViews && isProd) {
+        if (shouldUpdateViews) {
             const registerView = async () => {
                 await fetcher(`/api/views/${slug}`,
                     {
