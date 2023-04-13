@@ -49,7 +49,7 @@ export function Views({as: Component = 'span', slug, className, shouldUpdateView
                 )
             }
 
-            registerView()
+            registerView().then(() => mutate(`/api/views/${slug}`))
         }
     }, [])
 
