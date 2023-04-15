@@ -22,13 +22,15 @@ export const getTemp = async () => {
                     "maxDataPoints": 100
                 }
             ],
-            "from": "now-5m",
+            "from": "1681578682129",
             "to": "now"
         })
     })
 
+    const temp = parseInt(response.results.A.frames[0].data.values[1].slice(-1))
+
     return {
-        temp: response.results.A.frames[0].data.values[1][15].toFixed(2)
+        temp
     }
 }
 
@@ -51,13 +53,15 @@ export const getRootFsUsage = async () => {
                     "maxDataPoints": 100
                 }
             ],
-            "from": "now-5m",
+            "from": "1681578682129",
             "to": "now"
         })
     })
 
+    const rootFsUsage = parseInt(response.results.A.frames[0].data.values[1].slice(-1))
+
     return {
-        rootFsUsage: response.results.A.frames[0].data.values[1][15].toFixed(2)
+        rootFsUsage
     }
 }
 
@@ -80,19 +84,19 @@ export const getUptime = async () => {
                     "maxDataPoints": 100
                 }
             ],
-            "from": "now-5m",
+            "from": "1681578682129",
             "to": "now"
         })
     })
 
-    const seconds = response.results.A.frames[0].data.values[1][15]
-    const minutes = (seconds / 60).toFixed(2)
-    const hours = (seconds / 3_600).toFixed(2)
-    const days = (seconds / 86400).toFixed(2)
-    const weeks = (seconds / 604_800).toFixed(2)
+    const seconds = parseInt(response.results.A.frames[0].data.values[1].slice(-1))
+    const minutes = (seconds / 60)
+    const hours = (seconds / 3_600)
+    const days = (seconds / 86400)
+    const weeks = (seconds / 604_800)
 
     return {
-        seconds: (seconds).toFixed(2),
+        seconds: (seconds),
         minutes,
         hours,
         days,
@@ -119,13 +123,15 @@ export const getRamUsage = async () => {
                     "maxDataPoints": 100
                 }
             ],
-            "from": "now-5m",
+            "from": "1681578682129",
             "to": "now"
         })
     })
 
+    const ramUsage = parseInt(response.results.A.frames[0].data.values[1].slice(-1))
+
     return {
-        ramUsage: response.results.A.frames[0].data.values[1][15].toFixed(2)
+        ramUsage
     }
 }
 
@@ -148,12 +154,14 @@ export const getSysLoad = async () => {
                     "maxDataPoints": 100
                 }
             ],
-            "from": "now-5m",
+            "from": "1681578682129",
             "to": "now"
         })
     })
 
+    const sysLoad = parseInt(response.results.A.frames[0].data.values[1].slice(-1))
+
     return {
-        sysLoad: response.results.A.frames[0].data.values[1][15].toFixed(2)
+        sysLoad
     }
 }
