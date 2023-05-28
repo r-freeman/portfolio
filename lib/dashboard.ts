@@ -26,27 +26,27 @@ export async function getDashboardData(context: GetServerSidePropsContext) {
     const totalArticles = (await getAllArticles()).length
     const topArtist = await getTopArtist()
     const {genre} = await getTopGenre()
-    const {hoursListened, minutesListened, streams} = await getStats()
+    // const {hoursListened, minutesListened, streams} = await getStats()
 
     const metrics: Metric[] = [
-        {
-            title: "Streams",
-            value: +streams,
-            group: "Spotify",
-            href: "https://open.spotify.com/?"
-        },
-        {
-            title: "Hours listened",
-            value: +hoursListened,
-            group: "Spotify",
-            href: "https://open.spotify.com/?"
-        },
-        {
-            title: "Minutes listened",
-            value: +minutesListened,
-            group: "Spotify",
-            href: "https://open.spotify.com/?"
-        },
+        // {
+        //     title: "Streams",
+        //     value: +streams,
+        //     group: "Spotify",
+        //     href: "https://open.spotify.com/?"
+        // },
+        // {
+        //     title: "Hours listened",
+        //     value: +hoursListened,
+        //     group: "Spotify",
+        //     href: "https://open.spotify.com/?"
+        // },
+        // {
+        //     title: "Minutes listened",
+        //     value: +minutesListened,
+        //     group: "Spotify",
+        //     href: "https://open.spotify.com/?"
+        // },
         {
             title: "Top genre",
             value: genre,

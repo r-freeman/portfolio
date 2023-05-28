@@ -1,10 +1,10 @@
 import {useRouter} from 'next/router'
 import {useEffect, useRef} from 'react'
 import {Container} from './Container'
-import {MobileNavigation, DesktopNavigation} from './ui/Navigation'
-import {Avatar, AvatarContainer} from './ui/Avatar'
-import {MoonIcon} from './icons/MoonIcon'
-import {SunIcon} from './icons/SunIcon'
+import {MobileNavigation, DesktopNavigation} from '@/components/ui/Navigation'
+import {Avatar, AvatarContainer} from '@/components/ui/Avatar'
+import {MoonIcon} from '@/components/icons/MoonIcon'
+import {SunIcon} from '@/components/icons/SunIcon'
 
 function ModeToggle() {
     function disableTransitionsTemporarily() {

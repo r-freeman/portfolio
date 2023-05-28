@@ -1,7 +1,7 @@
 import React from 'react'
 import {OuterContainer, InnerContainer} from './Container'
 import {NavLink} from '@/components/ui/Navigation'
-import {SpotifyPlayer} from './ui/SpotifyPlayer'
+import {SpotifyPlayer} from '@/components/ui/SpotifyPlayer'
 import {SocialLink} from '@/components/ui/SocialLink'
 import {GitHubIcon, LinkedInIcon, TwitterIcon} from '@/components/icons/SocialIcons'
 

@@ -3,7 +3,7 @@ import Head from 'next/head'
 import {GetStaticProps} from 'next'
 import {Card} from '@/components/ui/Card'
 import {Resume} from '@/components/ui/Resume'
-import {Container} from '@/components/Container'
+import {Container} from '@/components/common/Container'
 import {
     GitHubIcon,
     LinkedInIcon,

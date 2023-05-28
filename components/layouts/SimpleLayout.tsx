@@ -1,5 +1,5 @@
 import {ReactNode} from 'react'
-import {Container} from '@/components/Container'
+import {Container} from '@/components/common/Container'
 import {twMerge} from 'tailwind-merge'
 
 type SimpleLayout = {

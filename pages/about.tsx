@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import clsx from 'clsx'
 
-import {Container} from '@/components/Container'
+import {Container} from '@/components/common/Container'
 import {
     GitHubIcon,
     LinkedInIcon,
