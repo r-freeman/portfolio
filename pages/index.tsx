@@ -6,8 +6,7 @@ import {Resume} from '@/components/ui/Resume'
 import {Container} from '@/components/common/Container'
 import {
     GitHubIcon,
-    LinkedInIcon,
-    TwitterIcon
+    LinkedInIcon
 } from '@/components/icons/SocialIcons'
 import {SocialLink} from '@/components/ui/SocialLink'
 import {Views} from '@/components/ui/Views'
@@ -112,11 +111,6 @@ export default function Home({articles}: { articles: Article[] }) {
                             href="https://linkedin.com/in/r-freeman/"
                             ariaLabel="Follow on LinkedIn"
                             icon={LinkedInIcon}
-                        />
-                        <SocialLink
-                            href="https://twitter.com/freemry"
-                            ariaLabel="Follow on Twitter"
-                            icon={TwitterIcon}
                         />
                     </div>
                 </div>

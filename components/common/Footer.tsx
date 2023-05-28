@@ -3,7 +3,7 @@ import {OuterContainer, InnerContainer} from './Container'
 import {NavLink} from '@/components/ui/Navigation'
 import {SpotifyPlayer} from '@/components/ui/SpotifyPlayer'
 import {SocialLink} from '@/components/ui/SocialLink'
-import {GitHubIcon, LinkedInIcon, TwitterIcon} from '@/components/icons/SocialIcons'
+import {GitHubIcon, LinkedInIcon} from '@/components/icons/SocialIcons'
 
 
 export function Footer() {
@@ -37,11 +37,6 @@ export function Footer() {
                                         href="https://linkedin.com/in/r-freeman/"
                                         ariaLabel="Follow on LinkedIn"
                                         icon={LinkedInIcon}
-                                    />
-                                    <SocialLink
-                                        href="https://twitter.com/freemry"
-                                        ariaLabel="Follow on Twitter"
-                                        icon={TwitterIcon}
                                     />
                                 </div>
                             </div>

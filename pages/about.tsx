@@ -7,8 +7,7 @@ import clsx from 'clsx'
 import {Container} from '@/components/common/Container'
 import {
     GitHubIcon,
-    LinkedInIcon,
-    TwitterIcon
+    LinkedInIcon
 } from '@/components/icons/SocialIcons'
 import {MailIcon} from '@/components/icons/MailIcon'
 import photoOfMe from '@/public/static/images/photo-of-me.jpg'
@@ -121,9 +120,6 @@ export default function About() {
                             </SocialLink>
                             <SocialLink href="https://linkedin.com/in/r-freeman/" icon={LinkedInIcon} className="mt-4">
                                 Follow on LinkedIn
-                            </SocialLink>
-                            <SocialLink href="https://twitter.com/freemry" icon={TwitterIcon} className="mt-4">
-                                Follow on Twitter
                             </SocialLink>
                             <SocialLink
                                 href="mailto:hello@ryanfreeman.dev"
