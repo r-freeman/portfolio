@@ -1,5 +1,7 @@
+'use client'
+
 import React, {Fragment, ReactNode} from 'react'
-import {useRouter} from 'next/router'
+import {usePathname} from 'next/navigation'
 import {Popover, Transition} from '@headlessui/react'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -77,8 +79,8 @@ export function MobileNavigation(props: Props) {
 }
 
 function NavItem({href, children}: { href: string } & Props) {
-    const router = useRouter()
-    let isActive = router.pathname === href
+    const pathname = usePathname()
+    let isActive = pathname === href
 
     return (
         <li>

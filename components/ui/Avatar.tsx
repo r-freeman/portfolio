@@ -2,7 +2,7 @@ import {Props} from '@/types'
 import clsx from 'clsx'
 import Link from 'next/link'
 import Image from 'next/image'
-import avatar from '@/public/static/images/avatar.jpg'
+import me from '/public/images/me.jpg'
 
 export function AvatarContainer({className, ...props}: { style?: Object } & Props) {
     return (
@@ -25,7 +25,7 @@ export function Avatar({large = false, className, ...props}: { large?: boolean, 
             {...props}
         >
             <Image
-                src={avatar}
+                src={me}
                 alt=""
                 sizes={large ? '4rem' : '2.25rem'}
                 className={clsx(

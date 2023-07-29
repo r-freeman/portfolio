@@ -1,20 +1,14 @@
-import {GetServerSidePropsContext} from 'next'
-import {createServerSupabaseClient} from '@supabase/auth-helpers-nextjs'
-import {
-    getTopRepo,
-    getTotalFollowers,
-    getTotalForks,
-    getTotalRepos,
-    getTotalStars
-} from '@/lib/github'
+import {cookies} from 'next/headers'
+import {createServerComponentClient} from '@supabase/auth-helpers-nextjs'
+import {getTopRepo, getTotalFollowers, getTotalForks, getTotalRepos, getTotalStars} from '@/lib/github'
 import {getAllArticles} from '@/lib/getAllArticles'
 import {getTopArtist, getTopGenre} from '@/lib/spotify'
-import {getStats} from '@/lib/statsfm'
 import {Metric} from '@/types'
+import {getStats} from "@/lib/statsfm";
 
-export async function getDashboardData(context: GetServerSidePropsContext) {
-    const supabaseClient = createServerSupabaseClient(context)
-    const {data: views} = await supabaseClient.rpc('total_views')
+export async function getDashboardData() {
+    const supabase = createServerComponentClient({cookies})
+    const {data: views} = await supabase.rpc('total_views')
     const [totalRepos, totalFollowers] = await Promise.all([
         getTotalRepos(),
         getTotalFollowers()
@@ -26,27 +20,27 @@ export async function getDashboardData(context: GetServerSidePropsContext) {
     const totalArticles = (await getAllArticles()).length
     const topArtist = await getTopArtist()
     const {genre} = await getTopGenre()
-    // const {hoursListened, minutesListened, streams} = await getStats()
+    const {hoursListened, minutesListened, streams} = await getStats()
 
     const metrics: Metric[] = [
-        // {
-        //     title: "Streams",
-        //     value: +streams,
-        //     group: "Spotify",
-        //     href: "https://open.spotify.com/?"
-        // },
-        // {
-        //     title: "Hours listened",
-        //     value: +hoursListened,
-        //     group: "Spotify",
-        //     href: "https://open.spotify.com/?"
-        // },
-        // {
-        //     title: "Minutes listened",
-        //     value: +minutesListened,
-        //     group: "Spotify",
-        //     href: "https://open.spotify.com/?"
-        // },
+        {
+            title: "Streams",
+            value: +streams,
+            group: "Spotify",
+            href: "https://open.spotify.com/?"
+        },
+        {
+            title: "Hours listened",
+            value: +hoursListened,
+            group: "Spotify",
+            href: "https://open.spotify.com/?"
+        },
+        {
+            title: "Minutes listened",
+            value: +minutesListened,
+            group: "Spotify",
+            href: "https://open.spotify.com/?"
+        },
         {
             title: "Top genre",
             value: genre,

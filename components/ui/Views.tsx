@@ -1,4 +1,6 @@
-import {useSupabaseClient} from '@supabase/auth-helpers-react'
+'use client'
+
+import {createPagesBrowserClient} from '@supabase/auth-helpers-nextjs'
 import {ElementType, useEffect} from 'react'
 import useSWR, {useSWRConfig} from 'swr'
 import fetcher from '@/lib/fetcher'
@@ -12,15 +14,16 @@ type ViewsProps = {
     shouldRender?: boolean
 }
 
+const supabase = createPagesBrowserClient()
+
 export function Views({as: Component = 'span', slug, className, shouldUpdateViews = true, shouldRender = true}: ViewsProps) {
-    const supabaseClient = useSupabaseClient()
     const {data} = useSWR(`/api/views/${slug}`, fetcher) as { data: { views: number } }
     const {mutate} = useSWRConfig()
 
     useEffect(() => {
         if (shouldUpdateViews) {
             // subscribe to analytics table and react to updates at row level
-            const sub = supabaseClient
+            const sub = supabase
                 .channel('any')
                 .on('postgres_changes', {
                     event: 'UPDATE',

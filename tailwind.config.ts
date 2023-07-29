@@ -1,7 +1,11 @@
 import type {Config} from 'tailwindcss'
 
 export default {
-    content: ['./pages/**/*.{js,jsx,tsx}', './components/**/*.{js,jsx,tsx}'],
+    content: [
+        './app/**/*.{js,ts,jsx,tsx,mdx}',
+        './pages/**/*.{js,jsx,tsx}',
+        './components/**/*.{js,jsx,tsx}'
+    ],
     darkMode: 'class',
     plugins: [
         require('@tailwindcss/typography')

@@ -1,0 +1,50 @@
+import Image from 'next/image'
+import {ArticleLayout} from '../../../components/layouts/ArticleLayout'
+import {createSlug} from '../../../lib/createSlug'
+import cargoShipImage from './ian-taylor-jOqJbvo1P9g-unsplash.jpg'
+
+export const metadata = {
+    author: 'Ryan Freeman',
+    date: '2023-02-11',
+    title: 'Docker cheat sheet',
+    description: 'This is a living document of useful commands for maintaining and using Docker, and should function as a handy reference for developers and DevOps engineers.',
+    ogImage: '/images/ian-taylor-jOqJbvo1P9g-unsplash.jpg'
+}
+
+export default (props) => <ArticleLayout
+    author={metadata.author}
+    date={metadata.date}
+    title={metadata.title}
+    description={metadata.description}
+    ogImage={metadata.ogImage}
+    slug={createSlug(metadata.title)}
+    {...props} />
+
+This is a living document of useful commands for maintaining and using Docker, and should function as a handy reference for developers and DevOps engineers.
+
+<Image
+    src={cargoShipImage}
+    alt="Image of a cargo ship by Ian Taylor on Unsplash"
+    placeholder="blur"
+    priority
+/>
+
+I'll kick off this Docker cheat sheet with cleaning up Docker images, let's get started.
+
+## Cleaning up Docker images
+
+If you update your Docker container images regularly using something like [watchtower](https://containrrr.dev/watchtower/), you might have dangling images which are out-of-date and no longer associated with some of your running containers.
+
+So why not use `docker image prune` to reclaim that valuable disk space. For example, running this command on my Raspberry Pi shaved off about 9.66Gb of disk usage.
+
+As a bonus, you can save some additional space using `docker image prune --all`, which removes all unused Docker images.
+
+## Restarting all containers
+
+Sometimes you want to restart all your containers at once, such as after you've pulled the latest images for your containers.
+
+To do this, use `docker restart $(docker ps -q)`, this command instructs Docker to restart all containers using the container ids which are returned from `docker ps -q`.
+
+## Stopping all containers
+
+Need to stop all containers? Simply use `docker stop $(docker ps -q)`. As above, this uses the container ids from `docker ps` to stop each running container.

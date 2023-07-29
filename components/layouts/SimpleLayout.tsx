@@ -2,19 +2,19 @@ import {ReactNode} from 'react'
 import {Container} from '@/components/common/Container'
 import {twMerge} from 'tailwind-merge'
 
-type SimpleLayout = {
-    title: string
-    intro: string
+export type SimpleLayoutProps = {
+    heading: string
+    description: string
     children: ReactNode
     gradient: string
 }
 
 export function SimpleLayout({
-                                 title,
-                                 intro,
+                                 heading,
+                                 description,
                                  children,
                                  gradient
-                             }: SimpleLayout) {
+                             }: SimpleLayoutProps) {
     return (
         <Container className="mt-16 sm:mt-32">
             <header className="max-w-2xl">
@@ -28,10 +28,10 @@ export function SimpleLayout({
                         sm:text-5xl
                         ${gradient ? `${gradient} bg-clip-text dark:text-transparent` : ''}
                     `)}>
-                    {title}
+                    {heading}
                 </h1>
                 <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-                    {intro}
+                    {description}
                 </p>
             </header>
             <div className="mt-16 sm:mt-20">{children}</div>

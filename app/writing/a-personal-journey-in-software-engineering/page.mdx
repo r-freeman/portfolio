@@ -1,0 +1,35 @@
+import {ArticleLayout} from '../../../components/layouts/ArticleLayout'
+import {createSlug} from '../../../lib/createSlug'
+
+export const metadata = {
+    authors: 'Ryan Freeman',
+    title: 'A personal journey in software engineering',
+    date: '2022-12-04',
+    description: 'Hello there! If you\'re reading this, you\'ve likely stumbled upon my website — welcome! My name is Ryan Freeman, and I\'m a full-stack developer with a passion for creating intuitive and dynamic web applications.'
+}
+
+export default (props) => <ArticleLayout
+    title={metadata.title}
+    date={metadata.date}
+    description={metadata.description}
+    slug={createSlug(metadata.title)}
+    {...props} />
+
+Hello there!
+
+If you're reading this, you've likely stumbled upon my website — welcome! My name is Ryan Freeman, and I'm a full-stack developer
+with a passion for creating intuitive and dynamic web applications.
+
+I have been working in the aviation industry for Aer Lingus since February 2022. My specialities include React, Java
+and AWS technologies, and I have a strong focus on building scalable and reliable solutions.
+
+This website is a showcase of my work, as well as a platform for me to share my thoughts and insights in the world of software engineering.
+Here's what you can expect to find:
+
+- A portfolio of my past and current projects, showcasing the range of applications I have developed and the technologies I have used.
+- Blog posts on a variety of topics, from the latest trends in software engineering to my personal experiences and insights as a full-stack developer.
+- Links to connect with me and to download my most up-to-date CV.
+
+I hope that my website provides you with a glimpse into my world as a full-stack developer, and I invite you to explore and learn more about what I do.
+
+Thanks for visiting, and I hope to hear from you soon!
