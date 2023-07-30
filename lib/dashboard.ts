@@ -3,8 +3,9 @@ import {createServerComponentClient} from '@supabase/auth-helpers-nextjs'
 import {getTopRepo, getTotalFollowers, getTotalForks, getTotalRepos, getTotalStars} from '@/lib/github'
 import {getAllArticles} from '@/lib/getAllArticles'
 import {getTopArtist, getTopGenre} from '@/lib/spotify'
+import {getRamUsage, getRootFsUsage, getSysLoad, getTemp, getUptime} from '@/lib/pi'
+import {getStats} from '@/lib/statsfm'
 import {Metric} from '@/types'
-import {getStats} from "@/lib/statsfm";
 
 export async function getDashboardData() {
     const supabase = createServerComponentClient({cookies})
@@ -21,6 +22,11 @@ export async function getDashboardData() {
     const topArtist = await getTopArtist()
     const {genre} = await getTopGenre()
     const {hoursListened, minutesListened, streams} = await getStats()
+    const {temp} = await getTemp()
+    const {sysLoad} = await getSysLoad()
+    const {ramUsage} = await getRamUsage()
+    const {rootFsUsage} = await getRootFsUsage()
+    const {days} = await getUptime()
 
     const metrics: Metric[] = [
         {
@@ -94,6 +100,36 @@ export async function getDashboardData() {
             value: +views,
             group: "Blog",
             href: "/writing"
+        },
+        {
+            title: "Temp",
+            value: `${temp} ℃`,
+            group: "Raspberry Pi",
+            href: ""
+        },
+        {
+            title: "Sys load (5m avg)",
+            value: `${sysLoad}%`,
+            group: "Raspberry Pi",
+            href: ""
+        },
+        {
+            title: "RAM usage",
+            value: `${ramUsage}%`,
+            group: "Raspberry Pi",
+            href: ""
+        },
+        {
+            title: "Root FS usage",
+            value: `${rootFsUsage}%`,
+            group: "Raspberry Pi",
+            href: ""
+        },
+        {
+            title: "Uptime days",
+            value: `${Math.round(days)}`,
+            group: "Raspberry Pi",
+            href: ""
         }
     ]
 

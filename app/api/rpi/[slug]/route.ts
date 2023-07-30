@@ -1,5 +1,5 @@
 import {NextResponse} from 'next/server'
-import {getRamUsage, getRootFsUsage, getSysLoad, getTemp, getUptime} from '@/lib/grafana'
+import {getRamUsage, getRootFsUsage, getSysLoad, getTemp, getUptime} from '@/lib/pi'
 
 export const fetchCache = 'force-no-store'
 

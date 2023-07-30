@@ -14,9 +14,8 @@ type ViewsProps = {
     shouldRender?: boolean
 }
 
-const supabase = createPagesBrowserClient()
-
 export function Views({as: Component = 'span', slug, className, shouldUpdateViews = true, shouldRender = true}: ViewsProps) {
+    const supabase = createPagesBrowserClient()
     const {data} = useSWR(`/api/views/${slug}`, fetcher) as { data: { views: number } }
     const {mutate} = useSWRConfig()
 
