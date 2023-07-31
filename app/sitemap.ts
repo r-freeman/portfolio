@@ -1,18 +1,25 @@
-import { MetadataRoute } from 'next'
+import {MetadataRoute} from 'next'
+import {getAllArticles} from '@/lib/getAllArticles'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-    return [
-        {
-            url: 'https://acme.com',
-            lastModified: new Date(),
-        },
-        {
-            url: 'https://acme.com/about',
-            lastModified: new Date(),
-        },
-        {
-            url: 'https://acme.com/blog',
-            lastModified: new Date(),
-        },
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+    const urls = [
+        'https://ryanfreeman.dev/',
+        'https://ryanfreeman.dev/about',
+        'https://ryanfreeman.dev/dashboard',
+        'https://ryanfreeman.dev/writing',
+        'https://ryanfreeman.dev/projects',
+        'https://ryanfreeman.dev/uses'
     ]
+
+    const pages = urls.map(url => ({
+        url,
+        lastModified: new Date()
+    }))
+
+    const posts = (await getAllArticles()).map(({slug, date}) => ({
+        url: `https://ryanfreeman.dev/${slug}/`,
+        lastModified: new Date(date).toISOString()
+    }))
+
+    return [...pages, ...posts]
 }
