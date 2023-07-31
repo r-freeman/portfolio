@@ -17,7 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
 
     const posts = (await getAllArticles()).map(({slug, date}) => ({
-        url: `https://ryanfreeman.dev/${slug}/`,
+        url: `https://ryanfreeman.dev/writing/${slug}/`,
         lastModified: new Date(date).toISOString()
     }))
 
