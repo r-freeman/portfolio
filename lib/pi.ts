@@ -3,6 +3,9 @@ import fetcher from '@/lib/fetcher'
 const GRAFANA_URL: string = process.env.GRAFANA_URL ?? ""
 const GRAFANA_TOKEN = process.env.GRAFANA_TOKEN
 
+const day = 24 * 60 * 60 * 1000;
+const yesterday = Date.now() - day;
+
 export const getTemp = async () => {
     const response = await fetcher(GRAFANA_URL, {
         method: 'POST',
@@ -22,7 +25,7 @@ export const getTemp = async () => {
                     "maxDataPoints": 100
                 }
             ],
-            "from": "1681578682129",
+            "from": yesterday.toString(),
             "to": "now"
         })
     })
@@ -53,7 +56,7 @@ export const getRootFsUsage = async () => {
                     "maxDataPoints": 100
                 }
             ],
-            "from": "1681578682129",
+            "from": yesterday.toString(),
             "to": "now"
         })
     })
@@ -84,7 +87,7 @@ export const getUptime = async () => {
                     "maxDataPoints": 100
                 }
             ],
-            "from": "1681578682129",
+            "from": yesterday.toString(),
             "to": "now"
         })
     })
@@ -123,7 +126,7 @@ export const getRamUsage = async () => {
                     "maxDataPoints": 100
                 }
             ],
-            "from": "1681578682129",
+            "from": yesterday.toString(),
             "to": "now"
         })
     })
@@ -154,7 +157,7 @@ export const getSysLoad = async () => {
                     "maxDataPoints": 100
                 }
             ],
-            "from": "1681578682129",
+            "from": yesterday.toString(),
             "to": "now"
         })
     })
