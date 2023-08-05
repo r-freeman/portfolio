@@ -3,7 +3,6 @@ import type {Config} from 'tailwindcss'
 export default {
     content: [
         './app/**/*.{js,ts,jsx,tsx,mdx}',
-        './pages/**/*.{js,jsx,tsx}',
         './components/**/*.{js,jsx,tsx}'
     ],
     darkMode: 'class',

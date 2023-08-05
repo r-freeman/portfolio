@@ -12,31 +12,6 @@ const nextConfig = {
     },
     images: {
         domains: ['i.scdn.co']
-    },
-    async rewrites() {
-        if (process.env.NODE_ENV === 'production') {
-            return [
-                {
-                    source: '/api/:path',
-                    destination: 'https://ryanfreeman.dev/:path/',
-                }
-            ]
-        } else {
-            return []
-        }
-    },
-    async headers() {
-        return [
-            {
-                source: '/api/spotify/currently-playing',
-                headers: [
-                    {
-                        key: "Cache-Control",
-                        value: "s-maxage=1, stale-while-revalidate=59"
-                    }
-                ]
-            }
-        ]
     }
 }
 
