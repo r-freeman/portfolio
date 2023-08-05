@@ -188,6 +188,8 @@ Song.Skeleton = function SongSkeleton() {
     )
 }
 
+export const dynamic = 'force-dynamic'
+
 export function SpotifyPlayer(): ReactElement | null {
     const currentlyPlaying = usePlayerState('currently-playing')
     const lastPlayed = usePlayerState('last-played')
