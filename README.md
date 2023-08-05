@@ -14,11 +14,11 @@ and skills, as well as provide information about me and my interests.
 
 ## Project structure
 
+- `app/` - App router.
+- `app/api/` - API routes for article views and Spotify integrations.
+- `app/writing/` - Blog posts written in MDX format (Markdown in JSX).
 - `components/` - All the components of the website in tsx format.
 - `lib/` - Useful functions and scripts for connecting to external services and so on.
-- `pages/api/` - API routes for article views and Spotify integrations.
-- `pages/writing/` - Blog posts written in MDX format (Markdown in JSX).
-- `pages/` - Contains all other static pages like about, projects and uses.
 - `public/` - Used for static files such as icons and images.
 - `styles/` - Contains the stylesheets for Tailwind and Prism.
 - `types/` - Types for various components in the project.
