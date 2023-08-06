@@ -1,0 +1,125 @@
+import Image from 'next/image'
+import {ArticleLayout} from '../../../components/layouts/ArticleLayout'
+import {createSlug} from '../../../lib/createSlug'
+import rainImage from './osman-rana-GXEZuWo5m4I-unsplash.jpg'
+import dashboard from './dashboard-raspberry-pi-widgets.png'
+import emojis from './emo5-removebg-preview.png'
+
+export const metadata = {
+    authors: 'Ryan Freeman',
+    title: 'Changelog August 2023',
+    date: '2023-08-05',
+    description: 'July was a truly soggy month and apparently Ireland\'s soggiest July on record, which has been a real dampener on my motivation and creativity. Despite the crappy weather I\'ve managed to get some things done this month.'
+}
+
+export default (props) => <ArticleLayout
+    title={metadata.title}
+    date={metadata.date}
+    description={metadata.description}
+    slug={createSlug(metadata.title)}
+    {...props} />
+
+<Image
+    src={rainImage}
+    alt="Person walking on street and holding umbrella while raining with vehicle nearby photo"
+    placeholder="blur"
+    priority
+/>
+
+July was a truly soggy month and apparently [Ireland's soggiest July on record](https://www.met.ie/july-2023-provisionally-irelands-wettest-july-on-record), which has been a real dampener on my motivation and creativity. Despite the crappy weather I've managed to get some things done this month.
+
+## Making the most of the new Next.js features
+
+Late July [I migrated this website to the app router](https://github.com/r-freeman/portfolio/commit/158973d3b6d293338858725ce1cd24065a4a299d) which allows me to use all the cool new features in Next.js, like [sitemap](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap#generate-a-sitemap) and [robots.txt generation](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/robots#generate-a-robots-file), [Metadata API](https://nextjs.org/docs/app/building-your-application/optimizing/metadata), dynamic open graph images and so on.
+
+For example, generating a `sitemap.xml` for this website is much more succinct now.
+
+```typescript
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+    const urls = [
+        'https://ryanfreeman.dev/',
+        'https://ryanfreeman.dev/about',
+        'https://ryanfreeman.dev/writing',
+        'https://ryanfreeman.dev/projects',
+        'https://ryanfreeman.dev/uses'
+    ]
+
+    const pages = urls.map(url => ({
+        url,
+        lastModified: new Date()
+    }))
+
+    const posts = (await getAllArticles()).map(({slug, date}) => ({
+        url: `https://ryanfreeman.dev/writing/${slug}/`,
+        lastModified: new Date(date).toISOString()
+    }))
+
+    return [...pages, ...posts]
+}
+```
+
+The `sitemap` function in `app/sitemap.ts` returns a combined array of pages and posts for this website, which is all I need to generate a `sitemap.xml`.
+
+```typescript
+export default function robots(): MetadataRoute.Robots {
+    return {
+        rules: {
+            userAgent: '*',
+            allow: '/',
+            disallow: '/private/',
+        },
+        sitemap: 'https://ryanfreeman.dev/sitemap.xml',
+    }
+}
+```
+
+Generating a `robots.txt` is just as easy, take a look at the code above.
+
+```typescript
+export const metadata = {
+    title: 'About - Ryan Freeman',
+    description: 'I’m Ryan. I live in Dublin, Ireland where I work as a software engineer.'
+}
+```
+
+I've also made use of the new Metadata API, you'll notice most pages export a `metadata` object containing title and description properties. This is a cool feature because it allows me to easily define metadata per page, which is useful for SEO.
+
+Other features I'm looking forward to exploring are dynamic open graph images and the different data fetching and caching options available in Next.js 13.
+
+Overall, I'm happy with the direction Next.js is going, and I'll likely use it for future React projects and websites, though I had to read the new docs a few times before I understood how the new app router works.
+
+## Retiring the dashboard page
+
+The [dashboard](/dashboard) page was an interesting experiment where I aggregated and displayed data from various sources such as GitHub, Spotify and my Raspberry Pi.
+
+<Image
+    src={dashboard}
+    alt="Dashboard widgets showing various data from my Raspberry Pi"
+    placeholder="blur"
+    priority
+/>
+
+For example, you could see my GitHub stats such as stars, followers and forks and some mostly useless information about my Spotify usage.
+
+However, the load time for the dashboard was horrendous, and it became difficult to maintain. Sometimes the page wouldn't render at all if one or more API requests failed. So I've made the decision to retire this page for now, at least in its current incarnation.
+
+That said, in building the dashboard page I learned some new IoT skills — using Grafana and Prometheus for getting system-level data from the Raspberry Pi such as temperature, CPU usage and uptime.
+
+## What's next for this site
+
+This website started as a platform for me to showcase my skills and professional experience, but admittedly I've neglected the blogging side of things, so I definitely want to get in the habit of writing and publishing good quality blog posts.
+
+<Image
+    src={emojis}
+    alt="Idea for a react bar featuring emojis"
+    placeholder="blur"
+    priority
+/>
+
+As far as new ideas, I've come up with the idea for an interactive emoji react bar for the bottom of blogs posts to drive engagement and to measure how my audience reacts to my posts (assuming I have an audience).
+
+I also need to write some TypeScript to generate a dynamic RSS feed so readers can subscribe to my blog posts, which I'll implement this in the coming days.
+
+Another nice-to-have feature would be to allow the readers to subscribe and receive updates via email.
+
+Watch this space for new features which I'll write about it next month's changelog.
