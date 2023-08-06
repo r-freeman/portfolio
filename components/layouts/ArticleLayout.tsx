@@ -53,7 +53,7 @@ export function ArticleLayout({
                     </Link>
                     <article>
                         <header className="flex flex-col">
-                            <h1 className={`mt-6 text-4xl font-bold tracking-tight sm:text-5xl bg-clip-text dark:text-transparent ${gradients[Math.floor(gradients.length * Math.random())]}`}>
+                            <h1 className={`mt-6 text-4xl font-bold tracking-tight sm:text-5xl bg-clip-text pb-1 dark:text-transparent ${gradients[Math.floor(gradients.length * Math.random())]}`}>
                                 {title}
                             </h1>
                             <p className="order-first text-base text-zinc-500 dark:text-zinc-400">
