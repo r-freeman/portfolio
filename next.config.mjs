@@ -5,11 +5,6 @@ import rehypePrism from '@mapbox/rehype-prism'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     pageExtensions: ['jsx', 'js', 'tsx', 'ts', 'mdx'],
-    reactStrictMode: true,
-    swcMinify: true,
-    experimental: {
-        mdxRs: true
-    },
     images: {
         domains: ['i.scdn.co']
     }
