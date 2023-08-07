@@ -13,7 +13,6 @@ type ArticleLayout = {
     slug: string
     children?: ReactNode
     ogImage?: string
-    isRssFeed?: boolean
 }
 
 const gradients = [
@@ -30,12 +29,8 @@ export function ArticleLayout({
                                   description,
                                   slug,
                                   children,
-                                  ogImage,
-                                  isRssFeed = false
+                                  ogImage
                               }: ArticleLayout) {
-    if (isRssFeed) {
-        return children
-    }
 
     return (
         <Container className="mt-16 lg:mt-32">
@@ -63,7 +58,7 @@ export function ArticleLayout({
                                 <Views slug={slug} shouldUpdateViews={true}/>
                             </p>
                         </header>
-                        <Prose className="mt-8">{children}</Prose>
+                        <Prose className="mt-8" data-mdx-content>{children}</Prose>
                     </article>
                 </div>
             </div>
