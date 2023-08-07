@@ -33,12 +33,14 @@ export async function GET(req: NextRequest) {
         let _article = $('article').first()
         let title = _article.find('h1').first().text()
         let date = _article.find('time').first().attr('datetime') ?? new Date()
+        let image = _article.find('image').first().html() ?? ""
         let content = _article.find('.prose').first().html() ?? ""
 
         feed.addItem({
             title,
             id: url,
             link: url,
+            image,
             content,
             author: [author],
             contributor: [author],
