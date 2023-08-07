@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
     return new Response(feed.rss2(), {
         status: 200,
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/xml'
         }
     })
 }
