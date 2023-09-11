@@ -110,7 +110,13 @@ type PlayerStateResponse = {
 }
 
 function usePlayerState(path: string) {
-    const {data, error, isLoading} = useSWR(`/api/spotify/${path}`, fetcher) as PlayerStateResponse
+    const {data, error, isLoading} = useSWR(`/api/spotify/${path}`, fetcher, {
+        refreshInterval: 3600, 
+        revalidateIfStale: true,
+        revalidateOnMount: true,
+        revalidateOnFocus: true,
+        revalidateOnReconnect true
+    }) as PlayerStateResponse
 
     return {
         song: data,
@@ -187,8 +193,6 @@ Song.Skeleton = function SongSkeleton() {
         </div>
     )
 }
-
-export const revalidate = 0
 
 export function SpotifyPlayer(): ReactElement | null {
     const currentlyPlaying = usePlayerState('currently-playing')
