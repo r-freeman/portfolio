@@ -188,7 +188,7 @@ Song.Skeleton = function SongSkeleton() {
     )
 }
 
-export const fetchCache = 'force-no-store'
+export const revalidate = 0
 
 export function SpotifyPlayer(): ReactElement | null {
     const currentlyPlaying = usePlayerState('currently-playing')
