@@ -83,7 +83,7 @@ export default function Uses() {
                         Windows on the fly.
                     </Tool>
                 </ToolsSection>
-                <ToolsSection title="Chrome Extensions">
+                <ToolsSection title="Browser Extensions">
                     <Tool title="Bitwarden"
                           href="https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb">
                         Bitwarden is a free, open-source password manager, this Chrome Extension connects to a self-hosted
@@ -99,6 +99,10 @@ export default function Uses() {
                         Floccus syncs your bookmarks across browsers and devices. It connects to my Nextcloud server via
                         WebDAV and keeps my bookmarks in sync, so no matter which device I&apos;m using, I always have the
                         same set of bookmarks.
+                    </Tool>
+                    <Tool title="I still don't care about cookies"
+                          href="https://chromewebstore.google.com/detail/edibdbjcniadpccecjdfdjjppcpchdlm">
+                        This extension removes unwanted/annoying cookie warnings/pop-ups from almost all websites!
                     </Tool>
                 </ToolsSection>
             </div>
