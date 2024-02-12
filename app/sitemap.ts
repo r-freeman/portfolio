@@ -5,6 +5,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const urls = [
         'https://ryanfreeman.dev/',
         'https://ryanfreeman.dev/about',
+        'https://ryanfreeman.dev/reading',
         'https://ryanfreeman.dev/writing',
         'https://ryanfreeman.dev/projects',
         'https://ryanfreeman.dev/uses'
