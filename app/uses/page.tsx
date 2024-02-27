@@ -104,6 +104,10 @@ export default function Uses() {
                           href="https://chromewebstore.google.com/detail/edibdbjcniadpccecjdfdjjppcpchdlm">
                         This extension removes unwanted/annoying cookie warnings/pop-ups from almost all websites!
                     </Tool>
+                    <Tool title="YouTube No Context"
+                        href="https://chromewebstore.google.com/detail/youtube-no-context/dnlffelklagnbdjpcbhfdbangccjmhhh?pli=1">
+                        Removes intrusive context boxes on YouTube.
+                    </Tool>
                 </ToolsSection>
             </div>
         </SimpleLayout>
