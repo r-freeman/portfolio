@@ -6,7 +6,11 @@ import rehypePrism from '@mapbox/rehype-prism'
 const nextConfig = {
     pageExtensions: ['jsx', 'js', 'tsx', 'ts', 'mdx'],
     images: {
-        domains: ['i.scdn.co']
+        remotePatterns: [{
+            protocol: 'https',
+            hostname: 'i.scdn.co',
+            port: ''
+        }]
     }
 }
 
