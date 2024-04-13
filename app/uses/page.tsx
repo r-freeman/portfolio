@@ -47,6 +47,12 @@ export default function Uses() {
                         I bought this chair second-hand when I started working for Apple, it&apos;s extremely comfortable and
                         ergonomic for those long hours spent at the desk.
                     </Tool>
+                    <Tool title="Maidesite T2 Pro Standing Desk Frame"
+                          href="https://amzn.to/3xAdgoJ">
+                        I was on the fence about standing desks for a while but after some research I decided to give the
+                        Maidesite T2 Pro Standing Desk Frame a try. This allows me to easily transition between sitting and
+                        standing.
+                    </Tool>
                 </ToolsSection>
                 <ToolsSection title="Development tools">
                     <Tool title="JetBrains" href="https://jetbrains.com/">
@@ -105,7 +111,7 @@ export default function Uses() {
                         This extension removes unwanted/annoying cookie warnings/pop-ups from almost all websites!
                     </Tool>
                     <Tool title="YouTube No Context"
-                        href="https://chromewebstore.google.com/detail/youtube-no-context/dnlffelklagnbdjpcbhfdbangccjmhhh?pli=1">
+                          href="https://chromewebstore.google.com/detail/youtube-no-context/dnlffelklagnbdjpcbhfdbangccjmhhh?pli=1">
                         Removes intrusive context boxes on YouTube.
                     </Tool>
                 </ToolsSection>
