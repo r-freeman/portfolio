@@ -110,8 +110,7 @@ type PlayerStateResponse = {
 }
 
 function usePlayerState(path: string) {
-    const timestamp = Date.parse(new Date().toString())
-    const {data, error, isLoading} = useSWR(`/api/spotify/${path}?ts=${timestamp}`, fetcher) as PlayerStateResponse
+    const {data, error, isLoading} = useSWR(`/api/spotify/${path}`, fetcher) as PlayerStateResponse
 
     return {
         song: data,
