@@ -9,6 +9,7 @@ export async function GET(request: Request, {params}: { params: { slug: string }
             const supabase = createServerComponentClient<Database>({cookies})
             const slug = params.slug.toString()
             const response = await supabase
+                // @ts-ignore
                 .from('analytics')
                 .select('views')
                 .eq('slug', slug)

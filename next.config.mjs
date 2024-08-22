@@ -11,7 +11,8 @@ const nextConfig = {
             hostname: 'i.scdn.co',
             port: ''
         }]
-    }
+    },
+    output: 'standalone'
 }
 
 const withMDX = nextMDX({
