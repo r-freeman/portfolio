@@ -38,18 +38,15 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{secrets.DOCKER_HUB_USERNAME}}/portfolio:v1
+          tags: ${{secrets.DOCKER_HUB_USERNAME}}/${{vars.REPO_NAME}}:v1
 
-      - name: Stop the docker container
+      - name: Stop and remove old Docker container
         continue-on-error: true
-        run: sudo docker stop portfolio
+        run: |
+          sudo docker stop ${{vars.REPO_NAME}}
+          sudo docker rm ${{vars.REPO_NAME}}
 
-      - name: Remove the docker container
-        continue-on-error: true
-        run: sudo docker rm portfolio
-
-      - name: Pull the Docker image
-        run: sudo docker pull ${{secrets.DOCKER_HUB_USERNAME}}/portfolio:v1
-
-      - name: Run the Docker container
-        run: sudo docker run -d --restart unless-stopped --env-file ./.env --name portfolio -p ${{vars.TAILSCALE_IP}}:3000:3000 ${{secrets.DOCKER_HUB_USERNAME}}/portfolio:v1
+      - name: Pull new image and start Docker container
+        run: |
+          sudo docker pull ${{secrets.DOCKER_HUB_USERNAME}}/${{vars.REPO_NAME}}:v1
+          sudo docker run -d --restart unless-stopped --env-file ./.env --name portfolio -p ${{vars.DEPLOY_IP}}:3000:3000 ${{secrets.DOCKER_HUB_USERNAME}}/${{vars.REPO_NAME}}:v1

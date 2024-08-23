@@ -1,0 +1,34 @@
+import {ArticleLayout} from '../../../components/layouts/ArticleLayout'
+import {createSlug} from '../../../lib/createSlug'
+import raspberryPi from './vishnu-mohanan-rZKdS0wI8Ks-unsplash.jpg'
+import Image from 'next/image';
+
+export const metadata = {
+    authors: 'Ryan Freeman',
+    title: 'Migrating from Vercel to Raspberry Pi 5',
+    date: '2024-08-23',
+    description: 'Recently, I decided to migrate this website from Vercel to a self-hosted environment using a Raspberry Pi 5. This transition was driven by several motivations, such as lowering costs and having greater control over the software and hardware that I run.'
+}
+
+export default (props) => <ArticleLayout
+    title={metadata.title}
+    date={metadata.date}
+    description={metadata.description}
+    slug={createSlug(metadata.title)}
+    {...props} />
+
+<Image src={raspberryPi} alt=""/>
+
+Recently, I decided to migrate this website from Vercel to a self-hosted environment using a Raspberry Pi 5. This transition was driven by several motivations, such as lowering costs and having greater control over the software and hardware that I run.
+
+## The Why: Leaving Vercel behind
+
+Don't get me wrong, the developer experience with Vercel is in my opinion second to none. Push code and forget about it, while Vercel automagically deploys your apps. Vercel abstracts all the complicated CI/CD processes behind a nice UI and takes care of everything under the hood.
+
+However, I wanted to explore a more hands-on approach, one that would give me more control over my deployment process and for this I needed a new home for my website.
+
+## The Hardware
+
+The Raspberry Pi 5 seemed like the perfect solution to run my website from. It's a powerful little device, cheap to run and since I'm already running a small media server on another Pi, I was at least somewhat familiar how to set everything up.
+
+I wanted fast and reliable storage so that websites and apps I'm going to deploy would be responsive. I settled on this [Geeekpi NVMe adapter](https://amzn.to/3yH64bf) and [Kingston 500GB NVMe](https://amzn.to/4g07NsI) which had sufficient storage capacity for my needs.
