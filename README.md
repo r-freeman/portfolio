@@ -8,7 +8,7 @@ and skills, as well as provide information about me and my interests.
 - Language: [TypeScript](https://www.typescriptlang.org/)
 - Framework: [Next.js](https://nextjs.org/)
 - Database: [Supabase](https://supabase.com/)
-- Deployment: [Vercel](https://vercel.com/)
+- Deployment: ~~[Vercel](https://vercel.com/)~~ Self-Hosted on Raspberry Pi 5
 - Styling: [Tailwind CSS](https://tailwindcss.com/)
 - Integrations: [Spotify](https://spotify.com/)
 
