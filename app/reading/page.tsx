@@ -1,5 +1,7 @@
 import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 import {Card} from '@/components/ui/Card'
+import {Views} from '@/components/ui/Views';
+import React from 'react';
 
 export const metadata = {
     title: 'Reading - Ryan Freeman',
@@ -84,6 +86,7 @@ export default async function Reading() {
                     </Card>
                 ))}
             </ul>
+            <Views slug="/reading" shouldUpdateViews={true} shouldRender={false}/>
         </SimpleLayout>
     )
 }

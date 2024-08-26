@@ -4,6 +4,8 @@ import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 import {Card} from '@/components/ui/Card'
 import {getPinnedRepos} from '@/lib/github'
 import {numberFormat} from '@/lib/numberFormat'
+import {Views} from '@/components/ui/Views';
+import React from 'react';
 
 export const metadata = {
     title: 'Projects - Ryan Freeman',
@@ -54,6 +56,7 @@ export default async function Projects() {
                     </Card>
                 ))}
             </ul>
+            <Views slug="/projects" shouldUpdateViews={true} shouldRender={false}/>
         </SimpleLayout>
     )
 }
