@@ -51,6 +51,6 @@ jobs:
           sudo docker pull ${{secrets.DOCKER_HUB_USERNAME}}/${{vars.REPO_NAME}}:v1
           sudo docker run -d --restart unless-stopped \
           --env-file ./.env \
-          --name portfolio \
+          --name ${{vars.REPO_NAME}} \
           -p ${{vars.DEPLOY_IP}}:3000:3000 \
           ${{secrets.DOCKER_HUB_USERNAME}}/${{vars.REPO_NAME}}:v1
