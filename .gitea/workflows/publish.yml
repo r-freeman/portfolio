@@ -38,7 +38,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{secrets.DOCKER_HUB_USERNAME}}/${{vars.REPO_NAME}}:v1
+          tags: ${{secrets.DOCKER_HUB_USERNAME}}/${{vars.REPO_NAME}}:latest
 
       - name: Stop and remove old Docker container
         continue-on-error: true
@@ -48,9 +48,9 @@ jobs:
 
       - name: Pull new image and start Docker container
         run: |
-          sudo docker pull ${{secrets.DOCKER_HUB_USERNAME}}/${{vars.REPO_NAME}}:v1
+          sudo docker pull ${{secrets.DOCKER_HUB_USERNAME}}/${{vars.REPO_NAME}}:latest
           sudo docker run -d --restart unless-stopped \
           --env-file ./.env \
           --name ${{vars.REPO_NAME}} \
           -p ${{vars.DEPLOY_IP}}:3000:3000 \
-          ${{secrets.DOCKER_HUB_USERNAME}}/${{vars.REPO_NAME}}:v1
+          ${{secrets.DOCKER_HUB_USERNAME}}/${{vars.REPO_NAME}}:latest
