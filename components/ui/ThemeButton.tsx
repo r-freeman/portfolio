@@ -14,16 +14,7 @@ export function ThemeButton() {
         return () => clearTimeout(timeout)
     }, [])
 
-    function disableTransitionsTemporarily() {
-        document.documentElement.classList.add('[&_*]:!transition-none')
-        window.setTimeout(() => {
-            document.documentElement.classList.remove('[&_*]:!transition-none')
-        }, 0)
-    }
-
     function toggleTheme() {
-        disableTransitionsTemporarily()
-
         let darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
         let isSystemDarkMode = darkModeMediaQuery.matches
         let isDarkMode = theme === 'dark'
