@@ -37,6 +37,20 @@ Devices connected within your Tailscale network are part of a tailnet, we'll be 
 
 Any device in your tailnet can be configured to act as an [exit node](https://tailscale.com/kb/1103/exit-nodes), which means all traffic will be routed through that node. For example, let's say Bob wants to allow Alice to route all her traffic through Bob's tailnet.
 
+```mermaid
+graph TD;
+subgraph AA [Bob's Tailnet]
+A[Bob];
+B[Alice];
+end
+subgraph BB [Internet]
+E[Steam];
+end
+Z[Exit Node];
+AA --> Z;
+Z --> E;
+```
+
 Bob simply [configures a device in the tailnet as an exit node](https://tailscale.com/kb/1103/exit-nodes#configure-an-exit-node), and upon joining Bob's tailnet, Alice can route [all her traffic through Bob's exit node](https://tailscale.com/kb/1103/exit-nodes#use-the-exit-node).
 
 Websites and apps that Alice visits will now appear to come from Bob's IP address, for as long as she is using Bob's tailnet and exit node.

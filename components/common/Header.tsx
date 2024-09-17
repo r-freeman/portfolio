@@ -120,8 +120,11 @@ export function Header() {
         updateStyles()
 
         const opts: AddEventListenerOptions & EventListenerOptions = {passive: true}
-        window.addEventListener('scroll', updateStyles, opts)
-        window.addEventListener('resize', updateStyles)
+
+        if (isHomePage) {
+            window.addEventListener('scroll', updateStyles, opts)
+            window.addEventListener('resize', updateStyles)
+        }
 
         return () => {
             window.removeEventListener('scroll', updateStyles, opts)
