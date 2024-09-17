@@ -25,7 +25,6 @@
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.10",
     "autoprefixer": "^10.4.13",
-    "cheerio": "^1.0.0-rc.12",
     "clsx": "^1.2.1",
     "encoding": "^0.1.13",
     "eslint": "8.31.0",

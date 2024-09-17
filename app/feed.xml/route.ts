@@ -1,6 +1,5 @@
 import {NextRequest} from 'next/server'
 import {Feed} from 'feed'
-import * as cheerio from 'cheerio'
 import {getAllArticles} from '@/lib/getAllArticles'
 
 export async function GET(req: NextRequest) {
@@ -27,22 +26,18 @@ export async function GET(req: NextRequest) {
 
     for (let article of articles) {
         let url = `${siteUrl}/writing/${article.slug}`
-        let html = await (await fetch(url)).text()
-        let $ = cheerio.load(html)
-
-        let _article = $('article').first()
-        let title = _article.find('h1').first().text()
-        let date = _article.find('time').first().attr('datetime') ?? new Date()
-        let content = _article.find('.prose').first().html() ?? ""
+        let title = article.title
+        let date = new Date(article.date)
+        let description = article.description
 
         feed.addItem({
             title,
             id: url,
             link: url,
-            content,
+            description,
             author: [author],
             contributor: [author],
-            date: new Date(date)
+            date
         })
     }
 
