@@ -1,0 +1,128 @@
+import Image from 'next/image'
+import {ArticleLayout} from '../../../components/layouts/ArticleLayout'
+import {createSlug} from '../../../lib/createSlug'
+import locks from './mariia-shalabaieva-zVC8A0CrTZ0-unsplash.jpg'
+import namecheap from './namecheap-change-nameservers.png'
+import nginx from './nginx-proxy-manager.png'
+import starshipTroopers from './starship-troopers.gif'
+
+export const metadata = {
+    authors: 'Ryan Freeman',
+    title: 'Secure your websites with Let\'s Encrypt, NPM and Cloudflare',
+    date: '2024-09-21',
+    description: 'SSL/TLS is the encryption standard or protocol which encrypts the session between a website (server) and the browser (client). This protects us from potential man-in-the-middle attacks whereby an attacker could eavesdrop on the session and see all the traffic and data exchanged in the clear.'
+}
+
+export default (props) => <ArticleLayout
+    title={metadata.title}
+    date={metadata.date}
+    description={metadata.description}
+    slug={createSlug(metadata.title)}
+    {...props} />
+
+<Image src={locks} alt=""/>
+
+SSL/TLS is the encryption standard or protocol which encrypts the session between a website (server) and the browser (client). This protects us from potential man-in-the-middle attacks whereby an attacker could eavesdrop on the session and see all the traffic and data exchanged in the clear.
+
+SSL/TLS is ubiquitous on the modern web, in fact you'll probably only be aware of this technology when your browser warns you that a website is insecure.
+
+Nowadays, SSL/TLS is non-negotiable if you are hosting an e-commerce website or website that deals with personal data. Fortunately, obtaining the certificates required to provide a secure, encrypted connection is now easier than ever with Let\'s Encrypt.
+
+In this post, I'll demonstrate how you can get free SSL certificates using Let's Encrypt, NPM and Cloudflare which can be used to secure your self-hosted or public facing websites.
+
+## What is Let\'s Encrypt?
+
+[Let's Encrypt](https://letsencrypt.org/about/) is a Certificate Authority that enables domain name owners to get SSL certificates for their websites free-of-charge. Let's Encrypt's goal is to make a more secure, privacy-respecting web for everybody. We'll be interacting with Let's Encrypt using [Certbot](https://certbot.eff.org/) which is included in Nginx Proxy Manager.
+
+## Nginx Proxy Manager
+
+[Nginx Proxy Manager](https://nginxproxymanager.com/) or NPM, not to be confused with Node Package Manager is a Docker-deployable app that includes nginx, Certbot and a nice UI which we can use to easily manage our SSL certs, proxy hosts and so on.
+
+While there are alternatives out there such as Caddy and Traefik, I'll use Nginx Proxy Manager because I find it easier to use.
+
+### Set up Nginx Proxy Manager
+
+Docker is required before we can spin up Nginx Proxy Manager. In my case, I installed Docker on [Ubuntu](https://docs.docker.com/desktop/install/linux/ubuntu/), but you can also install Docker on [Windows](https://docs.docker.com/desktop/install/windows-install/) and [Mac](https://docs.docker.com/desktop/install/mac-install/).
+
+With Docker installed, create an `nginx-proxy-manager` folder and then create a `docker-compose.yaml` file in that folder with the following content:
+
+```yaml
+version: '3.8'
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+```
+
+Next, start Nginx Proxy Manager  with `docker compose up -d`. And after a couple of minutes the admin interface will be available on [port 81](http://localhost:81). Login with the default email `admin@example.com` and password `changeme`.
+
+At this point, I strongly recommended changing the default email and password when prompted. For now, we can leave Nginx Proxy Manager running in the background.
+
+In the next section, I'll explain what Cloudflare is and how it will allow us to generate our SSL certs with Let's Encrypt and Nginx Proxy Manager.
+
+## Cloudflare
+
+Cloudflare is a web infrastructure and website security company that provides services to improve the performance, security, and reliability of websites and Internet connected applications.
+
+It's best known for its Content Delivery Network, Distributed Denial of Service protection, and Web Application Firewall services. However, Cloudflare also functions as a registrar allowing customers to purchase, or transfer domain names.
+
+While there are tons of registrars to choose from such as Porkbun and Namecheap, I'll be using Cloudflare's DNS and registrar capabilities to obtain free SSL certs in this example.
+
+### Buy a domain or change nameservers
+
+If like me, you want to use Cloudflare to obtain your SSL certs, I recommend either purchasing a domain name from Cloudflare or changing the nameservers on your existing domain name provider to point to Cloudflare's nameservers.
+
+<Image src={namecheap} alt="" className="rounded-none"/>
+
+The way you change your nameservers is dependent on your domain name provider, in the example above my domain was purchased from Namecheap, so I used [these instructions](https://www.namecheap.com/support/knowledgebase/article.aspx/767/10/how-to-change-dns-for-a-domain/) to change my nameservers to Cloudflare's nameservers.
+
+If you have changed your nameservers to Cloudflare allow some time to pass so that the DNS changes can propagate before continuing to the next step.
+
+### Create an API token
+
+We'll need to create an API token in Cloudflare with the necessary scopes, allowing Nginx Proxy Manager (or Certbot) to perform a DNS challenge.
+
+This challenge involves inserting a DNS record into our domain name residing on Cloudflare, which allows Certbot to confirm our ownership of the domain name and grant the SSL certs.
+
+From the Cloudflare dashboard, click on the user icon in the top-right corner and then `My Profile`. Navigate to `API Tokens`, and click the `Create Token` button.
+
+#### Permissions
+|   |   |   |
+|---|---|---|
+| Zone | Zone Settings | Read |
+| Zone | Zone | Read |
+| Zone | DNS | Edit |
+
+#### Zone Resources
+|   |   |
+|---|---|
+| Includes | All Zones |
+
+Use the settings above to create an API token with the required permissions and zone resources. When you're done save the token in your password manager, because we'll need it in the next step.
+
+## Generate SSL Certificates
+
+At this point, you'll have changed your nameservers or purchased a domain name from Cloudflare and generated an API token. We'll now use this API token to retrieve our SSL certificates.
+
+<Image src={nginx} alt="" className="rounded-none"/>
+
+In Nginx Proxy Manager, go to the `SSL Certificates` tab and click the `Add SSL Certificate` button. Choose the option for `Let's Encrypt`. From there, we want the SSL certificates to cover both the root domain e.g. `example.com`, and any subdomains with `*.example.com`.
+
+Next, enter your email address, Certbot will use this to notify you when your SSL certificates are about to expire. Click the `Use DNS Challenge` toggle and choose Cloudflare from the `DNS Provider` dropdown, then copy and paste the API token you created earlier. Finally, agree to the Terms of Service and click the save button to create your SSL certificates.
+
+Your SSL certificates usually expire 90 days from the date they are issued. However, as long as your Cloudflare API token is valid, Nginx Proxy Manager will automatically renew the SSL certificates for you.
+
+## Conclusion
+
+Congratulations on getting to the end of this post, you've used Let's Encrypt, Nginx Proxy Manager and Cloudflare to obtain free SSL certificates for your self-hosted or public facing websites. You've taken a step toward making the web more secure.
+
+<Image src={starshipTroopers} alt="" className="mx-auto"/>
+
+In an upcoming post, I'll explain how to protect your self-hosted services using these SSL certificates and Nginx Proxy Manager.
