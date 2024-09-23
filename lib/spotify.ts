@@ -6,7 +6,6 @@ const SPOTIFY_REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN
 const SPOTIFY_TOKEN = "https://accounts.spotify.com/api/token"
 const SPOTIFY_CURRENTLY_PLAYING = "https://api.spotify.com/v1/me/player/currently-playing"
 const SPOTIFY_RECENTLY_PLAYED = "https://api.spotify.com/v1/me/player/recently-played"
-const SPOTIFY_TOP_ARTISTS = "https://api.spotify.com/v1/me/top/artists"
 
 const basic = Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`).toString('base64')
 
@@ -53,49 +52,4 @@ export const getRecentlyPlayed = async () => {
             Authorization: `Bearer ${access_token}`
         }
     })
-}
-
-type TopArtistItem = {
-    name: string
-    uri: string
-    genres: string[]
-}
-
-type TopArtistsResponse = {
-    items: TopArtistItem[]
-}
-
-export const getTopArtist = async () => {
-    const {access_token}: Response = await getAccessToken() as Response
-
-    const response = await fetch(SPOTIFY_TOP_ARTISTS, {
-        headers: {
-            Authorization: `Bearer ${access_token}`
-        }
-    }).then(r => r.json()) as TopArtistsResponse
-
-    const artist = response.items[0].name
-    const uri = response.items[0].uri
-
-    return {
-        artist,
-        uri
-    }
-}
-
-export const getTopGenre = async () => {
-    const {access_token}: Response = await getAccessToken() as Response
-
-    const response = await fetch(SPOTIFY_TOP_ARTISTS, {
-        headers: {
-            Authorization: `Bearer ${access_token}`
-        }
-    }).then(r => r.json()) as TopArtistsResponse
-
-    let genre = response.items[0].genres[0]
-    genre = genre.charAt(0).toUpperCase() + genre.slice(1)
-
-    return {
-        genre
-    }
 }
