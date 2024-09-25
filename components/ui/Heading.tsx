@@ -13,7 +13,7 @@ export function Heading({as: Component = 'h1', children = null}: HeadingProps) {
     return (
         <Component id={createSlug(headingText)} className='group'>
             {children}
-            <Link className='ml-1 group-hover:opacity-100 opacity-0 transition-opacity ease-in'
+            <Link className='ml-1.5 group-hover:visible invisible'
                   href={`#${createSlug(headingText)}`}>#</Link>
         </Component>
     )
