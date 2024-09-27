@@ -3,15 +3,9 @@
 import useSWR from 'swr'
 import fetcher from '@/lib/fetcher'
 import Image from 'next/image'
-import Link from 'next/link'
 import clsx from 'clsx'
-import {useEffect, ReactElement, ElementType} from 'react'
-import {animate} from 'motion'
-
-type Status = {
-    as?: ElementType
-    isPlaying: boolean
-}
+import {ElementType, ReactElement} from 'react'
+import Link from 'next/link'
 
 type Artist = {
     as?: ElementType
@@ -32,76 +26,7 @@ type Album = {
 
 type Song = {
     as?: ElementType
-} & Artist & Title & Album & Status
-
-function AnimatedBars() {
-    useEffect(() => {
-        animate(
-            '#bar1',
-            {
-                transform: [
-                    'scaleY(1.0) translateY(0rem)',
-                    'scaleY(1.5) translateY(-0.082rem)',
-                    'scaleY(1.0) translateY(0rem)'
-                ]
-            },
-            {
-                duration: 1.0,
-                repeat: Infinity,
-                easing: ['ease-in-out']
-            }
-        );
-        animate(
-            '#bar2',
-            {
-                transform: [
-                    'scaleY(1.0) translateY(0rem)',
-                    'scaleY(3) translateY(-0.083rem)',
-                    'scaleY(1.0) translateY(0rem)'
-                ]
-            },
-            {
-                delay: 0.2,
-                duration: 1.5,
-                repeat: Infinity,
-                easing: ['ease-in-out']
-            }
-        );
-        animate(
-            '#bar3',
-            {
-                transform: [
-                    'scaleY(1.0)  translateY(0rem)',
-                    'scaleY(0.5) translateY(0.37rem)',
-                    'scaleY(1.0)  translateY(0rem)'
-                ]
-            },
-            {
-                delay: 0.3,
-                duration: 1.5,
-                repeat: Infinity,
-                easing: ['ease-in-out']
-            }
-        );
-    }, [])
-
-    return (
-        <div className="w-auto flex items-end overflow-hidden flex-shrink-0">
-      <span
-          id="bar1"
-          className="w-1 mr-[3px] h-2 bg-gray-300 dark:bg-green-950"
-      />
-            <span
-                id="bar2"
-                className="w-1 mr-[3px] h-1 bg-gray-300 dark:bg-green-950"
-            />
-            <span
-                id="bar3"
-                className="w-1 h-3 bg-gray-300 dark:bg-green-950"
-            />
-        </div>
-    )
-}
+} & Artist & Title & Album
 
 type PlayerStateResponse = {
     data: Song
@@ -119,13 +44,10 @@ function usePlayerState(path: string) {
     }
 }
 
-function Song({as: Component = 'div', artist, title, songUrl, album, albumImageUrl, isPlaying}: Song) {
+function Song({as: Component = 'div', artist, title, songUrl, album, albumImageUrl}: Song) {
     return (
         <Component
             className="flex items-center space-x-4">
-            {isPlaying &&
-                <AnimatedBars/>
-            }
             <Song.Album
                 album={album}
                 albumImageUrl={albumImageUrl}
@@ -134,9 +56,6 @@ function Song({as: Component = 'div', artist, title, songUrl, album, albumImageU
                 <Song.Title
                     title={title}
                     songUrl={songUrl}
-                    className={isPlaying
-                        ? 'dark:text-green-950'
-                        : 'dark:text-zinc-100'}
                 />
                 <Song.Artist artist={artist}/>
             </div>
@@ -158,7 +77,8 @@ Song.Album = function SongAlbum({album, albumImageUrl}: Album) {
 
 Song.Title = function SongTitle({as: Component = 'h2', title, songUrl, className}: Title) {
     return (
-        <Component className={clsx(className, 'text-sm font-semibold text-zinc-800 line-clamp-1 lg:line-clamp-none')}>
+        <Component
+            className={clsx(className, 'text-sm font-semibold text-zinc-800 dark:text-zinc-100 line-clamp-1 lg:line-clamp-none')}>
             <Link href={songUrl}>
                 {title}
             </Link>
@@ -189,20 +109,15 @@ Song.Skeleton = function SongSkeleton() {
 }
 
 export function SpotifyPlayer(): ReactElement | null {
-    const currentlyPlaying = usePlayerState('currently-playing')
     const lastPlayed = usePlayerState('last-played')
 
-    if (currentlyPlaying.isError || lastPlayed.isError) return null
+    if (lastPlayed.isError) return null
 
     return (
         <div className="grid">
-            {currentlyPlaying.isLoading
+            {lastPlayed.isLoading
                 ? <Song.Skeleton/>
-                : currentlyPlaying.song?.isPlaying
-                    ? <Song  {...currentlyPlaying.song}/>
-                    : lastPlayed.isLoading
-                        ? <Song.Skeleton/>
-                        : <Song {...lastPlayed.song}/>
+                : <Song {...lastPlayed.song}/>
             }
         </div>
     )
