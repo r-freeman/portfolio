@@ -7,33 +7,22 @@ import {MoonIcon} from '@/components/icons/MoonIcon'
 
 export function ThemeButton() {
     const [mounted, setMounted] = useState(false)
-    const {theme, setTheme} = useTheme()
+    const {resolvedTheme, setTheme} = useTheme()
+    let otherTheme = resolvedTheme === 'dark' ? 'light' : 'dark'
 
     useEffect(() => {
         const timeout = setTimeout(() => setMounted(true), 500)
         return () => clearTimeout(timeout)
     }, [])
 
-    function toggleTheme() {
-        let darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-        let isSystemDarkMode = darkModeMediaQuery.matches
-        let isDarkMode = theme === 'dark'
-
-        if (isDarkMode === isSystemDarkMode) {
-            setTheme('light')
-        } else {
-            setTheme('dark')
-        }
-    }
-
     if (!mounted) return <ThemeButton.Skeleton/>
 
     return (
         <button
             type="button"
-            aria-label="Toggle dark mode"
+            aria-label={mounted ? `Switch to ${otherTheme} theme` : 'Toggle theme'}
             className="group rounded-full bg-white/90 px-3 py-2 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur transition dark:bg-zinc-800/90 dark:ring-white/10 dark:hover:ring-white/20"
-            onClick={() => toggleTheme()}
+            onClick={() => setTheme(otherTheme)}
         >
             <SunIcon
                 className="h-6 w-6 fill-zinc-100 stroke-zinc-500 transition group-hover:fill-zinc-200 group-hover:stroke-zinc-700 dark:hidden [@media(prefers-color-scheme:dark)]:fill-indigo-50 [@media(prefers-color-scheme:dark)]:stroke-indigo-500 [@media(prefers-color-scheme:dark)]:group-hover:fill-indigo-50 [@media(prefers-color-scheme:dark)]:group-hover:stroke-indigo-600"/>
