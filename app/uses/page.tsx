@@ -2,7 +2,6 @@ import React, {ReactNode} from 'react'
 import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 import {Card} from '@/components/ui/Card'
 import {Section} from '@/components/ui/Section'
-import {Views} from '@/components/ui/Views';
 
 export const metadata = {
     title: 'Uses - Ryan Freeman',
@@ -117,7 +116,6 @@ export default function Uses() {
                     </Tool>
                 </ToolsSection>
             </div>
-            <Views slug="/uses" shouldUpdateViews={true} shouldRender={false}/>
         </SimpleLayout>
     )
 }

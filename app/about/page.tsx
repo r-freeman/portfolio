@@ -7,7 +7,6 @@ import {GitHubIcon, LinkedInIcon} from '@/components/icons/SocialIcons'
 import clsx from 'clsx'
 import me from '@/public/images/me.jpg'
 import awsCCPBadge from '@/public/images/aws-certified-cloud-practitioner-badge.png'
-import {Views} from '@/components/ui/Views';
 
 export const metadata = {
     title: 'About - Ryan Freeman',
@@ -130,7 +129,6 @@ export default async function About() {
                     </Link>
                 </div>
             </div>
-            <Views slug="/about" shouldUpdateViews={true} shouldRender={false}/>
         </Container>
     )
 }

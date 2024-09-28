@@ -49,7 +49,6 @@ export default async function Writing() {
                     ))}
                 </div>
             </div>
-            <Views slug="/writing" shouldUpdateViews={true} shouldRender={false}/>
         </SimpleLayout>
     )
 }
