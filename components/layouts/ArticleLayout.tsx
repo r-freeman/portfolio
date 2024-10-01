@@ -5,6 +5,7 @@ import {Prose} from '@/components/ui/Prose'
 import {Views} from '@/components/ui/Views'
 import {ArrowDownIcon} from '@/components/icons/ArrowDownIcon'
 import {formatDate} from '@/lib/formatDate'
+import ArticleNav from '@/components/ui/ArticleNav'
 
 type ArticleLayout = {
     title: string
@@ -12,7 +13,6 @@ type ArticleLayout = {
     description: string
     slug: string
     children?: ReactNode
-    ogImage?: string
 }
 
 const gradients = [
@@ -26,10 +26,8 @@ const gradients = [
 export function ArticleLayout({
                                   title,
                                   date,
-                                  description,
                                   slug,
                                   children,
-                                  ogImage
                               }: ArticleLayout) {
 
     return (
@@ -60,6 +58,7 @@ export function ArticleLayout({
                         </header>
                         <Prose className="mt-8" data-mdx-content>{children}</Prose>
                     </article>
+                    <ArticleNav slug={slug}/>
                 </div>
             </div>
         </Container>

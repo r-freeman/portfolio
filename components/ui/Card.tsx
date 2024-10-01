@@ -13,6 +13,7 @@ type Card = {
 
 type CardLink = {
     href: string
+    ariaLabel?: string
     children: ReactNode
 }
 
@@ -74,12 +75,12 @@ export function Card({
     )
 }
 
-Card.Link = function CardLink({href, children}: CardLink) {
+Card.Link = function CardLink({href, children, ariaLabel}: CardLink) {
     return (
         <>
             <div
                 className="absolute -inset-y-6 -inset-x-4 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 dark:bg-zinc-800/50 sm:-inset-x-6 sm:rounded-2xl"/>
-            <Link href={href}>
+            <Link href={href} aria-label={ariaLabel}>
                 <span className="absolute -inset-y-6 -inset-x-4 z-20 sm:-inset-x-6 sm:rounded-2xl"/>
                 <span className="relative z-10">{children}</span>
             </Link>
@@ -89,7 +90,8 @@ Card.Link = function CardLink({href, children}: CardLink) {
 
 Card.Title = function CardTitle({as: Component = 'h2', href, children}: CardTitle) {
     return (
-        <Component className="group-hover:text-indigo-500 text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
+        <Component
+            className="group-hover:text-indigo-500 text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
             {href ? <Card.Link href={href}>{children}</Card.Link> : children}
         </Component>
     )
