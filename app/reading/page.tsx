@@ -4,7 +4,7 @@ import React from 'react';
 
 export const metadata = {
     title: 'Reading - Ryan Freeman',
-    description: 'I have many leather-bound books, take a look at my book recommendations.'
+    description: 'Take a look at my curated reading list.'
 }
 
 type Book = {
@@ -69,7 +69,7 @@ export default async function Reading() {
 
     return (
         <SimpleLayout
-            heading="What's on my bookshelf"
+            heading="Books I'm reading at the moment"
             description={metadata.description}
             gradient="bg-gradient-to-r from-sky-400 to-blue-500">
             <ul
