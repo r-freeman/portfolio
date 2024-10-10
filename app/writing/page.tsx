@@ -6,9 +6,28 @@ import {formatDate} from '@/lib/formatDate'
 import {getAllArticles} from '@/lib/getAllArticles'
 import type {Article} from '@/types'
 
-export const metadata = {
+const meta = {
     title: 'Writing - Ryan Freeman',
+    heading: 'Writing on software engineering, and everything in between.',
     description: 'All of my long-form thoughts on software engineering, and more, displayed in chronological order.'
+}
+
+export const metadata = {
+    ...meta,
+    openGraph: {
+        title: meta.title,
+        description: meta.description,
+        images: [
+            {
+                url: `/api/og-image?text=${meta.heading}`,
+                width: 1200,
+                height: 600,
+                alt: meta.heading,
+                type: 'image/png'
+            }
+        ],
+        type: 'website'
+    }
 }
 
 function Article({article}: { article: Article }) {
@@ -38,7 +57,7 @@ export default async function Writing() {
 
     return (
         <SimpleLayout
-            heading="Writing on software engineering, and everything in between."
+            heading={metadata.heading}
             description={metadata.description}
             gradient="bg-gradient-to-r from-pink-500 to-violet-500"
         >

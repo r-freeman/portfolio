@@ -17,7 +17,7 @@ const gradients = [
 export async function GET(request: Request) {
     const fontData = await font
     const {searchParams} = new URL(request.url)
-    const title = searchParams.get('title')
+    const text = searchParams.get('text')
 
     return new ImageResponse(
         (
@@ -44,7 +44,7 @@ export async function GET(request: Request) {
                         '-webkit-background-clip': 'text',
                         color: 'transparent',
                     }}>
-                    {title}
+                    {text}
                 </div>
             </div>
         ),
@@ -59,5 +59,5 @@ export async function GET(request: Request) {
                 }
             ]
         }
-    );
+    )
 }

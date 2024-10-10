@@ -1,0 +1,145 @@
+import {ArticleLayout} from '../../../components/layouts/ArticleLayout'
+import {createSlug} from '../../../lib/createSlug'
+import Image from 'next/image'
+import ogMetaTags from './open-graph-meta-tags.png'
+
+export const meta = {
+    authors: 'Ryan Freeman',
+    title: 'Generating dynamic Open Graph images with Next.js',
+    date: '2024-10-10',
+    description: 'In this post I\'ll talk about how I created dynamic, eye-catching Open Graph images with Next.js for this website.'
+}
+
+export const metadata = {
+    ...meta,
+    openGraph: {
+        title: meta.title,
+        description: meta.description,
+        images: [
+            {
+                url: `/api/og-image?text=${meta.title}`,
+                width: 1200,
+                height: 600,
+                alt: meta.title,
+                type: 'image/png'
+            }
+        ],
+        type: 'website'
+    }
+}
+
+export default (props) => <ArticleLayout
+    title={metadata.title}
+    date={metadata.date}
+    description={metadata.description}
+    slug={createSlug(metadata.title)}
+    {...props} />
+
+In this post I\'ll talk about how I created dynamic, eye-catching Open Graph images with Next.js for this website.
+
+## What is Open Graph?
+
+[Open Graph](https://ogp.me/) is the web standard that allows website owners to manage the appearance of their content when it is shared on social media platforms.
+
+In other words, it enables website owners to attract readers to their content, similar to how thumbnails on YouTube videos attract our attention and entice us to click on a video.
+
+## Show me the code
+
+Alright, let\'s see how this was achieved in code. Taking the new [Services page](/services) as an example, the first step was to create a new API route located at `/api/og-image`.
+
+### API route
+
+This API route should allow me to specify some text like a page heading and dynamically generate an image, which I can then reference using the Open Graph meta tags on each page.
+
+```javascript
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url)
+    const text = searchParams.get('text')
+```
+
+This was straightforward to implement, here the API route responds to a `GET` request and accepts a `text` parameter in the url. For example, `/api/og-image?text=hello,world`.
+
+```javascript
+return new ImageResponse(
+    (
+        <div
+            style={{
+                fontSize: 64,
+                background: 'black',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                textAlign: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+                lineHeight: '1',
+                padding: '0 128px'
+            }}
+        >
+            <div
+                style={{
+                    backgroundImage: 'radial-gradient(at right top, rgb(221, 214, 254), rgb(239, 68, 68), rgb(251, 146, 60))',
+                    backgroundClip: 'text',
+                    // @ts-ignore
+                    '-webkit-background-clip': 'text',
+                    color: 'transparent'
+                }}>
+                {text}
+            </div>
+        </div>
+    ),
+    {
+        width: 1200,
+        height: 600
+    }
+)
+```
+
+Next, I thought about how I wanted the Open Graph image to look. To keep things simple, I settled on a black background with the text centered both horizontally and vertically.
+
+This was achieved using the [ImageReponse](https://nextjs.org/docs/app/api-reference/functions/image-response) constructor, which allows you to create and style dynamic images using JSX and CSS.
+
+<Image src={`/api/og-image?text=hello,world`} width="1200" height="600" alt=""/>
+
+When you visit the API route and specify some text in the url, you'll get something that looks like the image above. Next, I'll demonstrate how I added the Open Graph meta tags to the Services page to render this dynamic image for social media platforms.
+
+### Open Graph Meta Tags
+
+The last step was to include the Open Graph meta tags on the Services page so that when it's shared, an eye-catching image will appear to draw readers to the content.
+
+```javascript
+const meta = {
+    title: 'Services - Ryan Freeman',
+    heading: 'I offer a wide range of digital services to elevate and transform your business',
+    description: 'Whether you need a WordPress website, React app, AWS support or odd coding jobs, I\'m here to help. ' +
+        'As an experienced software engineer, I produce high-quality software that will deliver immediate value for you and your customers.',
+}
+
+export const metadata = {
+    ...meta,
+    openGraph: {
+        title: meta.title,
+        description: meta.description,
+        images: [
+            {
+                url: `/api/og-image?text=${meta.heading}`,
+                width: 1200,
+                height: 600,
+                alt: meta.heading,
+                type: 'image/png'
+            }
+        ],
+        type: 'website'
+    }
+}
+```
+
+By exporting the `metadata` object, I was able to specify the Open Graph meta tags for this page. In this example, you can see how I’m fetching data from the new API route, which generates a dynamic image featuring the page heading, sized at 1200 by 600 pixels.
+
+<Image src={ogMetaTags} alt=""/>
+
+Lastly, I can verify everything is working correctly by loading the page in the browser.
+
+## Conclusion
+
+In this post, I demonstrated how you can create dynamic Open Graph images with Next.js for creating content previews which engage readers and attract them to your content.

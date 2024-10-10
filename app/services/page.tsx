@@ -24,13 +24,14 @@ export const metadata = {
         description: meta.description,
         images: [
             {
-                url: `/api/og-image?title=${meta.heading}`,
+                url: `/api/og-image?text=${meta.heading}`,
                 width: 1200,
                 height: 600,
                 alt: meta.heading,
                 type: 'image/png'
             }
-        ]
+        ],
+        type: 'website'
     }
 }
 
@@ -98,7 +99,7 @@ export default function Services() {
 
     return (
         <SimpleLayout
-            heading="I offer a wide range of digital services to elevate and transform your business"
+            heading={metadata.heading}
             description={metadata.description}
             gradient="bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400">
             <ul
