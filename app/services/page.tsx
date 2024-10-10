@@ -8,10 +8,12 @@ import {CodeIcon} from '@/components/icons/CodeIcon'
 import {ShieldIcon} from '@/components/icons/ShieldIcon'
 import {EmailIcon} from '@/components/icons/EmailIcon'
 import {RocketIcon} from '@/components/icons/RocketIcon'
+import {ShoppingBagIcon} from '@/components/icons/ShoppingBagIcon'
 
 export const metadata = {
     title: 'Services - Ryan Freeman',
-    description: 'Whether you need a WordPress website, React app, AWS support or odd coding jobs, I\'m here to help. As an experienced software engineer, I produce high-quality software that will deliver immediate value for you and your customers.'
+    description: 'Whether you need a WordPress website, React app, AWS support or odd coding jobs, I\'m here to help. ' +
+        'As an experienced software engineer, I produce high-quality software that will deliver immediate value for you and your customers.'
 }
 
 type Services = {
@@ -32,7 +34,7 @@ const iconStyles = `
     group-hover:stroke-indigo-500
 `
 
-export default async function Services() {
+export default function Services() {
     const services: Services[] = [
         {
             title: 'AWS',
@@ -43,6 +45,11 @@ export default async function Services() {
             title: 'Databases',
             description: 'Not all database technologies are the same, I\'ll help you choose the right database for your use case.',
             icon: () => <DatabaseIcon className={iconStyles}/>
+        },
+        {
+            title: 'Ecommerce',
+            description: 'From WooCommerce to Shopify, I can assist with setting up and managing your online store, allowing you to focus on growing your sales.',
+            icon: () => <ShoppingBagIcon className={iconStyles}/>
         },
         {
             title: 'WordPress',
