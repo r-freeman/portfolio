@@ -2,11 +2,16 @@ import React, {ReactNode} from 'react'
 import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 import {Card} from '@/components/ui/Card'
 import {Section} from '@/components/ui/Section'
+import {metadata as _metadata} from '@/lib/generateMetadata'
 
-export const metadata = {
-    title: 'Uses - Ryan Freeman',
-    description: 'Software I use, equipment that makes my job easier, and other things I recommend.'
+const meta = {
+    title: 'Uses',
+    heading: 'Software I use, equipment that makes my job easier, and other things I recommend.',
+    description: 'I get asked a lot about the things I use to build software and stay productive. Here’s a big list of all of my favourite gear.',
+    type: 'website'
 }
+
+export const metadata = _metadata({...meta, heading: meta.heading})
 
 function ToolsSection({children, title}: { children: ReactNode, title: string }) {
     return (
@@ -32,8 +37,8 @@ function Tool({title, href, children}: { title: string, href: string, children: 
 export default function Uses() {
     return (
         <SimpleLayout
-            heading="Software I use, equipment that makes my job easier, and other things I recommend."
-            description="I get asked a lot about the things I use to build software and stay productive. Here’s a big list of all of my favourite gear."
+            heading={meta.heading}
+            description={meta.description}
             gradient="bg-gradient-to-r from-orange-400 to-rose-400">
             <div className="space-y-20">
                 <ToolsSection title="Workstation">

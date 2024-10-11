@@ -23,17 +23,3 @@ export type Repo = {
         color: string
     }
 }
-
-export type Metric = {
-    title: string
-    value: number | string
-    group: string
-    href: string
-}
-
-export type MetricGroup = [
-    {
-        groupName: string,
-        groupItems: Metric[]
-    }
-]

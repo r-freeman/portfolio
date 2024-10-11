@@ -8,6 +8,18 @@ import {GitHubIcon, LinkedInIcon} from '@/components/icons/SocialIcons'
 import {getAllArticles} from '@/lib/getAllArticles'
 import {formatDate} from '@/lib/formatDate'
 import type {Article} from '@/types'
+import {metadata as _metadata} from '@/lib/generateMetadata'
+
+const meta = {
+    title: 'Ryan Freeman - Full-stack software engineer based in Dublin, Ireland.',
+    heading: 'Full-stack software engineer who enjoys building cloud-native applications.',
+    description: 'Hi. I\'m Ryan, a software engineer based in Dublin, Ireland. I\'m currently working in the aviation industry for Aer Lingus. ' +
+        'I am passionate about personal growth and progressing in my career. ' +
+        'This is my personal website where you can learn more about me, read articles I\'ve written and see projects I\'ve worked on.',
+    type: 'website'
+}
+
+export const metadata = _metadata({...meta, heading: meta.heading})
 
 function Article(article: Article) {
     return (
@@ -41,13 +53,10 @@ export default async function Home() {
             <Container className="mt-9">
                 <div className="max-w-2xl">
                     <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl bg-clip-text dark:text-transparent bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500">
-                        Full-stack software engineer who enjoys building cloud-native applications.
+                        {meta.heading}
                     </h1>
                     <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-                        Hi. I&apos;m Ryan, a software engineer based in Dublin, Ireland. I&apos;m currently working in the
-                        aviation industry for Aer Lingus. I am passionate about personal growth and progressing in my career. This
-                        is my personal website where you can learn more about me, read articles I&apos;ve written and see projects
-                        I&apos;ve worked on.
+                        {meta.description}
                     </p>
                     <div className="mt-6 flex gap-6">
                         <SocialLink

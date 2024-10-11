@@ -1,20 +1,23 @@
 import {ArticleLayout} from '../../../components/layouts/ArticleLayout'
 import {createSlug} from '../../../lib/createSlug'
+import {metadata as _metadata} from '../../../lib/generateMetadata'
 import steamLibrary from './024a06f7b503c5ae8f9442ac521e06b9c9bc21e8.png'
 import Image from 'next/image'
 
-export const metadata = {
+export const meta = {
     authors: 'Ryan Freeman',
     title: 'Using Tailscale to bypass Steam Families restrictions',
     date: '2024-09-14',
     description: 'This past week, Steam launched Steam Families, which allows Steam account owners to share their game library with up to six members of their family.'
 }
 
+export const metadata = _metadata({title: meta.title, heading: meta.title, description: meta.description, type: 'article'})
+
 export default (props) => <ArticleLayout
-    title={metadata.title}
-    date={metadata.date}
-    description={metadata.description}
-    slug={createSlug(metadata.title)}
+    title={meta.title}
+    date={meta.date}
+    description={meta.description}
+    slug={createSlug(meta.title)}
     {...props} />
 
 <Image src={steamLibrary} alt=""/>

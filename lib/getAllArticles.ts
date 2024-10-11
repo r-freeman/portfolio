@@ -2,12 +2,12 @@ import glob from 'fast-glob'
 import * as path from 'path'
 
 async function importArticle(articleFilename: string) {
-    let {metadata, default: component} = await import(
+    let {meta, default: component} = await import(
         `/app/writing/${articleFilename}`
         )
     return {
         slug: articleFilename.replace(/(\/page)?\.mdx$/, ''),
-        ...metadata,
+        ...meta,
         component,
     }
 }

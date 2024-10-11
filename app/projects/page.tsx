@@ -4,12 +4,17 @@ import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 import {Card} from '@/components/ui/Card'
 import {getPinnedRepos} from '@/lib/github'
 import {numberFormat} from '@/lib/numberFormat'
-import React from 'react';
+import {metadata as _metadata} from '@/lib/generateMetadata'
+import React from 'react'
 
-export const metadata = {
-    title: 'Projects - Ryan Freeman',
-    description: 'Here\'s a selection of academic and personal projects that I have worked on. Many of them are open-source, so if you see something that piques your interest, check out the code and contribute if you have ideas for how it can be improved.'
+const meta = {
+    title: 'Projects',
+    heading: 'Things I\'ve made and projects I\'ve worked on.',
+    description: 'Here\'s a selection of academic and personal projects that I have worked on. Many of them are open-source, so if you see something that piques your interest, check out the code and contribute if you have ideas for how it can be improved.',
+    type: 'website'
 }
+
+export const metadata = _metadata({...meta, heading: meta.heading})
 
 export const revalidate = 0
 
@@ -18,8 +23,8 @@ export default async function Projects() {
 
     return (
         <SimpleLayout
-            heading="Things I've made and projects I've worked on."
-            description={metadata.description}
+            heading={meta.heading}
+            description={meta.description}
             gradient="bg-gradient-to-r from-sky-400 to-blue-500">
             <ul
                 role="list"

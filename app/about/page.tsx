@@ -4,14 +4,21 @@ import Image from 'next/image'
 import {Container} from '@/components/common/Container'
 import {MailIcon} from '@/components/icons/MailIcon'
 import {GitHubIcon, LinkedInIcon} from '@/components/icons/SocialIcons'
+import {metadata as _metadata} from '@/lib/generateMetadata'
 import clsx from 'clsx'
 import me from '@/public/images/me.jpg'
 import awsCCPBadge from '@/public/images/aws-certified-cloud-practitioner-badge.png'
 
-export const metadata = {
-    title: 'About - Ryan Freeman',
-    description: 'I’m Ryan. I live in Dublin, Ireland where I work as a software engineer.'
+const meta = {
+    title: 'About',
+    heading: 'I\'m Ryan. I live in Dublin, Ireland where I work as a software engineer.',
+    description: 'I\'ve always had an affinity for technology, and loved making things for as long as I can remember. ' +
+        'My first computer was an Amstrad CPC 464 way back in the 90s, which is ancient by modern standards. ' +
+        'My passion for tinkering continued through my teens and into adulthood where I eventually found my way into software engineering.',
+    type: 'website'
 }
+
+export const metadata = _metadata({...meta, heading: meta.heading})
 
 function SocialLink({
                         className,
@@ -55,14 +62,11 @@ export default async function About() {
                 </div>
                 <div className="lg:order-first lg:row-span-2">
                     <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl bg-clip-text dark:text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">
-                        I’m Ryan. I live in Dublin, Ireland where I work as a software engineer.
+                        {meta.heading}
                     </h1>
                     <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
                         <p>
-                            I&apos;ve always had an affinity for technology, and loved making things for as long as I can
-                            remember. My first computer was an Amstrad CPC 464 way back in the 90s, which is ancient by modern
-                            standards. My passion for tinkering continued through my teens and into adulthood where I
-                            eventually found my way into software engineering.
+                            {meta.description}
                         </p>
                         <p>
                             In terms of my experience to date, I have a strong foundation in both front-end and back-end

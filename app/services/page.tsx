@@ -9,31 +9,17 @@ import {ShieldIcon} from '@/components/icons/ShieldIcon'
 import {EmailIcon} from '@/components/icons/EmailIcon'
 import {RocketIcon} from '@/components/icons/RocketIcon'
 import {ShoppingBagIcon} from '@/components/icons/ShoppingBagIcon'
+import {metadata as _metadata} from '@/lib/generateMetadata'
 
 const meta = {
-    title: 'Services - Ryan Freeman',
+    title: 'Services',
     heading: 'I offer a wide range of digital services to elevate and transform your business',
     description: 'Whether you need a WordPress website, React app, AWS support or odd coding jobs, I\'m here to help. ' +
         'As an experienced software engineer, I produce high-quality software that will deliver immediate value for you and your customers.',
+    type: 'website'
 }
 
-export const metadata = {
-    ...meta,
-    openGraph: {
-        title: meta.title,
-        description: meta.description,
-        images: [
-            {
-                url: `/api/og-image?text=${meta.heading}`,
-                width: 1200,
-                height: 600,
-                alt: meta.heading,
-                type: 'image/png'
-            }
-        ],
-        type: 'website'
-    }
-}
+export const metadata = _metadata({...meta, heading: meta.heading})
 
 type Services = {
     title: string
@@ -99,8 +85,8 @@ export default function Services() {
 
     return (
         <SimpleLayout
-            heading={metadata.heading}
-            description={metadata.description}
+            heading={meta.heading}
+            description={meta.description}
             gradient="bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400">
             <ul
                 role="list"

@@ -4,31 +4,17 @@ import {Card} from '@/components/ui/Card'
 import {Views} from '@/components/ui/Views'
 import {formatDate} from '@/lib/formatDate'
 import {getAllArticles} from '@/lib/getAllArticles'
+import {metadata as _metadata} from '@/lib/generateMetadata'
 import type {Article} from '@/types'
 
 const meta = {
-    title: 'Writing - Ryan Freeman',
+    title: 'Writing',
     heading: 'Writing on software engineering, and everything in between.',
-    description: 'All of my long-form thoughts on software engineering, and more, displayed in chronological order.'
+    description: 'All of my long-form thoughts on software engineering, and more, displayed in chronological order.',
+    type: 'website'
 }
 
-export const metadata = {
-    ...meta,
-    openGraph: {
-        title: meta.title,
-        description: meta.description,
-        images: [
-            {
-                url: `/api/og-image?text=${meta.heading}`,
-                width: 1200,
-                height: 600,
-                alt: meta.heading,
-                type: 'image/png'
-            }
-        ],
-        type: 'website'
-    }
-}
+export const metadata = _metadata({...meta, heading: meta.heading})
 
 function Article({article}: { article: Article }) {
     return (
@@ -57,8 +43,8 @@ export default async function Writing() {
 
     return (
         <SimpleLayout
-            heading={metadata.heading}
-            description={metadata.description}
+            heading={meta.heading}
+            description={meta.description}
             gradient="bg-gradient-to-r from-pink-500 to-violet-500"
         >
             <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none">

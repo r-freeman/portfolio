@@ -1,21 +1,24 @@
 import {ArticleLayout} from '../../../components/layouts/ArticleLayout'
 import {createSlug} from '../../../lib/createSlug'
+import {metadata as _metadata} from '../../../lib/generateMetadata'
 import raspberryPi from './vishnu-mohanan-rZKdS0wI8Ks-unsplash.jpg'
 import casaOS from './casaos.png'
 import Image from 'next/image'
 
-export const metadata = {
+export const meta = {
     authors: 'Ryan Freeman',
     title: 'Migrating from Vercel to Raspberry Pi 5',
     date: '2024-08-23',
     description: 'Recently, I decided to migrate this website from Vercel to a self-hosted environment using a Raspberry Pi 5. This transition was driven by several motivations, such as lowering costs and having greater control over the software and hardware that I run.'
 }
 
+export const metadata = _metadata({title: meta.title, heading: meta.title, description: meta.description, type: 'article'})
+
 export default (props) => <ArticleLayout
-    title={metadata.title}
-    date={metadata.date}
-    description={metadata.description}
-    slug={createSlug(metadata.title)}
+    title={meta.title}
+    date={meta.date}
+    description={meta.description}
+    slug={createSlug(meta.title)}
     {...props} />
 
 <Image src={raspberryPi} alt=""/>

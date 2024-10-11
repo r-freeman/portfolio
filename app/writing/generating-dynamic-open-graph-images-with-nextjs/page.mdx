@@ -2,6 +2,7 @@ import {ArticleLayout} from '../../../components/layouts/ArticleLayout'
 import {createSlug} from '../../../lib/createSlug'
 import Image from 'next/image'
 import ogMetaTags from './open-graph-meta-tags.png'
+import {metadata as _metadata} from '../../../lib/generateMetadata'
 
 export const meta = {
     authors: 'Ryan Freeman',
@@ -10,29 +11,13 @@ export const meta = {
     description: 'In this post I\'ll talk about how I created dynamic, eye-catching Open Graph images with Next.js for this website.'
 }
 
-export const metadata = {
-    ...meta,
-    openGraph: {
-        title: meta.title,
-        description: meta.description,
-        images: [
-            {
-                url: `/api/og-image?text=${meta.title}`,
-                width: 1200,
-                height: 600,
-                alt: meta.title,
-                type: 'image/png'
-            }
-        ],
-        type: 'website'
-    }
-}
+export const metadata = _metadata({title: meta.title, heading: meta.title, description: meta.description, type: 'article'})
 
 export default (props) => <ArticleLayout
-    title={metadata.title}
-    date={metadata.date}
-    description={metadata.description}
-    slug={createSlug(metadata.title)}
+    title={meta.title}
+    date={meta.date}
+    description={meta.description}
+    slug={createSlug(meta.title)}
     {...props} />
 
 In this post I\'ll talk about how I created dynamic, eye-catching Open Graph images with Next.js for this website.
@@ -138,7 +123,7 @@ By exporting the `metadata` object, I was able to specify the Open Graph meta ta
 
 <Image src={ogMetaTags} alt=""/>
 
-Lastly, I can verify everything is working correctly by loading the page in the browser.
+Lastly, I can verify everything is working correctly by loading the Services page in the browser and examining the Open Graph meta tags.
 
 ## Conclusion
 

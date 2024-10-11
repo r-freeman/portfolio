@@ -29,11 +29,11 @@ export async function GET(request: Request) {
                     width: '100%',
                     height: '100%',
                     display: 'flex',
-                    textAlign: 'center',
+                    textAlign: 'left',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    lineHeight: '1',
-                    padding: '0 128px'
+                    lineHeight: '1.1',
+                    padding: '0 64px'
                 }}
             >
                 <div

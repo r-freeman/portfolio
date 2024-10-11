@@ -6,7 +6,10 @@ import {Footer} from '@/components/common/Footer'
 import '@/styles/tailwind.css'
 
 export const metadata = {
-    title: 'Ryan Freeman - Full-stack software engineer from Dublin, Ireland.',
+    title: {
+        default: 'Ryan Freeman - Full-stack software engineer based in Dublin, Ireland.',
+        template: '%s - Ryan Freeman'
+    },
     description: 'Full-stack software engineer who enjoys building cloud-native applications.',
     metadataBase: new URL('https://ryanfreeman.dev'),
     alternates: {

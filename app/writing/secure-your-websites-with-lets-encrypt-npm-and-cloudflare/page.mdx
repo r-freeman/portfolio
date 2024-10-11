@@ -1,23 +1,26 @@
 import Image from 'next/image'
 import {ArticleLayout} from '../../../components/layouts/ArticleLayout'
 import {createSlug} from '../../../lib/createSlug'
+import {metadata as _metadata} from '../../../lib/generateMetadata'
 import locks from './mariia-shalabaieva-zVC8A0CrTZ0-unsplash.jpg'
 import namecheap from './namecheap-change-nameservers.png'
 import nginx from './nginx-proxy-manager.png'
 import starshipTroopers from './starship-troopers.gif'
 
-export const metadata = {
+export const meta = {
     authors: 'Ryan Freeman',
     title: 'Secure your websites with Let\'s Encrypt, NPM and Cloudflare',
     date: '2024-09-21',
     description: 'SSL/TLS is the encryption standard or protocol which encrypts the session between a website (server) and the browser (client). This protects us from potential man-in-the-middle attacks whereby an attacker could eavesdrop on the session and see all the traffic and data exchanged in the clear.'
 }
 
+export const metadata = _metadata({title: meta.title, heading: meta.title, description: meta.description, type: 'article'})
+
 export default (props) => <ArticleLayout
-    title={metadata.title}
-    date={metadata.date}
-    description={metadata.description}
-    slug={createSlug(metadata.title)}
+    title={meta.title}
+    date={meta.date}
+    description={meta.description}
+    slug={createSlug(meta.title)}
     {...props} />
 
 <Image src={locks} alt=""/>

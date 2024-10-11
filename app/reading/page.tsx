@@ -1,11 +1,16 @@
 import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 import {Card} from '@/components/ui/Card'
-import React from 'react';
+import React from 'react'
+import {metadata as _metadata} from '@/lib/generateMetadata'
 
-export const metadata = {
-    title: 'Reading - Ryan Freeman',
-    description: 'Take a look at my curated reading list.'
+const meta = {
+    title: 'Reading',
+    heading: 'Books I\'m reading at the moment',
+    description: 'Take a look at my curated reading list.',
+    type: 'website'
 }
+
+export const metadata = _metadata({...meta, heading: meta.heading})
 
 type Book = {
     title: string
@@ -69,8 +74,8 @@ export default async function Reading() {
 
     return (
         <SimpleLayout
-            heading="Books I'm reading at the moment"
-            description={metadata.description}
+            heading={meta.heading}
+            description={meta.description}
             gradient="bg-gradient-to-r from-sky-400 to-blue-500">
             <ul
                 role="list"
