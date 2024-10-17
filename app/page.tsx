@@ -16,7 +16,10 @@ const meta = {
     description: 'Hi. I\'m Ryan, a software engineer based in Dublin, Ireland. I\'m currently working in the aviation industry for Aer Lingus. ' +
         'I am passionate about personal growth and progressing in my career. ' +
         'This is my personal website where you can learn more about me, read articles I\'ve written and see projects I\'ve worked on.',
-    type: 'website'
+    type: 'website',
+    alternates: {
+        canonical: '/'
+    }
 }
 
 export const metadata = _metadata({...meta, heading: meta.heading})

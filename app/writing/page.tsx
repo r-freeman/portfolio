@@ -11,7 +11,10 @@ const meta = {
     title: 'Writing',
     heading: 'Writing on software engineering, and everything in between.',
     description: 'All of my long-form thoughts on software engineering, and more, displayed in chronological order.',
-    type: 'website'
+    type: 'website',
+    alternates: {
+        canonical: '/writing'
+    }
 }
 
 export const metadata = _metadata({...meta, heading: meta.heading})

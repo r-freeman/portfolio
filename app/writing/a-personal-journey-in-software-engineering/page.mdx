@@ -6,10 +6,19 @@ export const meta = {
     authors: 'Ryan Freeman',
     title: 'A personal journey in software engineering',
     date: '2022-12-04',
-    description: 'Hello there! If you\'re reading this, you\'ve likely stumbled upon my website — welcome! My name is Ryan Freeman, and I\'m a full-stack developer with a passion for creating intuitive and dynamic web applications.'
+    description: 'Hello there! If you\'re reading this, you\'ve likely stumbled upon my website — welcome! My name is Ryan Freeman, and I\'m a full-stack developer with a passion for creating intuitive and dynamic web applications.',
+    alternates: {
+        canonical: `/writing/${createSlug('A personal journey in software engineering')}`
+    }
 }
 
-export const metadata = _metadata({title: meta.title, heading: meta.title, description: meta.description, type: 'article'})
+export const metadata = _metadata({
+    title: meta.title,
+    heading: meta.title,
+    description: meta.description,
+    type: 'article',
+    alternates: meta.alternates
+})
 
 export default (props) => <ArticleLayout
     title={meta.title}

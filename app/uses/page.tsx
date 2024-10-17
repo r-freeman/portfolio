@@ -8,7 +8,10 @@ const meta = {
     title: 'Uses',
     heading: 'Software I use, equipment that makes my job easier, and other things I recommend.',
     description: 'I get asked a lot about the things I use to build software and stay productive. Here’s a big list of all of my favourite gear.',
-    type: 'website'
+    type: 'website',
+    alternates: {
+        canonical: '/uses'
+    }
 }
 
 export const metadata = _metadata({...meta, heading: meta.heading})

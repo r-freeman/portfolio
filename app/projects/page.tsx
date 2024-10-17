@@ -11,7 +11,10 @@ const meta = {
     title: 'Projects',
     heading: 'Things I\'ve made and projects I\'ve worked on.',
     description: 'Here\'s a selection of academic and personal projects that I have worked on. Many of them are open-source, so if you see something that piques your interest, check out the code and contribute if you have ideas for how it can be improved.',
-    type: 'website'
+    type: 'website',
+    alternates: {
+        canonical: '/projects'
+    }
 }
 
 export const metadata = _metadata({...meta, heading: meta.heading})

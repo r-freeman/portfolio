@@ -8,10 +8,19 @@ export const meta = {
     authors: 'Ryan Freeman',
     title: 'Generating dynamic Open Graph images with Next.js',
     date: '2024-10-10',
-    description: 'In this post I\'ll talk about how I created dynamic, eye-catching Open Graph images with Next.js for this website.'
+    description: 'In this post I\'ll talk about how I created dynamic, eye-catching Open Graph images with Next.js for this website.',
+    alternates: {
+        canonical: `/writing/${createSlug('Generating dynamic Open Graph images with Next.js')}`
+    }
 }
 
-export const metadata = _metadata({title: meta.title, heading: meta.title, description: meta.description, type: 'article'})
+export const metadata = _metadata({
+    title: meta.title,
+    heading: meta.title,
+    description: meta.description,
+    type: 'article',
+    alternates: meta.alternates
+})
 
 export default (props) => <ArticleLayout
     title={meta.title}

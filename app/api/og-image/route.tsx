@@ -25,7 +25,7 @@ export async function GET(request: Request) {
                 style={{
                     fontSize: 64,
                     fontFamily: 'Inter',
-                    background: 'black',
+                    background: '#0a0a0a',
                     width: '100%',
                     height: '100%',
                     display: 'flex',

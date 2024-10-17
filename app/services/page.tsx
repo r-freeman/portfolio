@@ -16,7 +16,10 @@ const meta = {
     heading: 'I offer a wide range of digital services to elevate and transform your business',
     description: 'Whether you need a WordPress website, React app, AWS support or odd coding jobs, I\'m here to help. ' +
         'As an experienced software engineer, I produce high-quality software that will deliver immediate value for you and your customers.',
-    type: 'website'
+    type: 'website',
+    alternates: {
+        canonical: '/services'
+    }
 }
 
 export const metadata = _metadata({...meta, heading: meta.heading})

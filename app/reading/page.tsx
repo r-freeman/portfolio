@@ -7,7 +7,10 @@ const meta = {
     title: 'Reading',
     heading: 'Books I\'m reading at the moment',
     description: 'Take a look at my curated reading list.',
-    type: 'website'
+    type: 'website',
+    alternates: {
+        canonical: '/reading'
+    }
 }
 
 export const metadata = _metadata({...meta, heading: meta.heading})

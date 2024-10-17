@@ -8,10 +8,19 @@ export const meta = {
     authors: 'Ryan Freeman',
     title: 'Using Tailscale to bypass Steam Families restrictions',
     date: '2024-09-14',
-    description: 'This past week, Steam launched Steam Families, which allows Steam account owners to share their game library with up to six members of their family.'
+    description: 'This past week, Steam launched Steam Families, which allows Steam account owners to share their game library with up to six members of their family.',
+    alternates: {
+        canonical: `/writing/${createSlug('Using Tailscale to bypass Steam Families restrictions')}`
+    }
 }
 
-export const metadata = _metadata({title: meta.title, heading: meta.title, description: meta.description, type: 'article'})
+export const metadata = _metadata({
+    title: meta.title,
+    heading: meta.title,
+    description: meta.description,
+    type: 'article',
+    alternates: meta.alternates
+})
 
 export default (props) => <ArticleLayout
     title={meta.title}

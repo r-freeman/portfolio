@@ -15,7 +15,10 @@ const meta = {
     description: 'I\'ve always had an affinity for technology, and loved making things for as long as I can remember. ' +
         'My first computer was an Amstrad CPC 464 way back in the 90s, which is ancient by modern standards. ' +
         'My passion for tinkering continued through my teens and into adulthood where I eventually found my way into software engineering.',
-    type: 'website'
+    type: 'website',
+    alternates: {
+        canonical: '/about'
+    }
 }
 
 export const metadata = _metadata({...meta, heading: meta.heading})

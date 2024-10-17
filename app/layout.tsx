@@ -11,10 +11,7 @@ export const metadata = {
         template: '%s - Ryan Freeman'
     },
     description: 'Full-stack software engineer who enjoys building cloud-native applications.',
-    metadataBase: new URL('https://ryanfreeman.dev'),
-    alternates: {
-        canonical: '/'
-    }
+    metadataBase: new URL('https://ryanfreeman.dev')
 }
 
 export default function RootLayout({children}: { children: ReactNode }) {

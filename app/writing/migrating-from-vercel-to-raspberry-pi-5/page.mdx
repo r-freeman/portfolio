@@ -9,10 +9,19 @@ export const meta = {
     authors: 'Ryan Freeman',
     title: 'Migrating from Vercel to Raspberry Pi 5',
     date: '2024-08-23',
-    description: 'Recently, I decided to migrate this website from Vercel to a self-hosted environment using a Raspberry Pi 5. This transition was driven by several motivations, such as lowering costs and having greater control over the software and hardware that I run.'
+    description: 'Recently, I decided to migrate this website from Vercel to a self-hosted environment using a Raspberry Pi 5. This transition was driven by several motivations, such as lowering costs and having greater control over the software and hardware that I run.',
+    alternates: {
+        canonical: `/writing/${createSlug('Migrating from Vercel to Raspberry Pi 5')}`
+    }
 }
 
-export const metadata = _metadata({title: meta.title, heading: meta.title, description: meta.description, type: 'article'})
+export const metadata = _metadata({
+    title: meta.title,
+    heading: meta.title,
+    description: meta.description,
+    type: 'article',
+    alternates: meta.alternates
+})
 
 export default (props) => <ArticleLayout
     title={meta.title}
