@@ -11,7 +11,16 @@ export const meta = {
     description: 'This past week, Steam launched Steam Families, which allows Steam account owners to share their game library with up to six members of their family.',
     alternates: {
         canonical: `/writing/${createSlug('Using Tailscale to bypass Steam Families restrictions')}`
-    }
+    },
+    images: [
+        {
+            url: `/images/024a06f7b503c5ae8f9442ac521e06b9c9bc21e8.png`,
+            width: 1200,
+            height: 600,
+            alt: 'Using Tailscale to bypass Steam Families restrictions',
+            type: 'image/png'
+        }
+    ]
 }
 
 export const metadata = _metadata({
@@ -19,7 +28,8 @@ export const metadata = _metadata({
     heading: meta.title,
     description: meta.description,
     type: 'article',
-    alternates: meta.alternates
+    alternates: meta.alternates,
+    images: meta.images
 })
 
 export default (props) => <ArticleLayout

@@ -14,7 +14,16 @@ export const meta = {
     description: 'SSL/TLS is the encryption standard or protocol which encrypts the session between a website (server) and the browser (client). This protects us from potential man-in-the-middle attacks whereby an attacker could eavesdrop on the session and see all the traffic and data exchanged in the clear.',
     alternates: {
         canonical: `/writing/${createSlug('Secure your websites with Let\'s Encrypt, NPM and Cloudflare')}`
-    }
+    },
+    images: [
+        {
+            url: `/images/mariia-shalabaieva-zVC8A0CrTZ0-unsplash.jpg`,
+            width: 1200,
+            height: 600,
+            alt: 'Secure your websites with Let\'s Encrypt, NPM and Cloudflare',
+            type: 'image/jpg'
+        }
+    ]
 }
 
 export const metadata = _metadata({
@@ -22,7 +31,8 @@ export const metadata = _metadata({
     heading: meta.title,
     description: meta.description,
     type: 'article',
-    alternates: meta.alternates
+    alternates: meta.alternates,
+    images: meta.images
 })
 
 export default (props) => <ArticleLayout

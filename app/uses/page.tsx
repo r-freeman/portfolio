@@ -14,7 +14,21 @@ const meta = {
     }
 }
 
-export const metadata = _metadata({...meta, heading: meta.heading})
+export let metadata: {
+    [p: string]: string | Object
+    heading: string
+    description: string
+    title: string
+    type: string
+    openGraph: {
+        images: string | Object
+        description: string
+        title: string
+        type: string
+    }
+}
+
+metadata = _metadata({...meta, heading: meta.heading})
 
 function ToolsSection({children, title}: { children: ReactNode, title: string }) {
     return (

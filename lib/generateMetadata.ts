@@ -12,15 +12,17 @@ export const metadata = (meta: Meta) => {
         openGraph: {
             title: meta.title,
             description: meta.description,
-            images: [
-                {
-                    url: `/api/og-image?text=${meta.heading}`,
-                    width: 1200,
-                    height: 600,
-                    alt: meta.heading,
-                    type: 'image/png'
-                }
-            ],
+            images: meta.images
+                ? meta.images
+                : [
+                    {
+                        url: `/api/og-image?text=${meta.heading}`,
+                        width: 1200,
+                        height: 600,
+                        alt: meta.heading,
+                        type: 'image/png'
+                    }
+                ],
             type: meta.type
         }
     }

@@ -12,7 +12,16 @@ export const meta = {
     description: 'Recently, I decided to migrate this website from Vercel to a self-hosted environment using a Raspberry Pi 5. This transition was driven by several motivations, such as lowering costs and having greater control over the software and hardware that I run.',
     alternates: {
         canonical: `/writing/${createSlug('Migrating from Vercel to Raspberry Pi 5')}`
-    }
+    },
+    images: [
+        {
+            url: `/images/vishnu-mohanan-rZKdS0wI8Ks-unsplash.jpg`,
+            width: 1200,
+            height: 600,
+            alt: 'Migrating from Vercel to Raspberry Pi 5',
+            type: 'image/jpg'
+        }
+    ]
 }
 
 export const metadata = _metadata({
@@ -20,7 +29,8 @@ export const metadata = _metadata({
     heading: meta.title,
     description: meta.description,
     type: 'article',
-    alternates: meta.alternates
+    alternates: meta.alternates,
+    images: meta.images
 })
 
 export default (props) => <ArticleLayout
