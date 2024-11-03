@@ -61,42 +61,42 @@ export default function Services() {
         {
             title: 'AWS',
             description: 'As an AWS Certified Cloud Practitioner I can advise on and implement reliable, cost-effective cloud solutions for your business.',
-            icon: () => <CloudIcon className={iconStyles}/>
+            icon: (props) => <CloudIcon {...props}/>
         },
         {
             title: 'Databases',
             description: 'Not all database technologies are the same, I\'ll help you choose the right database for your use case.',
-            icon: () => <DatabaseIcon className={iconStyles}/>
+            icon: (props) => <DatabaseIcon {...props}/>
         },
         {
             title: 'Ecommerce',
             description: 'From WooCommerce to Shopify, I can assist with setting up and managing your online store, allowing you to focus on growing your sales.',
-            icon: () => <ShoppingBagIcon className={iconStyles}/>
+            icon: (props) => <ShoppingBagIcon {...props}/>
         },
         {
             title: 'WordPress',
             description: 'WordPress is the de-facto software for building SEO-friendly websites, together we can achieve top rankings in Google search results.',
-            icon: () => <AppIcon className={iconStyles}/>
+            icon: (props) => <AppIcon {...props}/>
         },
         {
             title: 'Frontend',
             description: 'Using React, I can deliver modern, responsive websites and applications that seamlessly adapt to any screen size.',
-            icon: () => <CodeIcon className={iconStyles}/>
+            icon: (props) => <CodeIcon {...props}/>
         },
         {
             title: 'Backend',
             description: 'From building APIs to authentication and integrating third-party services, I develop robust backend systems for your business needs.',
-            icon: () => <RocketIcon className={iconStyles}/>
+            icon: (props) => <RocketIcon {...props}/>
         },
         {
             title: 'Domain and hosting',
             description: 'Whether you’re launching a new website or migrating an existing one, I\'ll ensure your website is fast, secure and always online.',
-            icon: () => <ShieldIcon className={iconStyles}/>
+            icon: (props) => <ShieldIcon {...props}/>
         },
         {
             title: 'Email',
             description: 'I\'ll help you establish trust with your clients by using a custom domain for your email that reflects your brand.',
-            icon: () => <EmailIcon className={iconStyles}/>
+            icon: (props) => <EmailIcon {...props}/>
         }
     ]
 
@@ -112,7 +112,7 @@ export default function Services() {
                 {services.map(({title, description, icon: Icon}) => (
                     <Card as="li" key={title}>
                         <h2 className="flex items-center text-base font-semibold group-hover:text-indigo-500 text-zinc-800 dark:text-zinc-100">
-                            <Icon/>
+                            <Icon className={iconStyles}/>
                             <Card.Link href="mailto:hello@ryanfreeman.dev" ariaLabel={title}>{title}</Card.Link>
                         </h2>
                         <Card.Description>{description}</Card.Description>
