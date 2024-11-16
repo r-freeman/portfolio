@@ -1,6 +1,11 @@
 name: Build And Publish
 run-name: ${{ gitea.actor }} runs ci pipeline
-on: [ push ]
+on:
+  schedule:
+    - cron: '59 23 * * *'
+  push:
+    branches:
+      - 'main'
 
 jobs:
   BuildAndPublish:
