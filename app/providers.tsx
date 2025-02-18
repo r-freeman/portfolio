@@ -8,7 +8,7 @@ export function Providers({children}: {
 }) {
 
     return (
-        <ThemeProvider attribute="class" disableTransitionOnChange>
+        <ThemeProvider attribute="class" disableTransitionOnChange defaultTheme="dark">
             {children}
         </ThemeProvider>
     )
