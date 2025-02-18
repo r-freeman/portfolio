@@ -6,7 +6,7 @@ import {getAllArticles} from '@/lib/getAllArticles'
 import {formatDate} from '@/lib/formatDate'
 import type {Article} from '@/types'
 import {metadata as _metadata} from '@/lib/generateMetadata'
-import {SimpleLayout} from "@/components/layouts/SimpleLayout";
+import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 
 const meta = {
     title: 'Ryan Freeman - Full-stack software engineer based in Dublin, Ireland.',
@@ -66,7 +66,8 @@ export default async function Home() {
     return (
         <SimpleLayout heading={meta.heading}
                       description={meta.description}
-                      gradient="bg-gradient-to-r from-pink-500 to-violet-500">
+                      gradient="bg-gradient-to-r from-pink-500 to-violet-500"
+                      displaySocials={true}>
             <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
                 <div className="flex flex-col gap-16 mt-6">
                     {articles.map(({slug, title, description, date}) => (
