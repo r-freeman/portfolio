@@ -20,7 +20,7 @@ export function SimpleLayout({
                                  displaySocials = false
                              }: SimpleLayoutProps) {
     return (
-        <Container className="mt-16 sm:mt-32">
+        <Container className="mt-36">
             <header className="max-w-2xl">
                 <h1
                     className={twMerge(`
