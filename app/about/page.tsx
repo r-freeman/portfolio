@@ -64,7 +64,7 @@ function SocialLink({
 
 export default async function About() {
     return (
-        <Container className="mt-16 sm:mt-32">
+        <Container className="mt-36">
             <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12">
                 <div className="lg:pl-20">
                     <div className="max-w-xs lg:max-w-sm px-2.5">
