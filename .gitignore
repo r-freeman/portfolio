@@ -4,6 +4,7 @@ prisma/**/*
 .env
 
 supabase/
+!/lib/supabase
 
 .idea/
 
