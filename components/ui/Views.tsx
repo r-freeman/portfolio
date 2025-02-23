@@ -1,10 +1,10 @@
 'use client'
 
-import {createPagesBrowserClient} from '@supabase/auth-helpers-nextjs'
 import {ElementType, useEffect} from 'react'
 import useSWR, {useSWRConfig} from 'swr'
 import fetcher from '@/lib/fetcher'
 import {numberFormat} from '@/lib/numberFormat'
+import {createClient} from '@/lib/supabase/client'
 
 type ViewsProps = {
     as?: ElementType
@@ -15,7 +15,7 @@ type ViewsProps = {
 }
 
 export function Views({as: Component = 'span', slug, className, shouldUpdateViews = true, shouldRender = true}: ViewsProps) {
-    const supabase = createPagesBrowserClient()
+    const supabase = createClient()
     const {data} = useSWR(`/api/views/${slug}`, fetcher) as { data: { views: number } }
     const {mutate} = useSWRConfig()
 

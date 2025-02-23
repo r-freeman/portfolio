@@ -1,13 +1,11 @@
 import {NextResponse} from 'next/server'
-import {cookies} from 'next/headers'
-import {createServerComponentClient} from '@supabase/auth-helpers-nextjs'
-import type {Database} from '@/types/database.types'
+import {createClient} from '@/lib/supabase/server'
 
 export async function GET(request: Request, {params}: { params: { slug: string } }) {
-    if (typeof params.slug !== 'undefined') {
+    const {slug} = await params
+    if (typeof slug !== 'undefined') {
         try {
-            const supabase = createServerComponentClient<Database>({cookies})
-            const slug = params.slug.toString()
+            const supabase = await createClient()
             const response = await supabase
                 // @ts-ignore
                 .from('analytics')
@@ -27,10 +25,10 @@ export async function GET(request: Request, {params}: { params: { slug: string }
 }
 
 export async function POST(request: Request, {params}: { params: { slug: string } }) {
-    if (typeof params.slug !== 'undefined') {
+    const {slug} = await params
+    if (typeof slug !== 'undefined') {
         try {
-            const supabase = createServerComponentClient<Database>({cookies})
-            const slug = params.slug.toString()
+            const supabase = await createClient()
             // @ts-ignore
             await supabase.rpc('increment_views', {page_slug: slug})
             return NextResponse.json({})
