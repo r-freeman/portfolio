@@ -11,9 +11,9 @@ export function Heading({as: Component = 'h1', children = null}: HeadingProps) {
     let headingText = children ? children.toString() : ''
 
     return (
-        <Component id={createSlug(headingText)} className='group'>
+        <Component id={createSlug(headingText)} className="group">
             {children}
-            <Link className='ml-1.5 group-hover:visible invisible'
+            <Link className="ml-1.5 group-hover:visible invisible"
                   href={`#${createSlug(headingText)}`}>#</Link>
         </Component>
     )

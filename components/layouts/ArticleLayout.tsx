@@ -6,6 +6,7 @@ import {Views} from '@/components/ui/Views'
 import {ArrowDownIcon} from '@/components/icons/ArrowDownIcon'
 import {formatDate} from '@/lib/formatDate'
 import ArticleNav from '@/components/ui/ArticleNav'
+import Comments from '@/components/ui/Comments'
 
 type ArticleLayout = {
     title: string
@@ -27,7 +28,7 @@ export function ArticleLayout({
                                   title,
                                   date,
                                   slug,
-                                  children,
+                                  children
                               }: ArticleLayout) {
 
     return (
@@ -58,6 +59,7 @@ export function ArticleLayout({
                         </header>
                         <Prose className="mt-8" data-mdx-content>{children}</Prose>
                     </article>
+                    <Comments slug={slug}/>
                     <ArticleNav slug={slug}/>
                 </div>
             </div>

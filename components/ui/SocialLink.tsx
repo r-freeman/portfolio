@@ -17,7 +17,7 @@ export function SocialLink({icon: Icon, href, ariaLabel, className}: SocialLink)
         group-hover:fill-zinc-600
         dark:fill-zinc-400
         dark:group-hover:fill-zinc-300
-        ${className ?? ""}
+        ${className ?? ''}
     `)
 
     return (

@@ -56,7 +56,7 @@ export function Card({
         normal:
             'flex-col',
         inline:
-            'flex-col md:flex-row md:justify-between',
+            'flex-col md:flex-row md:justify-between'
     }
 
     return (
@@ -67,7 +67,7 @@ export function Card({
                 flex
                 items-baseline
                 ${variantStyles[variant as keyof VariantStyles]}
-                ${className ?? ""}
+                ${className ?? ''}
             `)}
         >
             {children}
@@ -107,7 +107,7 @@ Card.Description = function CardDescription({children, className}: CardDescripti
                 dark:text-zinc-400
                 relative 
                 z-10
-                ${className ?? ""}
+                ${className ?? ''}
             `)}>
             {children}
         </p>

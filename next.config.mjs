@@ -7,11 +7,17 @@ import {remarkMermaid} from '@theguild/remark-mermaid'
 const nextConfig = {
     pageExtensions: ['jsx', 'js', 'tsx', 'ts', 'mdx'],
     images: {
-        remotePatterns: [{
-            protocol: 'https',
-            hostname: 'i.scdn.co',
-            port: ''
-        }]
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'i.scdn.co',
+                port: ''
+            },
+            {
+                protocol: 'https',
+                hostname: 'avatars.githubusercontent.com'
+            }
+        ]
     },
     output: 'standalone',
     eslint: {

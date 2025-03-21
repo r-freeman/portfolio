@@ -16,7 +16,7 @@ export function Cta({icon: Icon, title, children, className}: CtaProps) {
             border-zinc-100 
             p-6 
             dark:border-zinc-700/40
-            ${className ?? ""}
+            ${className ?? ''}
         `)}>
             <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
                 <Icon className="h-6 w-6 flex-none"/>

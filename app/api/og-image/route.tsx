@@ -42,7 +42,7 @@ export async function GET(request: Request) {
                         backgroundClip: 'text',
                         // @ts-ignore
                         '-webkit-background-clip': 'text',
-                        color: 'transparent',
+                        color: 'transparent'
                     }}>
                     {text}
                 </div>

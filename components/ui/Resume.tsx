@@ -27,7 +27,7 @@ export function Resume() {
             },
             end: {
                 label: 'present',
-                dateTime: new Date().getFullYear().toString(),
+                dateTime: new Date().getFullYear().toString()
             }
         },
         {
@@ -40,7 +40,7 @@ export function Resume() {
             end: {
                 label: '2018',
                 dateTime: '2018'
-            },
+            }
         }
     ]
 
