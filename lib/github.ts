@@ -3,7 +3,7 @@ import fetcher from '@/lib/fetcher'
 
 const GITHUB_ACCESS_TOKEN = process.env.GITHUB_ACCESS_TOKEN
 const GITHUB_USERNAME = process.env.GITHUB_USERNAME
-const GITHUB_GRAPHQL = "https://api.github.com/graphql"
+const GITHUB_GRAPHQL = 'https://api.github.com/graphql'
 
 type PinnedReposResponse = {
     data: {

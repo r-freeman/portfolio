@@ -86,7 +86,7 @@ export default async function Reading() {
             title: 'HTML and CSS',
             author: 'Jon Duckett',
             url: 'https://www.goodreads.com/book/show/10361330-html-and-css?from_search=true&from_srp=true&qid=OKIiricQbD&rank=1'
-        },
+        }
     ]
 
     return (

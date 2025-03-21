@@ -3,7 +3,7 @@ import {Feed} from 'feed'
 import {getAllArticles} from '@/lib/getAllArticles'
 
 export async function GET(req: NextRequest) {
-    let siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ""
+    let siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ''
     let articles = await getAllArticles()
     let author = {
         name: 'Ryan Freeman',

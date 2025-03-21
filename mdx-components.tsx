@@ -9,10 +9,10 @@ import {Heading} from './components/ui/Heading'
 // This file is required to use MDX in `app` directory.
 export function useMDXComponents(components: MDXComponents): MDXComponents {
     return {
-        h2: ({children}) => <Heading as='h2'>{children}</Heading>,
-        h3: ({children}) => <Heading as='h3'>{children}</Heading>,
+        h2: ({children}) => <Heading as="h2">{children}</Heading>,
+        h3: ({children}) => <Heading as="h3">{children}</Heading>,
         // Allows customizing built-in components, e.g. to add styling.
         // h1: ({ children }) => <h1 style={{ fontSize: "100px" }}>{children}</h1>,
-        ...components,
+        ...components
     }
 }

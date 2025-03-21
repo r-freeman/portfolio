@@ -8,13 +8,13 @@ async function importArticle(articleFilename: string) {
     return {
         slug: articleFilename.replace(/(\/page)?\.mdx$/, ''),
         ...meta,
-        component,
+        component
     }
 }
 
 export async function getAllArticles(dateDesc = true) {
     let articleFilenames = await glob(['*.mdx', '*/page.mdx'], {
-        cwd: path.join(process.cwd(), './app/writing'),
+        cwd: path.join(process.cwd(), './app/writing')
     })
 
     let articles = await Promise.all(articleFilenames.map(importArticle))
