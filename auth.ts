@@ -7,5 +7,10 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
             clientId: process.env.GITHUB_CLIENT_ID,
             clientSecret: process.env.GITHUB_SECRET
         })
-    ]
+    ],
+    callbacks: {
+        async redirect({url, baseUrl}) {
+            return url
+        }
+    }
 })
