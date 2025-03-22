@@ -9,10 +9,10 @@ export async function loginWithGitHub() {
     await signIn('github')
 }
 
-const notificationBody = (comment: any, user: any) => {
+const notificationBody = (comment: { id: number, content: string }, user: { name: string }) => {
     return {
         topic: 'comments',
-        message: `You have a new comment from ${user.name}:\n${comment.content}\n`,
+        message: `You've got a new comment from ${user.name}:\n${comment.content}`,
         actions: [
             {
                 action: 'http',
@@ -21,7 +21,8 @@ const notificationBody = (comment: any, user: any) => {
                 method: 'PATCH',
                 headers: {
                     Authorization: `Bearer ${process.env.NTFY_TOKEN}`
-                }
+                },
+                clear: true
             }
         ]
     }
