@@ -49,6 +49,7 @@ function Article(article: Article) {
                     </Card.Eyebrow>
                     <Views
                         slug={article.slug}
+                        title={article.title}
                         className="text-sm text-zinc-500 dark:text-zinc-400"
                         shouldUpdateViews={false}
                     />

@@ -9,10 +9,10 @@ export async function loginWithGitHub() {
     await signIn('github')
 }
 
-const notificationBody = (comment: { id: number, content: string }, user: { name: string }) => {
+const notificationBody = (comment: { id: number, content: string }, user: { name: string }, article: { title: string }) => {
     return {
-        topic: 'comments',
-        message: `You've got a new comment from ${user.name}:\n${comment.content}`,
+        topic: 'portfolio',
+        message: `New comment on ${article.title} from ${user.name}:\n${comment.content}`,
         actions: [
             {
                 action: 'http',
@@ -60,7 +60,7 @@ export async function addComment(prevState: { message: string }, formData: FormD
 
         const [{data: user}, {data: article}] = await Promise.all([
             supabase.from('users').upsert({name, email, image}, {onConflict: 'email'}).select('*').single(),
-            supabase.from('articles').select('id').eq('slug', slug).single()
+            supabase.from('articles').select('*').eq('slug', slug).single()
         ])
 
         const {data: newComment, error} = await supabase
@@ -73,7 +73,7 @@ export async function addComment(prevState: { message: string }, formData: FormD
             return {message: general_error}
         }
 
-        await sendNotification(notificationBody(newComment, user))
+        await sendNotification(notificationBody(newComment, user, article))
 
         return {message: success_message}
     } catch (error) {

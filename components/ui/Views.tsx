@@ -9,11 +9,12 @@ import {incrementViews} from '@/app/actions/views'
 type ViewsProps = {
     as?: ElementType
     slug: string
+    title: string
     className?: string
     shouldUpdateViews?: boolean
 }
 
-export function Views({as: Component = 'span', slug, className, shouldUpdateViews = true}: ViewsProps) {
+export function Views({as: Component = 'span', slug, title, className, shouldUpdateViews = true}: ViewsProps) {
     const {data} = useSWR(`/api/views/${slug}`, fetcher) as { data: { views: number } }
     const {mutate} = useSWRConfig()
 
@@ -22,7 +23,7 @@ export function Views({as: Component = 'span', slug, className, shouldUpdateView
             const updateViews = async () => {
                 const hasViewed = sessionStorage.getItem(`has-viewed-${slug}`)
                 if (!hasViewed) {
-                    await incrementViews(slug)
+                    await incrementViews(slug, title)
 
                     sessionStorage.setItem(`has-viewed-${slug}`, 'true')
                 }

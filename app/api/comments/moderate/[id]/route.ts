@@ -14,7 +14,7 @@ export async function PATCH(request: Request, {params}: { params: Promise<{ id: 
                 .update({published: true})
                 .eq('id', id)
 
-            return new Response(null, {status: 204})
+            return new Response(JSON.stringify({}), {status: 200})
         }
         return new Response(JSON.stringify({status: 'Not Found'}), {status: 404})
     }

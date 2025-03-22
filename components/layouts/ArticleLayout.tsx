@@ -54,7 +54,7 @@ export function ArticleLayout({
                                 <time dateTime={date}>
                                     <span>{formatDate(date)}</span>
                                 </time>
-                                <Views slug={slug} shouldUpdateViews={true}/>
+                                <Views slug={slug} title={title} shouldUpdateViews={true}/>
                             </p>
                         </header>
                         <Prose className="mt-8" data-mdx-content>{children}</Prose>
