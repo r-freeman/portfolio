@@ -17,7 +17,7 @@ export async function GET(request: Request, {params}: { params: Promise<{ slug: 
                     article:articles!inner(id, slug)
                 `)
                 .eq('article.slug', slug)
-                // .eq('published', 'true')
+                .eq('published', true)
                 .order('created_at', {ascending: false})
 
             if (comments !== null && comments?.length > 0) {
