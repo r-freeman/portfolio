@@ -69,6 +69,13 @@ Comments.Form = function Form({slug}: CommentsProps) {
     const [state, formAction, pending] = useActionState(addComment, initialState)
     const {data: session} = useSession()
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'Enter' || e.key === 'NumpadEnter')) {
+            e.preventDefault()
+            e.currentTarget.form?.requestSubmit()
+        }
+    }
+
     return (
         <div className="mt-12">
             {!session ?
@@ -88,6 +95,7 @@ Comments.Form = function Form({slug}: CommentsProps) {
                                 name="comment"
                                 rows={4}
                                 className="resize-none block w-full rounded-md px-3 py-1.5 text-base text-zinc-600 dark:text-zinc-400 bg-[#fafafa] dark:bg-[#121212] border-[1px] dark:border-zinc-700/40 -outline-offset-1 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 focus:dark:outline-indigo-600"
+                                onKeyDown={handleKeyDown}
                                 disabled={pending}
                                 defaultValue={''}
                                 required
