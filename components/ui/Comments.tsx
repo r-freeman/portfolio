@@ -37,7 +37,7 @@ Comments.List = function List({comments}: CommentsListProps) {
                     {comments.map((comment) => (
                         <article key={comment.id} className="flex gap-x-4 py-5">
                             <Image src={comment.user.image} alt={comment.user.name} width={64} height={64}
-                                   className="size-12 flex-none rounded-full bg-gray-50"/>
+                                   className="size-12 rounded-full"/>
                             <div className="flex-auto">
                                 <div className="flex items-baseline gap-x-2">
                                     <p className="font-semibold text-sm text-zinc-800 dark:text-zinc-100">{comment.user.name}</p>
@@ -98,6 +98,7 @@ Comments.Form = function Form({slug}: CommentsProps) {
                                 onKeyDown={handleKeyDown}
                                 disabled={pending}
                                 defaultValue={''}
+                                maxLength={255}
                                 required
                             />
                     </div>
