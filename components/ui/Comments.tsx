@@ -3,9 +3,7 @@
 import React, {ReactNode, useActionState} from 'react'
 import {useSession} from 'next-auth/react'
 import Image from 'next/image'
-import useSWR from 'swr'
 import clsx from 'clsx'
-import fetcher from '@/lib/fetcher'
 import {formatDate} from '@/lib/formatDate'
 import {addComment, loginWithGitHub} from '@/app/actions/comments'
 import {Button} from '@/components/ui/Button'
@@ -65,7 +63,7 @@ Comments.Status = function Status({children}: CommentsStatusProps) {
 
     return (
         <p aria-live="polite" role="status"
-           className={clsx('text-base font-semibold',
+           className={clsx('text-sm font-semibold',
                !isError ? 'text-green-800 dark:text-green-600' : 'text-red-800 dark:text-red-600')}>
             {children}
         </p>
@@ -134,21 +132,14 @@ Comments.Form = function Form({slug}: CommentsProps) {
 
 type CommentsProps = {
     slug: string
+    comments?: any
 }
 
-export default function Comments({slug}: CommentsProps) {
-    const {data, isLoading, error} = useSWR(`/api/comments/${slug}`, fetcher) as {
-        data: { comments: Comment[] },
-        isLoading: boolean,
-        error: string
-    }
-
-    if (error) return null
-
+export default function Comments({slug, comments}: CommentsProps) {
     return (
         <div className="mt-24">
-            {!isLoading &&
-                <Comments.List comments={data?.comments}/>
+            {comments &&
+                <Comments.List comments={comments}/>
             }
             <Comments.Form slug={slug}/>
         </div>

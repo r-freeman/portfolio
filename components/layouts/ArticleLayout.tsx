@@ -8,6 +8,7 @@ import {formatDate} from '@/lib/formatDate'
 import ArticleNav from '@/components/ui/ArticleNav'
 import Comments from '@/components/ui/Comments'
 import {getAllArticles} from '@/lib/getAllArticles'
+import {getComments} from '@/lib/getComments'
 
 type ArticleLayout = {
     title: string
@@ -50,6 +51,7 @@ export async function ArticleLayout({
                                         slug,
                                         children
                                     }: ArticleLayout) {
+    const comments = await getComments(slug)
     const articles = await getAllArticles(false)
     const {prev, next} = findAdjacentArticles(articles, slug)
 
@@ -81,7 +83,7 @@ export async function ArticleLayout({
                         </header>
                         <Prose className="mt-8" data-mdx-content>{children}</Prose>
                     </article>
-                    <Comments slug={slug}/>
+                    <Comments slug={slug} comments={comments}/>
                     <ArticleNav prev={prev} next={next}/>
                 </div>
             </div>
