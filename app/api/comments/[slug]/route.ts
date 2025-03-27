@@ -14,7 +14,7 @@ export async function GET(request: Request, {params}: { params: Promise<{ slug: 
                     published,
                     created_at,
                     user:users!inner(id, name, image),
-                    article:articles!inner(id, slug)
+                    article:articles!inner(id, title, slug)
                 `)
                 .eq('article.slug', slug)
                 .eq('published', true)

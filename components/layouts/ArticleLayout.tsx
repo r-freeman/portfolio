@@ -7,6 +7,7 @@ import {ArrowDownIcon} from '@/components/icons/ArrowDownIcon'
 import {formatDate} from '@/lib/formatDate'
 import ArticleNav from '@/components/ui/ArticleNav'
 import Comments from '@/components/ui/Comments'
+import {getAllArticles} from '@/lib/getAllArticles'
 
 type ArticleLayout = {
     title: string
@@ -24,12 +25,33 @@ const gradients = [
     'bg-gradient-to-r from-sky-400 to-blue-500'
 ]
 
-export function ArticleLayout({
-                                  title,
-                                  date,
-                                  slug,
-                                  children
-                              }: ArticleLayout) {
+type Article = {
+    slug: string
+    authors: string
+    title: string
+    date: string
+    description: string
+}
+
+function findAdjacentArticles(articles: Article[], slug: string) {
+    let prev, next
+    if (articles) {
+        const index = articles.findIndex(article => article.slug === slug)
+        prev = index > 0 ? articles[index - 1] : null
+        next = index < articles.length - 1 ? articles[index + 1] : null
+    }
+
+    return {prev, next}
+}
+
+export async function ArticleLayout({
+                                        title,
+                                        date,
+                                        slug,
+                                        children
+                                    }: ArticleLayout) {
+    const articles = await getAllArticles(false)
+    const {prev, next} = findAdjacentArticles(articles, slug)
 
     return (
         <Container className="mt-16 lg:mt-32">
@@ -60,7 +82,7 @@ export function ArticleLayout({
                         <Prose className="mt-8" data-mdx-content>{children}</Prose>
                     </article>
                     <Comments slug={slug}/>
-                    <ArticleNav slug={slug}/>
+                    <ArticleNav prev={prev} next={next}/>
                 </div>
             </div>
         </Container>
