@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useActionState} from 'react'
+import React, {ReactNode, useActionState} from 'react'
 import {useSession} from 'next-auth/react'
 import Image from 'next/image'
 import useSWR from 'swr'
@@ -27,33 +27,48 @@ type CommentsListProps = {
 }
 
 Comments.List = function List({comments}: CommentsListProps) {
+    if (!(comments?.length > 0)) return null
+
     return (
         <section>
             <h3 className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100 mb-4">
-                {comments?.length > 0 ? 'Comments' : 'No comments yet'}
+                Comments
             </h3>
-            {comments &&
-                <>
-                    {comments.map((comment) => (
-                        <article key={comment.id} className="flex gap-x-4 py-5">
-                            <Image src={comment.user.image} alt={comment.user.name} width={64} height={64}
-                                   className="size-12 rounded-full"/>
-                            <div className="flex-auto">
-                                <div className="flex items-baseline gap-x-2">
-                                    <p className="font-semibold text-sm text-zinc-800 dark:text-zinc-100">{comment.user.name}</p>
-                                    <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                                        <time dateTime={comment.created_at}>
-                                            <span>&middot; {formatDate(comment.created_at)}</span>
-                                        </time>
-                                    </p>
-                                </div>
-                                <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{comment.content}</p>
-                            </div>
-                        </article>
-                    ))}
-                </>
-            }
+            {comments.map((comment) => (
+                <article key={comment.id} className="flex gap-x-4 py-5">
+                    <Image src={comment.user.image} alt={comment.user.name} width={64} height={64}
+                           className="size-12 rounded-full"/>
+                    <div className="flex-auto">
+                        <div className="flex items-baseline gap-x-1">
+                            <p className="font-semibold text-sm text-zinc-800 dark:text-zinc-100">{comment.user.name}</p>
+                            <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                                <time dateTime={comment.created_at}>
+                                    <span>&middot; {formatDate(comment.created_at)}</span>
+                                </time>
+                            </p>
+                        </div>
+                        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{comment.content}</p>
+                    </div>
+                </article>
+            ))}
         </section>
+    )
+}
+
+type CommentsStatusProps = {
+    children: ReactNode
+}
+
+Comments.Status = function Status({children}: CommentsStatusProps) {
+    const conditions = ['error', 'problem']
+    const isError = conditions.some(condition => children?.toString().toLowerCase().includes(condition))
+
+    return (
+        <p aria-live="polite" role="status"
+           className={clsx('text-base font-semibold',
+               !isError ? 'text-green-800 dark:text-green-600' : 'text-red-800 dark:text-red-600')}>
+            {children}
+        </p>
     )
 }
 
@@ -103,12 +118,10 @@ Comments.Form = function Form({slug}: CommentsProps) {
                             />
                     </div>
                     <input type="hidden" name="slug" value={slug}/>
-                    <div className="mt-2 flex justify-between items-center">
-                        <p aria-live="polite" role="status" className={clsx('text-base font-semibold',
-                            (state?.message !== null && !state?.message.toLowerCase().includes('error')
-                                ? 'text-green-800 dark:text-green-600' : 'text-red-800 dark:text-red-600'))}>
+                    <div className="mt-2 flex justify-between items-start gap-x-4">
+                        <Comments.Status>
                             {state?.message}
-                        </p>
+                        </Comments.Status>
                         <Button variant="secondary" disabled={pending}>
                             Comment
                         </Button>
