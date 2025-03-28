@@ -4,10 +4,10 @@ import React, {ReactNode, useActionState} from 'react'
 import {useSession} from 'next-auth/react'
 import Image from 'next/image'
 import clsx from 'clsx'
-import {formatDate} from '@/lib/formatDate'
 import {addComment, loginWithGitHub} from '@/app/actions/comments'
 import {Button} from '@/components/ui/Button'
 import {GitHubIcon} from '@/components/icons/SocialIcons'
+import {formatDistanceToNow} from 'date-fns'
 
 type Comment = {
     id: number
@@ -25,8 +25,6 @@ type CommentsListProps = {
 }
 
 Comments.List = function List({comments}: CommentsListProps) {
-    if (!(comments?.length > 0)) return null
-
     return (
         <section>
             <h3 className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100 mb-4">
@@ -41,7 +39,7 @@ Comments.List = function List({comments}: CommentsListProps) {
                             <p className="font-semibold text-sm text-zinc-800 dark:text-zinc-100">{comment.user.name}</p>
                             <p className="text-sm text-zinc-500 dark:text-zinc-400">
                                 <time dateTime={comment.created_at}>
-                                    <span>&middot; {formatDate(comment.created_at)}</span>
+                                    <span>&middot; {`${formatDistanceToNow(comment.created_at)} ago`}</span>
                                 </time>
                             </p>
                         </div>
