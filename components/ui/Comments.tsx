@@ -26,28 +26,32 @@ type CommentsListProps = {
 
 Comments.List = function List({comments}: CommentsListProps) {
     return (
-        <section>
-            <h3 className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100 mb-4">
-                Comments
-            </h3>
-            {comments.map((comment) => (
-                <article key={comment.id} className="flex gap-x-4 py-5">
-                    <Image src={comment.user.image} alt={comment.user.name} width={64} height={64}
-                           className="size-12 rounded-full"/>
-                    <div className="flex-auto">
-                        <div className="flex items-baseline gap-x-1">
-                            <p className="font-semibold text-sm text-zinc-800 dark:text-zinc-100">{comment.user.name}</p>
-                            <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                                <time dateTime={comment.created_at}>
-                                    <span>&middot; {`${formatDistanceToNow(comment.created_at)} ago`}</span>
-                                </time>
-                            </p>
-                        </div>
-                        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{comment.content}</p>
-                    </div>
-                </article>
-            ))}
-        </section>
+        <>
+            {comments.length > 0 &&
+                <section>
+                    <h3 className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100 mb-4">
+                        Comments
+                    </h3>
+                    {comments.map((comment) => (
+                        <article key={comment.id} className="flex gap-x-4 py-5">
+                            <Image src={comment.user.image} alt={comment.user.name} width={64} height={64}
+                                   className="size-12 rounded-full"/>
+                            <div className="flex-auto">
+                                <div className="flex items-baseline gap-x-1">
+                                    <p className="font-semibold text-sm text-zinc-800 dark:text-zinc-100">{comment.user.name}</p>
+                                    <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                                        <time dateTime={comment.created_at}>
+                                            <span>&middot; {`${formatDistanceToNow(comment.created_at)} ago`}</span>
+                                        </time>
+                                    </p>
+                                </div>
+                                <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400 max-w-xl">{comment.content}</p>
+                            </div>
+                        </article>
+                    ))}
+                </section>
+            }
+        </>
     )
 }
 
