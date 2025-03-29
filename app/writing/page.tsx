@@ -2,10 +2,10 @@ import React from 'react'
 import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 import {Card} from '@/components/ui/Card'
 import {Views} from '@/components/ui/Views'
-import {formatDate} from '@/lib/formatDate'
 import {getAllArticles} from '@/lib/getAllArticles'
 import {metadata as _metadata} from '@/lib/generateMetadata'
 import type {Article} from '@/types'
+import {format} from 'date-fns'
 
 const meta = {
     title: 'Writing',
@@ -42,7 +42,7 @@ function Article({article}: { article: Article }) {
                 </Card.Title>
                 <p className="flex order-first space-x-1 z-10 mb-3 md:mb-0 md:ml-4 md:order-last flex-shrink-0">
                     <Card.Eyebrow as="time" dateTime={article.date} decorate={false}>
-                        {formatDate(article.date)}
+                        {format(article.date, 'd MMMM yyyy')}
                     </Card.Eyebrow>
                     <Views
                         slug={article.slug}

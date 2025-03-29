@@ -4,11 +4,11 @@ import {Container} from '@/components/common/Container'
 import {Prose} from '@/components/ui/Prose'
 import {Views} from '@/components/ui/Views'
 import {ArrowDownIcon} from '@/components/icons/ArrowDownIcon'
-import {formatDate} from '@/lib/formatDate'
 import ArticleNav from '@/components/ui/ArticleNav'
 import Comments from '@/components/ui/Comments'
 import {getAllArticles} from '@/lib/getAllArticles'
 import {getComments} from '@/lib/getComments'
+import {format} from 'date-fns'
 
 type ArticleLayout = {
     title: string
@@ -76,7 +76,7 @@ export async function ArticleLayout({
                             </h1>
                             <p className="order-first text-base text-zinc-500 dark:text-zinc-400">
                                 <time dateTime={date}>
-                                    <span>{formatDate(date)}</span>
+                                    <span>{format(date, 'd MMMM yyyy')}</span>
                                 </time>
                                 <Views slug={slug} title={title} shouldUpdateViews={true}/>
                             </p>

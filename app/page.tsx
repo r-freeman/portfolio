@@ -3,10 +3,10 @@ import {Card} from '@/components/ui/Card'
 import {Views} from '@/components/ui/Views'
 import {Resume} from '@/components/ui/Resume'
 import {getAllArticles} from '@/lib/getAllArticles'
-import {formatDate} from '@/lib/formatDate'
 import type {Article} from '@/types'
 import {metadata as _metadata} from '@/lib/generateMetadata'
 import {SimpleLayout} from '@/components/layouts/SimpleLayout'
+import {format} from 'date-fns'
 
 const meta = {
     title: 'Ryan Freeman - Full-stack software engineer based in Dublin, Ireland.',
@@ -45,7 +45,7 @@ function Article(article: Article) {
                 </Card.Title>
                 <p className="flex order-first space-x-1 z-10 mb-3">
                     <Card.Eyebrow as="time" dateTime={article.date} decorate={false}>
-                        {formatDate(article.date)}
+                        {format(article.date, 'd MMMM yyyy')}
                     </Card.Eyebrow>
                     <Views
                         slug={article.slug}
