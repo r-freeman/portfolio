@@ -37,9 +37,9 @@ const notificationBody = (comment: { id: number, content: string }, user: { name
 }
 
 export async function addComment(prevState: { message: string }, formData: FormData) {
-    const general_error = 'There was an error with your comment, please try again later.'
+    const general_error = 'There was a problem with your comment, please try again later.'
     const authorisation_error = 'Error, you must be logged in to post a comment.'
-    const success_message = 'Your comment was submitted and is awaiting approval.'
+    const success_message = 'Thanks, your comment was submitted and is awaiting approval.'
 
     const schema = z.object({
         comment: z.string().min(3).max(255),
