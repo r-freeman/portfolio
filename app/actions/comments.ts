@@ -21,8 +21,16 @@ const notificationBody = (comment: { id: number, content: string }, user: { name
                 method: 'PATCH',
                 headers: {
                     Authorization: `Bearer ${process.env.NTFY_TOKEN}`
-                },
-                clear: true
+                }
+            },
+            {
+                action: 'http',
+                label: 'Delete comment',
+                url: `${process.env.NEXT_PUBLIC_SITE_URL}/api/comments/moderate/${comment.id}`,
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${process.env.NTFY_TOKEN}`
+                }
             }
         ]
     }
