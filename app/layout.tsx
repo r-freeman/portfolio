@@ -7,10 +7,10 @@ import '@/styles/tailwind.css'
 
 export const metadata = {
     title: {
-        default: 'Ryan Freeman - Full-stack software engineer based in Dublin, Ireland.',
+        default: 'Ryan Freeman - Software engineer based in Dublin, Ireland.',
         template: '%s - Ryan Freeman'
     },
-    description: 'Full-stack software engineer who enjoys building cloud-native applications.',
+    description: 'Software engineer currently working in the aviation industry.',
     metadataBase: new URL('https://ryanfreeman.dev')
 }
 

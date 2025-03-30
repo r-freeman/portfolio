@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
 
     let feed = new Feed({
         title: author.name,
-        description: 'Full-stack software engineer who enjoys building cloud-native applications.',
+        description: 'Software engineer currently working in the aviation industry.',
         author,
         id: siteUrl,
         link: siteUrl,

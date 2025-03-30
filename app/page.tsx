@@ -9,8 +9,8 @@ import {SimpleLayout} from '@/components/layouts/SimpleLayout'
 import {format} from 'date-fns'
 
 const meta = {
-    title: 'Ryan Freeman - Full-stack software engineer based in Dublin, Ireland.',
-    heading: 'Full-stack software engineer who enjoys building cloud-native applications.',
+    title: 'Ryan Freeman - Software engineer based in Dublin, Ireland.',
+    heading: 'Software engineer currently working in the aviation industry.',
     description: 'Hi. I\'m Ryan, a software engineer based in Dublin, Ireland. I\'m currently working in the aviation industry for Aer Lingus. ' +
         'I am passionate about personal growth and progressing in my career. ' +
         'This is my personal website where you can learn more about me, read articles I\'ve written and see projects I\'ve worked on.',

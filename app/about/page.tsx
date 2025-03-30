@@ -86,35 +86,23 @@ export default async function About() {
                             {meta.description}
                         </p>
                         <p>
-                            In terms of my experience to date, I have a strong foundation in both front-end and back-end
-                            development. I enjoy working with React to create dynamic and responsive user interfaces,
-                            and I have a deep understanding of Java for building robust and scalable applications.
-                            Recently, I achieved one of my milestones which was to get AWS certified by the end of 2022.
+                            I have strong experience in front and backend software engineering, I use React for creating dynamic
+                            and responsive user interfaces, and Spring for building robust and scalable backend applications. I
+                            work with AWS everyday and I'm a Amazon Web Services Certified Cloud Practitioner.
                         </p>
                         <p>
-                            Currently, I work in the aviation industry for Aer Lingus as a software engineer where I work
-                            on exciting software projects for the airline. This includes everything from bug fixing, to
-                            working on legacy code and greenfield projects, to building customer-facing websites and services.
-                            I am responsible for ensuring that our software is of the highest quality, and that it meets the
-                            needs of our customers and stakeholders. The most fulfilling part of my job is knowing that the
-                            software I contribute to will be used by many thousands of people.
+                            Currently, I work as a software engineer at Aer Lingus, contributing to projects ranging from bug
+                            fixes and legacy code maintenance to greenfield projects and customer-facing services. Knowing my
+                            work impacts thousands of users is very rewarding.
                         </p>
                         <p>
-                            In my free time, I enjoy staying up-to-date on the latest developments in the world of software
-                            engineering, and I am always looking for new ways to push the boundaries of what is possible with
-                            technology. I&apos;m a huge advocate of free and open-source software and maintain a small
-                            Raspberry Pi server which I use to experiment with Docker containers for self-hosted
-                            services like Bitwarden, Nextcloud and Octoprint.
+                            Beyond work, I stay up-to-date on software trends and support open-source technology. I run a
+                            Raspberry Pi and a couple of Linux servers where I host a handful of useful services. I also build and
+                            maintain computers and upgrade retro gaming systems.
                         </p>
                         <p>
-                            On the hardware side, I build and maintain my own computers and I like to upgrade and modernise
-                            retro video game systems. When I&apos;m not tinkering, I mostly spend time with my
-                            family and enjoy travelling whenever I can get away.
-                        </p>
-                        <p>
-                            That&apos;s me in a nutshell, thank you for visiting my website, I hope that you find the
-                            information here to be insightful. If you have any questions or would like to work with me, please
-                            don&apos;t hesitate to get in touch.
+                            When I'm not tinkering I enjoy spending time with my family and a travelling abroad whenever I can.
+                            Anyways, thanks for visiting my site, feel free to reach out if you'd like to connect.
                         </p>
                     </div>
                 </div>
