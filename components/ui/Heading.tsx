@@ -10,7 +10,7 @@ type HeadingProps = {
 }
 
 export function Heading({as: Component = 'h1', children = null}: HeadingProps) {
-    const ref = useRef<HTMLAnchorElement>(null);
+    const ref = useRef<HTMLAnchorElement>(null)
     const headingText = children?.toString() || ''
 
     useEffect(() => {
@@ -20,9 +20,9 @@ export function Heading({as: Component = 'h1', children = null}: HeadingProps) {
     }, [])
 
     return (
-        <Component id={createSlug(headingText)} className="flex group">
+        <Component id={createSlug(headingText)} className="group">
             {children}
-            <Link className="sr-only group-hover:not-sr-only !ml-1.5" href={`#${createSlug(headingText)}`} ref={ref}></Link>
+            <Link className="ml-1.5 invisible group-hover:visible" href={`#${createSlug(headingText)}`} ref={ref}></Link>
         </Component>
     )
 }
