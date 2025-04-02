@@ -42,19 +42,23 @@ export async function addComment(prevState: { message: string }, formData: FormD
     const success_message = 'Thanks, your comment was submitted and is awaiting approval.'
 
     const schema = z.object({
-        comment: z.string().min(3).max(255),
-        slug: z.string()
+        comment: z.string().min(3).max(255).trim(),
+        slug: z.string(),
+        parent_id: z.string().optional()
     })
 
-    const {comment, slug} = {
+    let {comment, slug, parent_id} = {
         comment: formData.get('comment'),
-        slug: formData.get('slug')
+        slug: formData.get('slug'),
+        parent_id: formData.get('parent_id')
     }
 
-    const parse = schema.safeParse({comment, slug})
+    const parse = schema.safeParse({comment, slug, parent_id});
     if (!parse.success) {
         return {message: general_error}
     }
+
+    if (parent_id === '') parent_id = null
 
     try {
         const supabase = await createClient()
@@ -73,7 +77,7 @@ export async function addComment(prevState: { message: string }, formData: FormD
 
         const {data: newComment, error} = await supabase
             .from('comments')
-            .insert({content: comment, article_id: article?.id, user_id: user?.id})
+            .insert({content: comment, article_id: article?.id, user_id: user?.id, parent_id: parent_id})
             .select('*')
             .single()
 
@@ -81,7 +85,9 @@ export async function addComment(prevState: { message: string }, formData: FormD
             return {message: general_error}
         }
 
-        await sendNotification(notificationBody(newComment, user, article))
+        if (process.env.NODE_ENV === 'production') {
+            await sendNotification(notificationBody(newComment, user, article))
+        }
 
         return {message: success_message}
     } catch (error) {

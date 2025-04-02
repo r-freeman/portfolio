@@ -1,6 +1,6 @@
 'use client'
 
-import React, {ReactNode, useActionState} from 'react'
+import React, {createContext, ReactNode, RefObject, useActionState, useContext, useEffect, useRef, useState} from 'react'
 import {useSession} from 'next-auth/react'
 import Image from 'next/image'
 import clsx from 'clsx'
@@ -8,35 +8,76 @@ import {addComment, loginWithGitHub} from '@/app/actions/comments'
 import {Button} from '@/components/ui/Button'
 import {GitHubIcon} from '@/components/icons/SocialIcons'
 import {formatDistanceToNow} from 'date-fns'
+import {ArrowLeftIcon} from '@/components/icons/ArrowLeftIcon'
 
 type Comment = {
     id: number
     content: string
     created_at: string
+    parent_id: number | null
     user: {
         id: number
         name: string
         image: string
     }
+    replies?: Comment[]
 }
 
-Comments.Comment = function Comment({comment, isReply = false}: { comment: Comment, isReply?: boolean }) {
+type ReplyButton = {
+    comment: Comment
+}
+
+Comments.ReplyButton = function ReplyButton({comment}: ReplyButton) {
+    const replyContext = useContext(ReplyContext)
+    const commentFormContext = useContext(CommentFormContext)
+
+    const handleReplyButton = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        replyContext?.setReplyTo(comment)
+        commentFormContext?.focusCommentForm()
+    }
+
     return (
-        <article className="flex gap-x-4 py-5">
-            <Image src={comment.user.image} alt={comment.user.name} width={64} height={64}
-                   className="size-12 rounded-full"/>
-            <div className="flex-auto">
-                <div className="flex items-baseline gap-x-1">
-                    <p className="font-semibold text-sm text-zinc-800 dark:text-zinc-100">{comment.user.name}</p>
-                    <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                        <time dateTime={comment.created_at}>
-                            <span>&middot; {`${formatDistanceToNow(comment.created_at)} ago`}</span>
-                        </time>
-                    </p>
+        <button
+            className="flex mt-4 text-sm gap-x-2 items-center group hover:dark:text-indigo-500 text-zinc-800 dark:text-zinc-100"
+            onClick={handleReplyButton}
+        >
+            <ArrowLeftIcon
+                className="w-4 h-4 stroke-zinc-500 dark:stroke-zinc-400 group-hover:dark:stroke-indigo-500 group-hover:stroke-indigo-500"/>Reply
+        </button>
+    )
+}
+
+Comments.Comment = function Comment({comment, children, isReply = false}: {
+    comment: Comment,
+    children?: ReactNode,
+    isReply?: boolean
+}) {
+    const {data: session} = useSession()
+
+    return (
+        <>
+            <article
+                className={clsx('flex gap-x-4 py-5', isReply && 'ml-[62px]')}>
+                <Image src={comment.user.image} alt={comment.user.name} width={64} height={64}
+                       className="size-12 rounded-full"/>
+                <div className="flex-auto">
+                    <div className="flex items-baseline gap-x-1">
+                        <p className="font-semibold text-sm text-zinc-800 dark:text-zinc-100">{comment.user.name}</p>
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                            <time dateTime={comment.created_at}>
+                                <span>&middot; {`${formatDistanceToNow(comment.created_at)} ago`}</span>
+                            </time>
+                        </p>
+                    </div>
+                    <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400 max-w-xl">{comment.content}</p>
+                    {session &&
+                        <Comments.ReplyButton comment={comment}/>
+                    }
                 </div>
-                <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400 max-w-xl">{comment.content}</p>
-            </div>
-        </article>
+            </article>
+            {children}
+        </>
     )
 }
 
@@ -53,7 +94,11 @@ Comments.List = function List({comments}: CommentsListProps) {
                         Comments
                     </h3>
                     {comments.map((comment) => (
-                        <Comments.Comment key={comment.id} comment={comment}/>
+                        <Comments.Comment key={comment.id} comment={comment}>
+                            {comment.replies && comment.replies.map(reply => (
+                                <Comments.Comment key={reply.id} comment={reply} isReply={true}/>
+                            ))}
+                        </Comments.Comment>
                     ))}
                 </section>
             }
@@ -66,8 +111,8 @@ type CommentsStatusProps = {
 }
 
 Comments.Status = function Status({children}: CommentsStatusProps) {
-    const conditions = ['error', 'problem']
-    const isError = conditions.some(condition => children?.toString().toLowerCase().includes(condition))
+    const errorConditions = ['error', 'problem']
+    const isError = errorConditions.some(condition => children?.toString().toLowerCase().includes(condition))
 
     return (
         <p aria-live="polite" role="status"
@@ -86,14 +131,31 @@ const initialState: InitialState = {
     message: ''
 }
 
-Comments.Form = function Form({slug}: CommentsProps) {
+const CommentFormContext = createContext<{ focusCommentForm: () => void } | null>(null)
+
+Comments.Form = function Form({slug, commentFormRef}: CommentsProps) {
+    const [parentId, setParentId] = useState<string | number | null>('')
     const [state, formAction, pending] = useActionState(addComment, initialState)
     const {data: session} = useSession()
+    const replyContext = useContext(ReplyContext)
+
+    useEffect(() => {
+        if (replyContext?.replyTo?.parent_id !== null) {
+            setParentId(replyContext?.replyTo?.parent_id ?? '')
+        } else {
+            setParentId(replyContext?.replyTo?.id)
+        }
+    }, [replyContext?.replyTo])
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if ((e.ctrlKey || e.metaKey) && (e.key === 'Enter' || e.key === 'NumpadEnter')) {
             e.preventDefault()
             e.currentTarget.form?.requestSubmit()
+        }
+
+        if (e.key === 'Escape' && replyContext?.replyTo !== null) {
+            replyContext?.setReplyTo(null)
+            commentFormRef?.current?.blur()
         }
     }
 
@@ -105,10 +167,10 @@ Comments.Form = function Form({slug}: CommentsProps) {
                         <GitHubIcon className="w-6 h-6 dark:fill-white"/>Sign in to comment
                     </Button>
                 </form> :
-                <form action={formAction}>
+                <form action={formAction} onSubmit={() => replyContext?.setReplyTo(null)}>
                     <label htmlFor="comment"
                            className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
-                        Add a comment
+                        {replyContext?.replyTo ? `Reply to ${replyContext?.replyTo.user.name}` : 'Add a comment'}
                     </label>
                     <div className="mt-2 flex">
                             <textarea
@@ -120,17 +182,25 @@ Comments.Form = function Form({slug}: CommentsProps) {
                                 disabled={pending}
                                 defaultValue={''}
                                 maxLength={255}
+                                ref={commentFormRef}
                                 required
                             />
                     </div>
+                    <input type="hidden" name="parent_id" value={parentId ?? ''}/>
                     <input type="hidden" name="slug" value={slug}/>
                     <div className="mt-2 flex justify-between items-start gap-x-4">
                         <Comments.Status>
                             {state?.message}
                         </Comments.Status>
-                        <Button variant="secondary" disabled={pending}>
-                            Comment
-                        </Button>
+                        <div className="flex gap-x-4">
+                            {replyContext?.replyTo &&
+                                <button className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 hover:dark:text-zinc-50"
+                                        onClick={() => replyContext?.setReplyTo(null)}>Cancel</button>
+                            }
+                            <Button variant="secondary" disabled={pending}>
+                                Comment
+                            </Button>
+                        </div>
                     </div>
                 </form>
             }
@@ -138,18 +208,38 @@ Comments.Form = function Form({slug}: CommentsProps) {
     )
 }
 
+
+type ReplyContextType = {
+    replyTo: Comment | null
+    setReplyTo: (replyTo: Comment | null) => void
+}
+
+const ReplyContext = createContext<ReplyContextType | null>(null)
+
 type CommentsProps = {
     slug: string
     comments?: any
+    commentFormRef?: RefObject<HTMLTextAreaElement | null>
 }
 
 export default function Comments({slug, comments}: CommentsProps) {
+    const [replyTo, setReplyTo] = useState<Comment | null>(null)
+    const commentFormRef = useRef<HTMLTextAreaElement>(null)
+
+    const focusCommentForm = () => {
+        commentFormRef.current?.focus()
+    }
+
     return (
-        <div className="mt-24">
-            {comments &&
-                <Comments.List comments={comments}/>
-            }
-            <Comments.Form slug={slug}/>
-        </div>
+        <ReplyContext.Provider value={{replyTo, setReplyTo}}>
+            <CommentFormContext.Provider value={{focusCommentForm}}>
+                <div className="mt-24">
+                    {comments &&
+                        <Comments.List comments={comments}/>
+                    }
+                    <Comments.Form slug={slug} commentFormRef={commentFormRef}/>
+                </div>
+            </CommentFormContext.Provider>
+        </ReplyContext.Provider>
     )
 }
