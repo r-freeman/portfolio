@@ -39,11 +39,11 @@ Comments.ReplyButton = function ReplyButton({comment}: ReplyButton) {
 
     return (
         <button
-            className="flex mt-4 text-sm gap-x-2 items-center group hover:dark:text-indigo-500 text-zinc-800 dark:text-zinc-100"
+            className="flex mt-4 text-sm gap-x-2 items-center group active:dark:text-indigo-500 text-zinc-800 dark:text-zinc-100"
             onClick={handleReplyButton}
         >
             <ArrowLeftIcon
-                className="w-4 h-4 stroke-zinc-500 dark:stroke-zinc-400 group-hover:dark:stroke-indigo-500 group-hover:stroke-indigo-500"/>Reply
+                className="w-4 h-4 stroke-zinc-500 dark:stroke-zinc-400 group-active:dark:stroke-indigo-500 group-active:stroke-indigo-500"/>Reply
         </button>
     )
 }
@@ -60,13 +60,13 @@ Comments.Comment = function Comment({comment, children, isReply = false}: {
             <article
                 className={clsx('flex gap-x-4 py-5', isReply && 'ml-[62px]')}>
                 <Image src={comment.user.image} alt={comment.user.name} width={64} height={64}
-                       className="size-12 rounded-full"/>
+                       className={clsx('rounded-full', isReply ? 'size-8' : 'size-12')}/>
                 <div className="flex-auto">
                     <div className="flex items-baseline gap-x-1">
                         <p className="font-semibold text-sm text-zinc-800 dark:text-zinc-100">{comment.user.name}</p>
                         <p className="text-sm text-zinc-500 dark:text-zinc-400">
                             <time dateTime={comment.created_at}>
-                                <span>&middot; {`${formatDistanceToNow(comment.created_at)} ago`}</span>
+                                <span>&middot; {`${formatDistanceToNow(comment.created_at, {addSuffix: true})}`}</span>
                             </time>
                         </p>
                     </div>
