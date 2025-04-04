@@ -30,10 +30,14 @@ type ReplyButton = {
 Comments.ReplyButton = function ReplyButton({comment}: ReplyButton) {
     const replyContext = useContext(ReplyContext)
     const commentFormContext = useContext(CommentFormContext)
+    const {data: session} = useSession()
 
-    const handleReplyButton = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleReplyButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        replyContext?.setReplyTo(comment)
+        if (!session) {
+            await loginWithGitHub()
+        }
+        replyContext?.setReplyTo(comment);
         commentFormContext?.focusCommentForm()
     }
 
@@ -71,9 +75,7 @@ Comments.Comment = function Comment({comment, children, isReply = false}: {
                         </p>
                     </div>
                     <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400 max-w-xl">{comment.content}</p>
-                    {session &&
-                        <Comments.ReplyButton comment={comment}/>
-                    }
+                    <Comments.ReplyButton comment={comment}/>
                 </div>
             </article>
             {children}
