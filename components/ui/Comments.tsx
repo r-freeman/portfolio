@@ -7,8 +7,8 @@ import clsx from 'clsx'
 import {addComment, loginWithGitHub} from '@/app/actions/comments'
 import {Button} from '@/components/ui/Button'
 import {GitHubIcon} from '@/components/icons/SocialIcons'
-import {formatDistanceToNow} from 'date-fns'
 import {ArrowLeftIcon} from '@/components/icons/ArrowLeftIcon'
+import {getShortDurationFromNow} from '@/lib/dateFns'
 
 type Comment = {
     id: number
@@ -58,7 +58,7 @@ Comments.Comment = function Comment({comment, children, isReply = false}: {
     return (
         <>
             <article
-                className={clsx('flex gap-x-4 py-5', isReply && 'ml-[62px]')}>
+                className={clsx('flex gap-x-4 py-5', isReply && 'ml-[62px] border-l border-zinc-100 pl-6 dark:border-zinc-700/40')}>
                 <Image src={comment.user.image} alt={comment.user.name} width={64} height={64}
                        className={clsx('rounded-full', isReply ? 'size-8' : 'size-12')}/>
                 <div className="flex-auto">
@@ -66,7 +66,7 @@ Comments.Comment = function Comment({comment, children, isReply = false}: {
                         <p className="font-semibold text-sm text-zinc-800 dark:text-zinc-100">{comment.user.name}</p>
                         <p className="text-sm text-zinc-500 dark:text-zinc-400">
                             <time dateTime={comment.created_at}>
-                                <span>&middot; {`${formatDistanceToNow(comment.created_at, {addSuffix: true})}`}</span>
+                                <span>&middot; {`${getShortDurationFromNow(comment.created_at)}`}</span>
                             </time>
                         </p>
                     </div>
