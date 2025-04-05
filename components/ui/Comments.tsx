@@ -52,13 +52,10 @@ Comments.ReplyButton = function ReplyButton({comment}: ReplyButton) {
     )
 }
 
-Comments.Comment = function Comment({comment, children, isReply = false}: {
+Comments.Comment = function Comment({comment, isReply = false}: {
     comment: Comment,
-    children?: ReactNode,
     isReply?: boolean
 }) {
-    const {data: session} = useSession()
-
     return (
         <>
             <article
@@ -78,7 +75,6 @@ Comments.Comment = function Comment({comment, children, isReply = false}: {
                     <Comments.ReplyButton comment={comment}/>
                 </div>
             </article>
-            {children}
         </>
     )
 }
@@ -96,11 +92,14 @@ Comments.List = function List({comments}: CommentsListProps) {
                         Comments
                     </h3>
                     {comments.map((comment) => (
-                        <Comments.Comment key={comment.id} comment={comment}>
-                            {comment.replies && comment.replies.map(reply => (
-                                <Comments.Comment key={reply.id} comment={reply} isReply={true}/>
-                            ))}
-                        </Comments.Comment>
+                        <React.Fragment key={comment.id}>
+                            <Comments.Comment comment={comment}/>
+                            {(typeof comment.replies !== 'undefined' && comment.replies.length > 0) ?
+                                comment.replies.map(reply => (
+                                    <Comments.Comment key={reply.id} comment={reply} isReply={true}/>
+                                )) : null
+                            }
+                        </React.Fragment>
                     ))}
                 </section>
             }
