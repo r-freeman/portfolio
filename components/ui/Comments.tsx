@@ -43,7 +43,7 @@ Comments.ReplyButton = function ReplyButton({comment}: ReplyButton) {
 
     return (
         <button
-            className="flex mt-4 text-sm gap-x-2 items-center group active:dark:text-indigo-500 text-zinc-800 dark:text-zinc-100"
+            className="flex mt-4 text-sm gap-x-2 items-center group active:dark:text-indigo-500 active:text-indigo-500 text-zinc-800 dark:text-zinc-100"
             onClick={handleReplyButton}
         >
             <ArrowLeftIcon
@@ -134,7 +134,12 @@ const initialState: InitialState = {
 
 const CommentFormContext = createContext<{ focusCommentForm: () => void } | null>(null)
 
-Comments.Form = function Form({slug, commentFormRef}: CommentsProps) {
+type CommentsFormsProps = {
+    slug: string
+    commentFormRef?: RefObject<HTMLTextAreaElement | null>
+}
+
+Comments.Form = function Form({slug, commentFormRef}: CommentsFormsProps) {
     const [parentId, setParentId] = useState<string | number | null>('')
     const [state, formAction, pending] = useActionState(addComment, initialState)
     const {data: session} = useSession()
@@ -219,8 +224,7 @@ const ReplyContext = createContext<ReplyContextType | null>(null)
 
 type CommentsProps = {
     slug: string
-    comments?: any
-    commentFormRef?: RefObject<HTMLTextAreaElement | null>
+    comments?: Comment[]
 }
 
 export default function Comments({slug, comments}: CommentsProps) {
