@@ -3,7 +3,6 @@ import {
     differenceInHours,
     differenceInMinutes,
     differenceInMonths,
-    differenceInSeconds,
     differenceInWeeks,
     differenceInYears
 } from 'date-fns'
@@ -17,8 +16,7 @@ export function getShortDurationFromNow(fromDateTime: string) {
         {fn: differenceInWeeks, suffix: 'w'},
         {fn: differenceInDays, suffix: 'd'},
         {fn: differenceInHours, suffix: 'h'},
-        {fn: differenceInMinutes, suffix: 'm'},
-        {fn: differenceInSeconds, suffix: 's'}
+        {fn: differenceInMinutes, suffix: 'm'}
     ]
 
     for (const {fn, suffix} of units) {
@@ -28,5 +26,5 @@ export function getShortDurationFromNow(fromDateTime: string) {
         }
     }
 
-    return '0s'
+    return '<1m'
 }

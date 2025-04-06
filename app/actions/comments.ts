@@ -42,7 +42,7 @@ export async function addComment(prevState: { message: string }, formData: FormD
     const success_message = 'Thanks, your comment was submitted and is awaiting approval.'
 
     const schema = z.object({
-        comment: z.string().min(1).max(255).trim(),
+        comment: z.string().min(1).max(300),
         slug: z.string(),
         parent_id: z.string().optional()
     })
