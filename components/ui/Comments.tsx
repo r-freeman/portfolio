@@ -1,6 +1,6 @@
 'use client'
 
-import React, {createContext, ReactNode, RefObject, useActionState, useContext, useEffect, useRef, useState} from 'react'
+import React, {ReactNode, useActionState, useEffect, useState} from 'react'
 import {useSession} from 'next-auth/react'
 import Image from 'next/image'
 import clsx from 'clsx'
@@ -9,27 +9,18 @@ import {Button} from '@/components/ui/Button'
 import {GitHubIcon} from '@/components/icons/SocialIcons'
 import {ArrowLeftIcon} from '@/components/icons/ArrowLeftIcon'
 import {getShortDurationFromNow} from '@/lib/dateFns'
+import ReplyProvider, {useReplyContext} from '@/app/context/ReplyProvider'
+import CommentFormProvider, {useCommentFormContext} from '@/app/context/CommentFormProvider'
 
-type Comment = {
-    id: number
-    content: string
-    created_at: string
-    parent_id: number | null
-    user: {
-        id: number
-        name: string
-        image: string
-    }
-    replies?: Comment[]
-}
+import type {Comment} from '@/types'
 
 type ReplyButton = {
     comment: Comment
 }
 
 Comments.ReplyButton = function ReplyButton({comment}: ReplyButton) {
-    const replyContext = useContext(ReplyContext)
-    const commentFormContext = useContext(CommentFormContext)
+    const replyContext = useReplyContext()
+    const commentFormContext = useCommentFormContext()
     const {data: session} = useSession()
 
     const handleReplyButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -132,18 +123,13 @@ const initialState: InitialState = {
     message: ''
 }
 
-const CommentFormContext = createContext<{ focusCommentForm: () => void } | null>(null)
-
-type CommentsFormsProps = {
-    slug: string
-    commentFormRef?: RefObject<HTMLTextAreaElement | null>
-}
-
-Comments.Form = function Form({slug, commentFormRef}: CommentsFormsProps) {
+Comments.Form = function Form({slug}: { slug: string }) {
     const [parentId, setParentId] = useState<string | number | null>('')
     const [state, formAction, pending] = useActionState(addComment, initialState)
     const {data: session} = useSession()
-    const replyContext = useContext(ReplyContext)
+    const replyContext = useReplyContext()
+    const commentFormContext = useCommentFormContext()
+    const commentFormRef = commentFormContext?.commentFormRef
 
     useEffect(() => {
         if (replyContext?.replyTo?.parent_id !== null) {
@@ -214,37 +200,22 @@ Comments.Form = function Form({slug, commentFormRef}: CommentsFormsProps) {
     )
 }
 
-
-type ReplyContextType = {
-    replyTo: Comment | null
-    setReplyTo: (replyTo: Comment | null) => void
-}
-
-const ReplyContext = createContext<ReplyContextType | null>(null)
-
 type CommentsProps = {
     slug: string
-    comments?: Comment[]
+    comments?: any
 }
 
 export default function Comments({slug, comments}: CommentsProps) {
-    const [replyTo, setReplyTo] = useState<Comment | null>(null)
-    const commentFormRef = useRef<HTMLTextAreaElement>(null)
-
-    const focusCommentForm = () => {
-        commentFormRef.current?.focus()
-    }
-
     return (
-        <ReplyContext.Provider value={{replyTo, setReplyTo}}>
-            <CommentFormContext.Provider value={{focusCommentForm}}>
+        <CommentFormProvider>
+            <ReplyProvider>
                 <div className="mt-24">
                     {comments &&
                         <Comments.List comments={comments}/>
                     }
-                    <Comments.Form slug={slug} commentFormRef={commentFormRef}/>
+                    <Comments.Form slug={slug}/>
                 </div>
-            </CommentFormContext.Provider>
-        </ReplyContext.Provider>
+            </ReplyProvider>
+        </CommentFormProvider>
     )
 }

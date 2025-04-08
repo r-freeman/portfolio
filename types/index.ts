@@ -23,3 +23,16 @@ export type Repo = {
         color: string
     }
 }
+
+export type Comment = {
+    id: number
+    content: string
+    created_at: string
+    parent_id: number | null
+    user: {
+        id: number
+        name: string
+        image: string
+    }
+    replies?: Comment[]
+}

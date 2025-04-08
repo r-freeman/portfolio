@@ -10,6 +10,8 @@ import {getAllArticles} from '@/lib/getAllArticles'
 import {getComments} from '@/lib/getComments'
 import {format} from 'date-fns'
 
+import type {Comment} from '@/types'
+
 type ArticleLayout = {
     title: string
     date: string
