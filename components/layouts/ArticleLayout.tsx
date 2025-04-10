@@ -5,12 +5,10 @@ import {Prose} from '@/components/ui/Prose'
 import {Views} from '@/components/ui/Views'
 import {ArrowDownIcon} from '@/components/icons/ArrowDownIcon'
 import ArticleNav from '@/components/ui/ArticleNav'
-import Comments from '@/components/ui/Comments'
+import {Comments} from '@/components/ui/Comments'
 import {getAllArticles} from '@/lib/getAllArticles'
 import {getComments} from '@/lib/getComments'
 import {format} from 'date-fns'
-
-import type {Comment} from '@/types'
 
 type ArticleLayout = {
     title: string
