@@ -45,13 +45,8 @@ export const getCurrentlyPlaying = async () => {
 
 
 export const getRecentlyPlayed = async () => {
-    try {
-        const {access_token}: Response = await getAccessToken() as Response
-    } catch(e) {
-        console.error(e)
-        return null
-    }
-        
+    const {access_token}: Response = await getAccessToken() as Response
+
     return await fetch(SPOTIFY_RECENTLY_PLAYED, {
         headers: {
             Authorization: `Bearer ${access_token}`

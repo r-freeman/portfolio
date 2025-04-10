@@ -205,7 +205,7 @@ type CommentsProps = {
     comments?: any
 }
 
-export default function Comments({slug, comments}: CommentsProps) {
+export function Comments({slug, comments}: CommentsProps) {
     return (
         <CommentFormProvider>
             <ReplyProvider>
