@@ -86,17 +86,17 @@ export default async function About() {
                             {meta.description}
                         </p>
                         <p>
-                            I have strong experience in front and backend software engineering, I use React for creating dynamic
-                            and responsive user interfaces, and Spring for building robust and scalable backend applications. I
-                            work with AWS everyday and I'm a Amazon Web Services Certified Cloud Practitioner.
+                            I have solid experience in both frontend and backend software engineering. I use React to develop
+                            dynamic, responsive user interfaces (such as this website), and Spring to build robust, scalable
+                            backend systems. I work with AWS daily and I'm a Amazon Web Services Certified Cloud Practitioner.
                         </p>
                         <p>
-                            Currently, I work as a software engineer at Aer Lingus, contributing to projects ranging from bug
+                            I'm currently working as a software engineer at Aer Lingus, contributing to projects ranging from bug
                             fixes and legacy code maintenance to greenfield projects and customer-facing services. Knowing my
                             work impacts thousands of users is very rewarding.
                         </p>
                         <p>
-                            Beyond work, I stay up-to-date on software trends and support open-source technology. I run a
+                            Beyond my day job, I stay up-to-date on software trends and support open-source technology. I run a
                             Raspberry Pi and a couple of Linux servers where I host a handful of useful services. I also build and
                             maintain computers and upgrade retro gaming systems.
                         </p>
