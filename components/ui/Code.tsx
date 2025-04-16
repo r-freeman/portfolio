@@ -1,8 +1,9 @@
 'use client'
 
 import React, {ReactNode, useRef, useState} from 'react'
-import {CopyIcon} from '@/components/icons/CopyIcon'
 import {CheckIcon} from '@/components/icons/CheckIcon'
+import {CopyIcon} from '@/components/icons/CopyIcon'
+import clsx from 'clsx';
 
 export function Code({children}: { children: ReactNode }) {
     const [copied, setCopied] = useState<boolean>(false)
@@ -16,10 +17,16 @@ export function Code({children}: { children: ReactNode }) {
     }
 
     return (
-        <pre className="relative" ref={preRef}>
-                <button className="absolute top-0 right-0 m-5" onClick={handleCopy} aria-label="Copy code">
-                {copied ? <CheckIcon className="size-6 text-green-500"/> :
-                    <CopyIcon className="size-6 text-zinc-400 hover:text-zinc-50"/>}
+        <pre className="relative group" ref={preRef}>
+                <button
+                    className="absolute top-0 right-0 m-5 scale-0 group-hover:scale-100 group-hover:opacity-100 opacity-0 transition-all ease-in p-2"
+                    onClick={handleCopy} aria-label="Copy code">
+                    <div className="relative size-6">
+                        <CheckIcon
+                            className={clsx('absolute text-green-500 ease-in transform transition', !copied ? 'scale-0' : 'scale-100')}/>
+                        <CopyIcon
+                            className={clsx('absolute text-zinc-400 hover:text-zinc-50 ease-in transform transition', !copied ? 'scale-100' : 'scale-0')}/>
+                    </div>
                 </button>
             <div className="mt-5 sm:mt-0 pb-5 overflow-auto ">
             {children}
