@@ -3,7 +3,7 @@
 import React, {ReactNode, useRef, useState} from 'react'
 import {CheckIcon} from '@/components/icons/CheckIcon'
 import {CopyIcon} from '@/components/icons/CopyIcon'
-import clsx from 'clsx';
+import clsx from 'clsx'
 
 export function Code({children}: { children: ReactNode }) {
     const [copied, setCopied] = useState<boolean>(false)
@@ -28,7 +28,7 @@ export function Code({children}: { children: ReactNode }) {
                             className={clsx('absolute text-zinc-400 hover:text-zinc-50 ease-in transform transition', !copied ? 'scale-100' : 'scale-0')}/>
                     </div>
                 </button>
-            <div className="mt-5 sm:mt-0 pb-5 overflow-auto ">
+            <div className="mt-5 sm:mt-0 pb-5 overflow-auto">
             {children}
             </div>
         </pre>
