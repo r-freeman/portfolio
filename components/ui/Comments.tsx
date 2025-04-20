@@ -1,6 +1,6 @@
 'use client'
 
-import React, {ReactNode, useActionState, useEffect, useState} from 'react'
+import React, {useActionState, useEffect, useState} from 'react'
 import {useSession} from 'next-auth/react'
 import Image from 'next/image'
 import clsx from 'clsx'
@@ -8,6 +8,7 @@ import {addComment, loginWithGitHub} from '@/app/actions/comments'
 import {Button} from '@/components/ui/Button'
 import {GitHubIcon} from '@/components/icons/SocialIcons'
 import {ArrowLeftIcon} from '@/components/icons/ArrowLeftIcon'
+import {StatusMessage} from '@/components/ui/StatusMessage'
 import {getShortDurationFromNow} from '@/lib/dateFns'
 import ReplyProvider, {useReplyContext} from '@/app/context/ReplyProvider'
 import CommentFormProvider, {useCommentFormContext} from '@/app/context/CommentFormProvider'
@@ -98,23 +99,6 @@ Comments.List = function List({comments}: CommentsListProps) {
     )
 }
 
-type CommentsStatusProps = {
-    children: ReactNode
-}
-
-Comments.Status = function Status({children}: CommentsStatusProps) {
-    const errorConditions = ['error', 'problem']
-    const isError = errorConditions.some(condition => children?.toString().toLowerCase().includes(condition))
-
-    return (
-        <p aria-live="polite" role="status"
-           className={clsx('text-sm font-semibold',
-               !isError ? 'text-green-800 dark:text-green-600' : 'text-red-800 dark:text-red-600')}>
-            {children}
-        </p>
-    )
-}
-
 type InitialState = {
     message: string
 }
@@ -130,6 +114,8 @@ Comments.Form = function Form({slug}: { slug: string }) {
     const replyContext = useReplyContext()
     const commentFormContext = useCommentFormContext()
     const commentFormRef = commentFormContext?.commentFormRef
+    const [commentLength, setCommentLength] = useState<number>(0)
+    const commentMaxLength = 300
 
     useEffect(() => {
         if (replyContext?.replyTo?.parent_id !== null) {
@@ -151,6 +137,11 @@ Comments.Form = function Form({slug}: { slug: string }) {
         }
     }
 
+    const handleSubmit = () => {
+        replyContext?.setReplyTo(null)
+        setCommentLength(0)
+    }
+
     return (
         <div className="mt-12">
             {!session ?
@@ -159,7 +150,7 @@ Comments.Form = function Form({slug}: { slug: string }) {
                         <GitHubIcon className="w-6 h-6 dark:fill-white"/>Sign in to comment
                     </Button>
                 </form> :
-                <form action={formAction} onSubmit={() => replyContext?.setReplyTo(null)}>
+                <form action={formAction} onSubmit={handleSubmit}>
                     <label htmlFor="comment"
                            className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
                         {replyContext?.replyTo ? `Reply to ${replyContext?.replyTo.user.name}` : 'Add a comment'}
@@ -171,9 +162,10 @@ Comments.Form = function Form({slug}: { slug: string }) {
                                 rows={4}
                                 className="resize-none block w-full rounded-md px-3 py-1.5 text-base text-zinc-600 dark:text-zinc-400 bg-[#fafafa] dark:bg-[#121212] border-[1px] dark:border-zinc-700/40 -outline-offset-1 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 focus:dark:outline-indigo-600"
                                 onKeyDown={handleKeyDown}
+                                onChange={(e) => setCommentLength(e.target.value.length ?? 0)}
                                 disabled={pending}
                                 defaultValue={''}
-                                maxLength={255}
+                                maxLength={commentMaxLength}
                                 ref={commentFormRef}
                                 required
                             />
@@ -181,9 +173,7 @@ Comments.Form = function Form({slug}: { slug: string }) {
                     <input type="hidden" name="parent_id" value={parentId ?? ''}/>
                     <input type="hidden" name="slug" value={slug}/>
                     <div className="mt-2 flex justify-between items-start gap-x-4">
-                        <Comments.Status>
-                            {state?.message}
-                        </Comments.Status>
+                        <p className="text-sm text-zinc-600 dark:text-zinc-400">{`${commentLength} / ${commentMaxLength}`}</p>
                         <div className="flex gap-x-4">
                             {replyContext?.replyTo &&
                                 <button className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 hover:dark:text-zinc-50"
@@ -194,6 +184,9 @@ Comments.Form = function Form({slug}: { slug: string }) {
                             </Button>
                         </div>
                     </div>
+                    <StatusMessage className="mt-2">
+                        {state.message}
+                    </StatusMessage>
                 </form>
             }
         </div>
