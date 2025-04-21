@@ -172,7 +172,7 @@ Comments.Form = function Form({slug}: { slug: string }) {
                     </div>
                     <input type="hidden" name="parent_id" value={parentId ?? ''}/>
                     <input type="hidden" name="slug" value={slug}/>
-                    <div className="mt-2 flex justify-between items-start gap-x-4">
+                    <div className="mt-2 flex justify-between items-center gap-x-4">
                         <p className="text-sm text-zinc-600 dark:text-zinc-400">{`${commentLength} / ${commentMaxLength}`}</p>
                         <div className="flex gap-x-4">
                             {replyContext?.replyTo &&

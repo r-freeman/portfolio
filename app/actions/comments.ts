@@ -37,9 +37,10 @@ const notificationBody = (comment: { id: number, content: string }, user: { name
 }
 
 export async function addComment(prevState: { message: string }, formData: FormData) {
-    const general_error = 'There was a problem with your comment, please try again later.'
+    const validation_error = 'Validation error, your comment was invalid.'
     const authorisation_error = 'Error, you must be logged in to post a comment.'
-    const success_message = 'Thanks, your comment was submitted and is awaiting approval.'
+    const server_error = 'Server error, please try again later.'
+    const success_message = 'Your comment was submitted and is awaiting approval.'
 
     const schema = z.object({
         comment: z.string().min(1).max(300),
@@ -55,7 +56,7 @@ export async function addComment(prevState: { message: string }, formData: FormD
 
     const parse = schema.safeParse({comment, slug, parent_id});
     if (!parse.success) {
-        return {message: general_error}
+        return {message: validation_error}
     }
 
     if (parent_id === '') parent_id = null
@@ -82,7 +83,7 @@ export async function addComment(prevState: { message: string }, formData: FormD
             .single()
 
         if (error || newComment?.id === null) {
-            return {message: general_error}
+            return {message: server_error}
         }
 
         if (process.env.NODE_ENV === 'production') {
@@ -92,6 +93,6 @@ export async function addComment(prevState: { message: string }, formData: FormD
         return {message: success_message}
     } catch (error) {
         console.error('Error posting comment:', error)
-        return {message: general_error}
+        return {message: server_error}
     }
 }
