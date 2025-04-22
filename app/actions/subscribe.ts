@@ -2,6 +2,16 @@
 
 import {z} from 'zod'
 import {addSubscriber} from '@/lib/listmonk'
+import {sendNotification} from '@/lib/ntfy'
+
+const notificationBody = (email: FormDataEntryValue | null) => {
+    return {
+        topic: 'portfolio',
+        message: `${email} has subscribed to your newsletter.`,
+        title: 'New subscriber',
+        tags: ['rocket']
+    }
+}
 
 export async function subscribe(prevState: { message: string }, formData: FormData) {
     const schema = z.object({
@@ -27,6 +37,8 @@ export async function subscribe(prevState: { message: string }, formData: FormDa
         console.error(error)
         return {message: errorMessage}
     }
+
+    await sendNotification(notificationBody(email))
 
     return {message: 'Subscribed'}
 }
