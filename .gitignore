@@ -3,6 +3,8 @@ prisma/**/*
 !prisma/schema.prisma
 .env
 
+encrypt_secrets.sh
+
 supabase/
 !/lib/supabase
 

@@ -6,11 +6,12 @@ import {CrossIcon} from '@/components/icons/CrossIcon'
 type StatusMessageProps = {
     children: ReactNode
     className?: string
+    errorConditions?: string[]
 }
 
-export function StatusMessage({children, className}: StatusMessageProps) {
-    const errorConditions = ['error', 'problem']
-    const isError = errorConditions.some(condition => children?.toString().toLowerCase().includes(condition))
+export function StatusMessage({children, className, errorConditions}: StatusMessageProps) {
+    const _errorConditions = ['error', 'problem', ...errorConditions ?? []]
+    const isError = _errorConditions.some(condition => children?.toString().toLowerCase().includes(condition))
 
     return (
         <>
