@@ -29,6 +29,8 @@ Comments.ReplyButton = function ReplyButton({comment}: ReplyButton) {
         if (!session) {
             await loginWithGitHub()
         }
+        commentFormContext?.setCommentLength(0)
+        commentFormContext?.commentFormRef?.current?.form?.reset()
         replyContext?.setReplyTo(comment);
         commentFormContext?.focusCommentForm()
     }
@@ -51,7 +53,7 @@ Comments.Comment = function Comment({comment, isReply = false}: {
     return (
         <>
             <article
-                className={clsx('flex gap-x-4 py-5', isReply && 'ml-[62px] border-l border-zinc-100 pl-6 dark:border-zinc-700/40')}>
+                className={clsx('flex gap-x-4 py-5', isReply && 'ml-[66px] border-l border-zinc-100 pl-6 dark:border-zinc-700/40')}>
                 <Image src={comment.user.image} alt={comment.user.name} width={64} height={64}
                        className={clsx('rounded-full', isReply ? 'size-8' : 'size-12')}/>
                 <div className="flex-auto">
@@ -114,8 +116,6 @@ Comments.Form = function Form({slug}: { slug: string }) {
     const replyContext = useReplyContext()
     const commentFormContext = useCommentFormContext()
     const commentFormRef = commentFormContext?.commentFormRef
-    const [commentLength, setCommentLength] = useState<number>(0)
-    const commentMaxLength = 300
 
     useEffect(() => {
         if (replyContext?.replyTo?.parent_id !== null) {
@@ -139,11 +139,17 @@ Comments.Form = function Form({slug}: { slug: string }) {
 
     const handleSubmit = () => {
         replyContext?.setReplyTo(null)
-        setCommentLength(0)
+        commentFormContext?.setCommentLength(0)
+    }
+
+    const handleCancel = () => {
+        replyContext?.setReplyTo(null)
+        commentFormContext?.setCommentLength(0)
+        commentFormRef?.current?.form?.reset()
     }
 
     return (
-        <div className="mt-12">
+        <div className="mt-24">
             {!session ?
                 <form action={async () => await loginWithGitHub()}>
                     <Button variant="secondary">
@@ -151,42 +157,47 @@ Comments.Form = function Form({slug}: { slug: string }) {
                     </Button>
                 </form> :
                 <form action={formAction} onSubmit={handleSubmit}>
-                    <label htmlFor="comment"
-                           className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
-                        {replyContext?.replyTo ? `Reply to ${replyContext?.replyTo.user.name}` : 'Add a comment'}
-                    </label>
-                    <div className="mt-2 flex">
+                    <div className="flex gap-x-4">
+                        {session?.user?.image !== null &&
+                            <Image className="size-12 rounded-full" src={session?.user?.image ?? ''}
+                                   alt={session?.user?.name ?? ''}
+                                   width={64} height={64}/>
+                        }
+                        <div className="flex-1">
                             <textarea
                                 id="comment"
                                 name="comment"
                                 rows={4}
                                 className="resize-none block w-full rounded-md px-3 py-1.5 text-base text-zinc-600 dark:text-zinc-400 bg-[#fafafa] dark:bg-[#121212] border-[1px] dark:border-zinc-700/40 -outline-offset-1 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 focus:dark:outline-indigo-600"
                                 onKeyDown={handleKeyDown}
-                                onChange={(e) => setCommentLength(e.target.value.length ?? 0)}
+                                onChange={(e) => commentFormContext?.setCommentLength(e.target.value.length ?? 0)}
                                 disabled={pending}
                                 defaultValue={''}
-                                maxLength={commentMaxLength}
+                                maxLength={commentFormContext?.commentMaxLength}
                                 ref={commentFormRef}
+                                placeholder={`${replyContext?.replyTo ? `Reply to ${replyContext.replyTo.user.name}` : 'Add a comment'}`}
                                 required
                             />
-                    </div>
-                    <input type="hidden" name="parent_id" value={parentId ?? ''}/>
-                    <input type="hidden" name="slug" value={slug}/>
-                    <div className="mt-2 flex justify-between items-center gap-x-4">
-                        <p className="text-sm text-zinc-600 dark:text-zinc-400">{`${commentLength} / ${commentMaxLength}`}</p>
-                        <div className="flex gap-x-4">
-                            {replyContext?.replyTo &&
-                                <button className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 hover:dark:text-zinc-50"
-                                        onClick={() => replyContext?.setReplyTo(null)}>Cancel</button>
-                            }
-                            <Button variant="secondary" disabled={pending}>
-                                Comment
-                            </Button>
+                            <input type="hidden" name="parent_id" value={parentId ?? ''}/>
+                            <input type="hidden" name="slug" value={slug}/>
+                            <div className="mt-2 flex justify-between items-center gap-x-4">
+                                <p className="text-sm text-zinc-600 dark:text-zinc-400">{`${commentFormContext?.commentLength} / ${commentFormContext?.commentMaxLength}`}</p>
+                                <div className="flex gap-x-4">
+                                    {replyContext?.replyTo &&
+                                        <button
+                                            className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 hover:dark:text-zinc-50"
+                                            onClick={handleCancel}>Cancel</button>
+                                    }
+                                    <Button variant="secondary" disabled={pending}>
+                                        Comment
+                                    </Button>
+                                </div>
+                            </div>
+                            <StatusMessage className="mt-2">
+                                {state.message}
+                            </StatusMessage>
                         </div>
                     </div>
-                    <StatusMessage className="mt-2">
-                        {state.message}
-                    </StatusMessage>
                 </form>
             }
         </div>
