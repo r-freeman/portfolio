@@ -10,7 +10,6 @@ import {GitHubIcon} from '@/components/icons/SocialIcons'
 import {ArrowLeftIcon} from '@/components/icons/ArrowLeftIcon'
 import {StatusMessage} from '@/components/ui/StatusMessage'
 import {getShortDurationFromNow} from '@/lib/dateFns'
-import ReplyProvider, {useReplyContext} from '@/app/context/ReplyProvider'
 import CommentFormProvider, {useCommentFormContext} from '@/app/context/CommentFormProvider'
 
 import type {Comment} from '@/types'
@@ -20,7 +19,6 @@ type ReplyButton = {
 }
 
 Comments.ReplyButton = function ReplyButton({comment}: ReplyButton) {
-    const replyContext = useReplyContext()
     const commentFormContext = useCommentFormContext()
     const {data: session} = useSession()
 
@@ -31,7 +29,7 @@ Comments.ReplyButton = function ReplyButton({comment}: ReplyButton) {
         }
         commentFormContext?.setCommentLength(0)
         commentFormContext?.commentFormRef?.current?.form?.reset()
-        replyContext?.setReplyTo(comment);
+        commentFormContext?.setReplyTo(comment);
         commentFormContext?.focusCommentForm()
     }
 
@@ -113,17 +111,16 @@ Comments.Form = function Form({slug}: { slug: string }) {
     const [parentId, setParentId] = useState<string | number | null>('')
     const [state, formAction, pending] = useActionState(addComment, initialState)
     const {data: session} = useSession()
-    const replyContext = useReplyContext()
     const commentFormContext = useCommentFormContext()
     const commentFormRef = commentFormContext?.commentFormRef
 
     useEffect(() => {
-        if (replyContext?.replyTo?.parent_id !== null) {
-            setParentId(replyContext?.replyTo?.parent_id ?? '')
+        if (commentFormContext?.replyTo?.parent_id !== null) {
+            setParentId(commentFormContext?.replyTo?.parent_id ?? '')
         } else {
-            setParentId(replyContext?.replyTo?.id)
+            setParentId(commentFormContext?.replyTo?.id)
         }
-    }, [replyContext?.replyTo])
+    }, [commentFormContext?.replyTo])
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if ((e.ctrlKey || e.metaKey) && (e.key === 'Enter' || e.key === 'NumpadEnter')) {
@@ -131,25 +128,25 @@ Comments.Form = function Form({slug}: { slug: string }) {
             e.currentTarget.form?.requestSubmit()
         }
 
-        if (e.key === 'Escape' && replyContext?.replyTo !== null) {
-            replyContext?.setReplyTo(null)
+        if (e.key === 'Escape' && commentFormContext?.replyTo !== null) {
+            commentFormContext?.setReplyTo(null)
             commentFormRef?.current?.blur()
         }
     }
 
     const handleSubmit = () => {
-        replyContext?.setReplyTo(null)
+        commentFormContext?.setReplyTo(null)
         commentFormContext?.setCommentLength(0)
     }
 
     const handleCancel = () => {
-        replyContext?.setReplyTo(null)
+        commentFormContext?.setReplyTo(null)
         commentFormContext?.setCommentLength(0)
         commentFormRef?.current?.form?.reset()
     }
 
     return (
-        <div className="mt-24">
+        <div className="mt-16">
             {!session ?
                 <form action={async () => await loginWithGitHub()}>
                     <Button variant="secondary">
@@ -175,7 +172,7 @@ Comments.Form = function Form({slug}: { slug: string }) {
                                 defaultValue={''}
                                 maxLength={commentFormContext?.commentMaxLength}
                                 ref={commentFormRef}
-                                placeholder={`${replyContext?.replyTo ? `Reply to ${replyContext.replyTo.user.name}` : 'Add a comment'}`}
+                                placeholder={`${commentFormContext?.replyTo ? `Reply to ${commentFormContext.replyTo.user.name}` : 'Add a comment'}`}
                                 required
                             />
                             <input type="hidden" name="parent_id" value={parentId ?? ''}/>
@@ -183,7 +180,7 @@ Comments.Form = function Form({slug}: { slug: string }) {
                             <div className="mt-2 flex justify-between items-center gap-x-4">
                                 <p className="text-sm text-zinc-600 dark:text-zinc-400">{`${commentFormContext?.commentLength} / ${commentFormContext?.commentMaxLength}`}</p>
                                 <div className="flex gap-x-4">
-                                    {replyContext?.replyTo &&
+                                    {commentFormContext?.replyTo &&
                                         <button
                                             className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 hover:dark:text-zinc-50"
                                             onClick={handleCancel}>Cancel</button>
@@ -212,14 +209,12 @@ type CommentsProps = {
 export function Comments({slug, comments}: CommentsProps) {
     return (
         <CommentFormProvider>
-            <ReplyProvider>
-                <div className="mt-24">
-                    {comments &&
-                        <Comments.List comments={comments}/>
-                    }
-                    <Comments.Form slug={slug}/>
-                </div>
-            </ReplyProvider>
+            <div className="mt-24">
+                {comments &&
+                    <Comments.List comments={comments}/>
+                }
+                <Comments.Form slug={slug}/>
+            </div>
         </CommentFormProvider>
     )
 }

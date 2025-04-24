@@ -38,7 +38,7 @@ export async function subscribe(prevState: { message: string }, formData: FormDa
         return {message: errorMessage}
     }
 
-    await sendNotification(notificationBody(email))
+    if (process.env.NODE_ENV === 'production') await sendNotification(notificationBody(email))
 
     return {message: 'Subscribed'}
 }
