@@ -19,7 +19,7 @@ export default function CommentFormProvider({children}: { children: ReactNode })
     const [replyTo, setReplyTo] = useState<Comment | null>(null)
     const [commentLength, setCommentLength] = useState<number>(0)
     const commentFormRef = useRef<HTMLTextAreaElement>(null)
-    const commentMaxLength = 300
+    const commentMaxLength = 500
 
     const focusCommentForm = () => {
         commentFormRef.current?.focus()

@@ -4,6 +4,7 @@ import {auth, signIn} from '@/auth'
 import {createClient} from '@/lib/supabase/server'
 import {z} from 'zod'
 import {sendNotification} from '@/lib/ntfy'
+import {extractUserId} from '@/lib/github'
 
 export async function loginWithGitHub() {
     await signIn('github')
@@ -22,15 +23,6 @@ const notificationBody = (comment: { id: number, content: string }, user: { name
                 headers: {
                     Authorization: `Bearer ${process.env.NTFY_TOKEN}`
                 }
-            },
-            {
-                action: 'http',
-                label: 'Delete comment',
-                url: `${process.env.NEXT_PUBLIC_SITE_URL}/api/comments/moderate/${comment.id}`,
-                method: 'DELETE',
-                headers: {
-                    Authorization: `Bearer ${process.env.NTFY_TOKEN}`
-                }
             }
         ]
     }
@@ -43,7 +35,7 @@ export async function addComment(prevState: { message: string }, formData: FormD
     const success_message = 'Your comment was submitted and is awaiting approval.'
 
     const schema = z.object({
-        comment: z.string().min(1).max(300),
+        comment: z.string().min(1).max(500),
         slug: z.string(),
         parent_id: z.string().optional()
     })
@@ -54,7 +46,7 @@ export async function addComment(prevState: { message: string }, formData: FormD
         parent_id: formData.get('parent_id')
     }
 
-    const parse = schema.safeParse({comment, slug, parent_id});
+    const parse = schema.safeParse({comment, slug, parent_id})
     if (!parse.success) {
         return {message: validation_error}
     }
@@ -64,6 +56,7 @@ export async function addComment(prevState: { message: string }, formData: FormD
     try {
         const supabase = await createClient()
         const session = await auth()
+        const isMe = process.env.GITHUB_USER_ID === extractUserId(session?.user?.image ?? '')
 
         if (!session?.user) {
             return {message: authorisation_error}
@@ -78,7 +71,7 @@ export async function addComment(prevState: { message: string }, formData: FormD
 
         const {data: newComment, error} = await supabase
             .from('comments')
-            .insert({content: comment, article_id: article?.id, user_id: user?.id, parent_id: parent_id})
+            .insert({content: comment, article_id: article?.id, user_id: user?.id, parent_id: parent_id, published: isMe})
             .select('*')
             .single()
 
@@ -86,7 +79,7 @@ export async function addComment(prevState: { message: string }, formData: FormD
             return {message: server_error}
         }
 
-        if (process.env.NODE_ENV === 'production') {
+        if (process.env.NODE_ENV === 'production' && !isMe) {
             await sendNotification(notificationBody(newComment, user, article))
         }
 

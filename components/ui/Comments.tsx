@@ -44,14 +44,15 @@ Comments.ReplyButton = function ReplyButton({comment}: ReplyButton) {
     )
 }
 
-Comments.Comment = function Comment({comment, isReply = false}: {
+Comments.Comment = function Comment({comment, isReply = false, className}: {
     comment: Comment,
     isReply?: boolean
+    className?: string
 }) {
     return (
         <>
             <article
-                className={clsx('flex gap-x-4 py-5', isReply && 'ml-[66px] border-l border-zinc-100 pl-6 dark:border-zinc-700/40')}>
+                className={clsx('flex gap-x-4 py-5', `${className ?? ''}`, isReply && 'ml-[66px] border-l border-zinc-100 pl-6 dark:border-zinc-700/40')}>
                 <Image src={comment.user.image} alt={comment.user.name} width={64} height={64}
                        className={clsx('rounded-full', isReply ? 'size-8' : 'size-12')}/>
                 <div className="flex-auto">
@@ -87,8 +88,9 @@ Comments.List = function List({comments}: CommentsListProps) {
                         <React.Fragment key={comment.id}>
                             <Comments.Comment comment={comment}/>
                             {(typeof comment.replies !== 'undefined' && comment.replies.length > 0) ?
-                                comment.replies.map(reply => (
-                                    <Comments.Comment key={reply.id} comment={reply} isReply={true}/>
+                                comment.replies.map((reply, i) => (
+                                    <Comments.Comment key={reply.id} comment={reply} isReply={true}
+                                                      className={`${i + 1 === comment.replies?.length ? 'mb-6' : ''}`}/>
                                 )) : null
                             }
                         </React.Fragment>

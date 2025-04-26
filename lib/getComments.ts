@@ -1,5 +1,6 @@
 import {createClient} from '@/lib/supabase/client'
 import {QueryData} from '@supabase/supabase-js'
+import type {Comment} from '@/types'
 
 export async function getComments(slug: string) {
     try {
@@ -27,23 +28,21 @@ export async function getComments(slug: string) {
             // @ts-ignore
             acc[comment.id] = {...comment, replies: []}
             return acc
-        }, {});
+        }, {})
 
         return comments?.reduce<Comment[]>((nested, comment) => {
             if (typeof commentMap !== 'undefined') {
                 if (comment.parent_id !== null) {
-                    const parent = commentMap[comment.parent_id];
+                    const parent: Comment = commentMap[comment.parent_id]
                     if (parent) {
-                        // @ts-ignore
                         parent.replies?.push(commentMap[comment.id])
-                        // @ts-ignore
                         parent.replies?.sort((a, b) => a.id - b.id)
                     }
                 } else {
-                    nested.push(commentMap[comment.id]);
+                    nested.push(commentMap[comment.id])
                 }
             }
-            return nested;
+            return nested
         }, [])
     } catch (error) {
         console.error(error)
