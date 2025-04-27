@@ -3,6 +3,7 @@
 import React, {useActionState, useEffect, useState} from 'react'
 import {useSession} from 'next-auth/react'
 import Image from 'next/image'
+import Link from 'next/link'
 import clsx from 'clsx'
 import {addComment, loginWithGitHub} from '@/app/actions/comments'
 import {Button} from '@/components/ui/Button'
@@ -57,7 +58,9 @@ Comments.Comment = function Comment({comment, isReply = false, className}: {
                        className={clsx('rounded-full', isReply ? 'size-8' : 'size-12')}/>
                 <div className="flex-auto">
                     <div className="flex items-baseline gap-x-1">
-                        <p className="font-semibold text-sm text-zinc-800 dark:text-zinc-100">{comment.user.name}</p>
+                        <p className="font-semibold text-sm text-zinc-800 dark:text-zinc-100">
+                            <Link href={`https://github.com/${comment.user.username ?? ''}`}>{comment.user.name}</Link>
+                        </p>
                         <p className="text-sm text-zinc-500 dark:text-zinc-400">
                             <time dateTime={comment.created_at}>
                                 <span>&middot; {`${getShortDurationFromNow(comment.created_at)}`}</span>

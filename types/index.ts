@@ -31,6 +31,7 @@ export type Comment = {
     parent_id: number | null
     user: {
         id: number
+        username: string
         name: string
         image: string
     }

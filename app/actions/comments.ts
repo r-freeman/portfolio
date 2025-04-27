@@ -4,7 +4,6 @@ import {auth, signIn} from '@/auth'
 import {createClient} from '@/lib/supabase/server'
 import {z} from 'zod'
 import {sendNotification} from '@/lib/ntfy'
-import {extractUserId} from '@/lib/github'
 
 export async function loginWithGitHub() {
     await signIn('github')
@@ -56,16 +55,21 @@ export async function addComment(prevState: { message: string }, formData: FormD
     try {
         const supabase = await createClient()
         const session = await auth()
-        const isMe = process.env.GITHUB_USER_ID === extractUserId(session?.user?.image ?? '')
+        const isMe = process.env.GITHUB_USER_ID === String(session?.user?.id)
 
         if (!session?.user) {
             return {message: authorisation_error}
         }
 
-        const {name, email, image} = session.user
+        const {name, email, image, login} = session.user as { [k: string]: string }
 
         const [{data: user}, {data: article}] = await Promise.all([
-            supabase.from('users').upsert({name, email, image}, {onConflict: 'email'}).select('*').single(),
+            supabase.from('users').upsert({
+                name,
+                email,
+                image,
+                username: login ?? null
+            }, {onConflict: 'email'}).select('*').single(),
             supabase.from('articles').select('*').eq('slug', slug).single()
         ])
 

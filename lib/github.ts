@@ -47,7 +47,3 @@ export async function getPinnedRepos() {
 
     return response.data.user.pinnedItems.nodes
 }
-
-export function extractUserId(avatarUrl: string) {
-    return new URL(avatarUrl).pathname.split('/')[2]
-}

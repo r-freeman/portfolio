@@ -13,7 +13,7 @@ export async function getComments(slug: string) {
                     published,
                     created_at,
                     parent_id,
-                    user:users!inner(id, name, image),
+                    user:users!inner(id, name, image, username),
                     article:articles!inner(id, title, slug)
                 `)
             .eq('article.slug', slug)
