@@ -10,7 +10,7 @@ import {Button} from '@/components/ui/Button'
 import {GitHubIcon} from '@/components/icons/SocialIcons'
 import {ArrowLeftIcon} from '@/components/icons/ArrowLeftIcon'
 import {StatusMessage} from '@/components/ui/StatusMessage'
-import {getShortDurationFromNow} from '@/lib/dateFns'
+import {getShortDurationFromNow, truncateDatetime} from '@/lib/dateFns'
 import CommentFormProvider, {useCommentFormContext} from '@/app/context/CommentFormProvider'
 
 import type {Comment} from '@/types'
@@ -18,6 +18,7 @@ import type {Comment} from '@/types'
 type ReplyButton = {
     comment: Comment
 }
+
 
 Comments.ReplyButton = function ReplyButton({comment}: ReplyButton) {
     const commentFormContext = useCommentFormContext()
@@ -62,7 +63,7 @@ Comments.Comment = function Comment({comment, isReply = false, className}: {
                             <Link href={`https://github.com/${comment.user.username ?? ''}`}>{comment.user.name}</Link>
                         </p>
                         <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                            <time dateTime={comment.created_at}>
+                            <time dateTime={truncateDatetime(comment.created_at)}>
                                 <span>&middot; {`${getShortDurationFromNow(comment.created_at)}`}</span>
                             </time>
                         </p>
