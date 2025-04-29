@@ -10,7 +10,6 @@ and skills, as well as provide information about me and my interests.
 - Database: [Supabase](https://supabase.com/)
 - Deployment: [Self-Hosted on Raspberry Pi 5](https://ryanfreeman.dev/writing/migrating-from-vercel-to-raspberry-pi-5)
 - Styling: [Tailwind CSS](https://tailwindcss.com/)
-- Integrations: [Spotify](https://spotify.com/)
 
 ## Project structure
 
