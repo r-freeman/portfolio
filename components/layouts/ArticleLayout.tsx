@@ -8,7 +8,6 @@ import ArticleNav from '@/components/ui/ArticleNav'
 import {Comments} from '@/components/ui/Comments'
 import {Subscribe} from '@/components/ui/Subscribe'
 import {getAllArticles} from '@/lib/getAllArticles'
-import {getComments} from '@/lib/getComments'
 import {format} from 'date-fns'
 
 type ArticleLayout = {
@@ -52,7 +51,6 @@ export async function ArticleLayout({
                                         slug,
                                         children
                                     }: ArticleLayout) {
-    const comments = await getComments(slug)
     const articles = await getAllArticles(false)
     const {prev, next} = findAdjacentArticles(articles, slug)
 
@@ -85,7 +83,7 @@ export async function ArticleLayout({
                         <Prose className="mt-8" data-mdx-content>{children}</Prose>
                     </article>
                     <Subscribe/>
-                    <Comments slug={slug} comments={comments}/>
+                    <Comments slug={slug}/>
                     <ArticleNav prev={prev} next={next}/>
                 </div>
             </div>

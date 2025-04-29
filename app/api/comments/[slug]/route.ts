@@ -1,8 +1,10 @@
-import {createClient} from '@/lib/supabase/client'
 import {QueryData} from '@supabase/supabase-js'
-import type {Comment} from '@/types'
+import {createClient} from '@/lib/supabase/server'
+import {Comment} from '@/types'
 
-export async function getComments(slug: string) {
+export async function GET(request: Request, {params}: { params: Promise<{ slug: string }> }) {
+    const {slug} = await params
+
     try {
         const supabase = await createClient()
         const commentsQuery = supabase
@@ -30,7 +32,8 @@ export async function getComments(slug: string) {
             return acc
         }, {})
 
-        return comments?.reduce<Comment[]>((nested, comment) => {
+        // @ts-ignore
+        const nestedComments = comments?.reduce<Comment[]>((nested, comment) => {
             if (typeof commentMap !== 'undefined') {
                 if (comment.parent_id !== null) {
                     const parent: Comment = commentMap[comment.parent_id]
@@ -41,10 +44,13 @@ export async function getComments(slug: string) {
                 } else {
                     nested.push(commentMap[comment.id])
                 }
+                return nested
             }
-            return nested
         }, [])
+
+        return new Response(JSON.stringify(nestedComments), {status: 200})
     } catch (error) {
         console.error(error)
+        return new Response(JSON.stringify({status: 'Internal Server Error'}), {status: 500})
     }
 }

@@ -11,14 +11,15 @@ import {GitHubIcon} from '@/components/icons/SocialIcons'
 import {ArrowLeftIcon} from '@/components/icons/ArrowLeftIcon'
 import {StatusMessage} from '@/components/ui/StatusMessage'
 import {getShortDurationFromNow, truncateDatetime} from '@/lib/dateFns'
+import fetcher from '@/lib/fetcher'
 import CommentFormProvider, {useCommentFormContext} from '@/app/context/CommentFormProvider'
+import useSWR from 'swr'
 
 import type {Comment} from '@/types'
 
 type ReplyButton = {
     comment: Comment
 }
-
 
 Comments.ReplyButton = function ReplyButton({comment}: ReplyButton) {
     const commentFormContext = useCommentFormContext()
@@ -209,15 +210,21 @@ Comments.Form = function Form({slug}: { slug: string }) {
 
 type CommentsProps = {
     slug: string
-    comments?: any
 }
 
-export function Comments({slug, comments}: CommentsProps) {
+export function Comments({slug}: CommentsProps) {
+    const {data: comments, error, isLoading} = useSWR(`/api/comments/${slug}`, fetcher) as {
+        data: Comment[],
+        error: Error,
+        isLoading: boolean
+    }
+
     return (
         <CommentFormProvider>
             <div className="mt-24">
-                {comments &&
+                {(comments && !error) ?
                     <Comments.List comments={comments}/>
+                    : null
                 }
                 <Comments.Form slug={slug}/>
             </div>
