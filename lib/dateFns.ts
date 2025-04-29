@@ -4,9 +4,7 @@ import {
     differenceInMinutes,
     differenceInMonths,
     differenceInWeeks,
-    differenceInYears,
-    format,
-    parseISO
+    differenceInYears
 } from 'date-fns'
 
 export function getShortDurationFromNow(fromDateTime: string) {
@@ -29,8 +27,4 @@ export function getShortDurationFromNow(fromDateTime: string) {
     }
 
     return '<1m'
-}
-
-export function truncateDatetime(datetime: string) {
-    return format(parseISO(datetime), 'yyyy-MM-dd\'T\'HH:mm')
 }
