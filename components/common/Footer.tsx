@@ -20,7 +20,6 @@ export function Footer() {
                                 <NavLink href="/reading">Reading</NavLink>
                                 <NavLink href="/writing">Writing</NavLink>
                                 <NavLink href="/projects">Projects</NavLink>
-                                <NavLink href="/uses">Uses</NavLink>
                             </div>
                             <div className="flex flex-col">
                                 <p className="text-sm text-zinc-600 dark:text-zinc-400">

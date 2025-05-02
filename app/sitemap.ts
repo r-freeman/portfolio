@@ -8,8 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         'https://ryanfreeman.dev/services',
         'https://ryanfreeman.dev/reading',
         'https://ryanfreeman.dev/writing',
-        'https://ryanfreeman.dev/projects',
-        'https://ryanfreeman.dev/uses'
+        'https://ryanfreeman.dev/projects'
     ]
 
     const pages = urls.map(url => ({
