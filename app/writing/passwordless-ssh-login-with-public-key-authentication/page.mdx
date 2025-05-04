@@ -1,0 +1,155 @@
+import {ArticleLayout} from '../../../components/layouts/ArticleLayout'
+import {createSlug} from '../../../lib/createSlug'
+import {metadata as _metadata} from '../../../lib/generateMetadata'
+
+export const meta = {
+    authors: 'Ryan Freeman',
+    title: 'Passwordless SSH login with public key authentication',
+    date: '2025-05-04',
+    description: 'SSH is an essential service for remotely maintaining a Linux server, in this blog post I\'ll talk about hardening the SSH service by enabling passwordless public key authentication.',
+    alternates: {
+        canonical: `/writing/${createSlug('Passwordless SSH login with public key authentication')}`
+    }
+}
+
+export const metadata = _metadata({
+    title: meta.title,
+    heading: meta.title,
+    description: meta.description,
+    type: 'article',
+    alternates: meta.alternates
+})
+
+export default (props) => <ArticleLayout
+    title={meta.title}
+    date={meta.date}
+    description={meta.description}
+    slug={createSlug(meta.title)}
+    {...props} />
+
+SSH is an essential service for remotely maintaining a Linux server, in this blog post I'll talk about hardening the SSH service by enabling passwordless public key authentication.
+
+## Create a new user and add to sudoers group
+
+The first step is to create a new non-root user who is capable of running commands with superuser privileges.
+
+```bash
+sudo adduser username
+```
+
+```bash
+sudo usermod -aG sudo ryan
+```
+
+Alternatively, if the user already exists you can add them to the sudo group using the `adduser` command.
+
+```bash
+sudo adduser ryan sudo
+```
+
+## Disable root login for SSH
+
+Now that the new user can run commands with superuser privileges there is no need to allow root login for SSH. In subsequent SSH sessions you'll log in using the new user created above.
+
+```bash
+sudo su
+```
+
+```bash
+nano /etc/ssh/ssh_config
+```
+
+```bash
+PermitRootLogin no
+```
+
+```bash
+systemctl restart sshd
+```
+
+## Generate SSH keys
+
+On the client (your computer), create a hidden ssh directory if it doesn't exist then generate the keypair and copy the public key to the server.
+
+```bash
+cd ~/.ssh
+```
+
+```bash
+ssh-keygen -t rsa -b 4096
+```
+
+```bash
+cat ~/.ssh/id_rsa.pub | ssh username@yourserverip "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+```
+
+## Set permissions and configure the server
+
+On the server, set the correct permissions for the `.ssh` directory and `authorized_keys` file.
+
+```bash
+chmod 700 ~/.ssh
+```
+
+```bash
+chmod 644 ~/.ssh/authorized_keys
+```
+
+Next, edit the `sshd_config` to allow authentication using the public key that was generated earlier.
+
+```bash
+nano /etc/ssh/sshd_config
+```
+
+```bash
+PubkeyAuthentication yes
+```
+
+```bash
+systemctl restart sshd
+```
+
+## Test login with public key
+
+The next step is to verify that public key authentication is working as expected, back on the client use the following command.
+
+```bash
+ssh username@yourserverip -i ~/.ssh/id_rsa
+```
+
+## Disable password authentication
+
+Finally, we can disable password authentication since we are using the public key to authenticate.
+
+```bash
+nano /etc/ssh/sshd_config
+```
+
+```bash
+PasswordAuthentication no
+#PermitEmptyPasswords no
+```
+
+```bash
+systemctl restart sshd
+```
+
+## Bonus
+
+Create a config file on the client to make the login process more convenient.
+
+```bash
+nano ~/.ssh/config
+```
+
+```bash
+Host somealias
+  HostName yourserverip
+  User username
+  IdentityFile ~/.ssh/id_rsa
+  IdentitiesOnly yes
+```
+
+```bash
+ssh somealias
+```

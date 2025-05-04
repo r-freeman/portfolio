@@ -36,7 +36,7 @@ export default async function NotFound() {
                       gradient="bg-gradient-to-r from-green-200 via-green-400 to-purple-700">
             <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none">
                 <nav className="max-w-3xl space-y-16 mt-6">
-                    {pages.map(({url: url}, i) => {
+                    {pages.map(({url}, i) => {
                         return (
                             <Card variant="inline" as="div" key={i}>
                                 <Card.Title href={url}>
