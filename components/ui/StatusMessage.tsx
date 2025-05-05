@@ -16,11 +16,12 @@ export function StatusMessage({children, className, errorConditions}: StatusMess
     return (
         <>
             {children &&
-                <div className={clsx(`flex items-start sm:items-center ${className ?? ''}`)}>
-                    {!isError ? <CheckIcon className="size-5 mt-0.5 sm:mt-0 mr-1 text-green-800 dark:text-green-600"/>
-                        : <CrossIcon className="size-5 mt-0.5 sm:mt-0 mr-1 text-red-800 dark:text-red-600"/>}
+                <div
+                    className={clsx(`flex items-start sm:items-center ${className ?? ''}, ${isError ? 'text-red-800 dark:text-red-600' : 'text-green-800 dark:text-green-600'}`)}>
+                    {!isError ? <CheckIcon className="size-5 mt-0.5 sm:mt-0 mr-1"/>
+                        : <CrossIcon className="size-5 mt-0.5 sm:mt-0 mr-1 "/>}
                     <p aria-live="polite" role="status"
-                       className={clsx('text-sm font-semibold', !isError ? 'text-green-800 dark:text-green-600' : 'text-red-800 dark:text-red-600')}>
+                       className="text-sm font-semibold">
                         {children}
                     </p>
                 </div>
