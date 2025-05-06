@@ -19,13 +19,13 @@ export function Code({children}: { children: ReactNode }) {
     return (
         <pre className="relative group" ref={preRef}>
                 <button
-                    className="absolute top-0 right-0 m-5"
+                    className="absolute top-0 right-0 m-5 text-zinc-400 hover:text-zinc-50 focus:text-zinc-50 active:text-zinc-50"
                     onClick={handleCopy} aria-label="Copy code">
                     <div className="relative size-6">
                         <CheckIcon
                             className={clsx('absolute text-green-500 ease-in transform transition', !copied ? 'scale-0' : 'scale-100')}/>
                         <CopyIcon
-                            className={clsx('absolute text-zinc-400 hover:text-zinc-50 ease-in transform transition', !copied ? 'scale-100' : 'scale-0')}/>
+                            className={clsx('absolute ease-in transform transition', !copied ? 'scale-100' : 'scale-0')}/>
                     </div>
                 </button>
             <div className="sm:mt-0 overflow-auto">
