@@ -2,10 +2,8 @@ import Image from 'next/image'
 import {ArticleLayout} from '../../../components/layouts/ArticleLayout'
 import {createSlug} from '../../../lib/createSlug'
 import {metadata as _metadata} from '../../../lib/generateMetadata'
-import locks from './mariia-shalabaieva-zVC8A0CrTZ0-unsplash.jpg'
 import namecheap from './namecheap-change-nameservers.png'
 import nginx from './nginx-proxy-manager.png'
-import starshipTroopers from './starship-troopers.gif'
 
 export const meta = {
     authors: 'Ryan Freeman',
@@ -14,16 +12,7 @@ export const meta = {
     description: 'SSL/TLS is the encryption standard or protocol which encrypts the session between a website (server) and the browser (client). This protects us from potential man-in-the-middle attacks whereby an attacker could eavesdrop on the session and see all the traffic and data exchanged in the clear.',
     alternates: {
         canonical: `/writing/${createSlug('Secure your websites with Let\'s Encrypt, NPM and Cloudflare')}`
-    },
-    images: [
-        {
-            url: `/images/mariia-shalabaieva-zVC8A0CrTZ0-unsplash.jpg`,
-            width: 1200,
-            height: 600,
-            alt: 'Secure your websites with Let\'s Encrypt, NPM and Cloudflare',
-            type: 'image/jpg'
-        }
-    ]
+    }
 }
 
 export const metadata = _metadata({
@@ -31,8 +20,7 @@ export const metadata = _metadata({
     heading: meta.title,
     description: meta.description,
     type: 'article',
-    alternates: meta.alternates,
-    images: meta.images
+    alternates: meta.alternates
 })
 
 export default (props) => <ArticleLayout
@@ -42,13 +30,11 @@ export default (props) => <ArticleLayout
     slug={createSlug(meta.title)}
     {...props} />
 
-<Image src={locks} alt=""/>
-
 SSL/TLS is the encryption standard or protocol which encrypts the session between a website (server) and the browser (client). This protects us from potential man-in-the-middle attacks whereby an attacker could eavesdrop on the session and see all the traffic and data exchanged in the clear.
 
 SSL/TLS is ubiquitous on the modern web, in fact you'll probably only be aware of this technology when your browser warns you that a website is insecure.
 
-Nowadays, SSL/TLS is non-negotiable if you are hosting an e-commerce website or website that deals with personal data. Fortunately, obtaining the certificates required to provide a secure, encrypted connection is now easier than ever with Let\'s Encrypt.
+Fortunately, obtaining the certificates required to provide a secure, encrypted connection is now easier than ever with Let\'s Encrypt.
 
 In this post, I'll demonstrate how you can get free SSL certificates using Let's Encrypt, NPM and Cloudflare which can be used to secure your self-hosted or public facing websites.
 
@@ -137,14 +123,12 @@ At this point, you'll have changed your nameservers or purchased a domain name f
 
 In Nginx Proxy Manager, go to the `SSL Certificates` tab and click the `Add SSL Certificate` button. Choose the option for `Let's Encrypt`. From there, we want the SSL certificates to cover both the root domain e.g. `example.com`, and any subdomains with `*.example.com`.
 
-Next, enter your email address, Certbot will use this to notify you when your SSL certificates are about to expire. Click the `Use DNS Challenge` toggle and choose Cloudflare from the `DNS Provider` dropdown, then copy and paste the API token you created earlier. Finally, agree to the Terms of Service and click the save button to create your SSL certificates.
+Next, enter your email address. ~~Certbot will use this to notify you when your SSL certificates are about to expire.~~ Click the `Use DNS Challenge` toggle and choose Cloudflare from the `DNS Provider` dropdown, then copy and paste the API token you created earlier. Finally, agree to the Terms of Service and click the save button to create your SSL certificates.
 
 Your SSL certificates usually expire 90 days from the date they are issued. However, as long as your Cloudflare API token is valid, Nginx Proxy Manager will automatically renew the SSL certificates for you.
+
+**Update:** As of 4th June 2025, [Let's Encrypt will no longer send email reminders](https://letsencrypt.org/2025/01/22/ending-expiration-emails/) when your certificates are about to expire.
 
 ## Conclusion
 
 Congratulations on getting to the end of this post, you've used Let's Encrypt, Nginx Proxy Manager and Cloudflare to obtain free SSL certificates for your self-hosted or public facing websites. You've taken a step toward making the web more secure.
-
-<Image src={starshipTroopers} alt="" className="mx-auto" unoptimized={true}/>
-
-In an upcoming post, I'll explain how to protect your self-hosted services using these SSL certificates and Nginx Proxy Manager.
