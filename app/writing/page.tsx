@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {ReactNode} from 'react'
 import {SimpleLayout} from '@/components/layouts/SimpleLayout'
+import {groupArticlesByYear} from '@/lib/getAllArticles'
+import {metadata as _metadata} from '@/lib/generateMetadata'
+import {Section} from '@/components/ui/Section'
+import {Article} from '@/types'
 import {Card} from '@/components/ui/Card'
 import {Views} from '@/components/ui/Views'
-import {getAllArticles} from '@/lib/getAllArticles'
-import {metadata as _metadata} from '@/lib/generateMetadata'
-import type {Article} from '@/types'
 import {format} from 'date-fns'
 
 const meta = {
@@ -33,31 +34,39 @@ export let metadata: {
 
 metadata = _metadata({...meta, heading: meta.heading})
 
-function Article({article}: { article: Article }) {
+function ArticleSection({year, children}: { year: string, children: ReactNode }) {
     return (
-        <article>
-            <Card variant="inline">
-                <Card.Title href={`/writing/${article.slug}`}>
-                    {article.title}
-                </Card.Title>
-                <p className="flex order-first space-x-1 z-10 mb-3 md:mb-0 md:ml-4 md:order-last flex-shrink-0">
-                    <Card.Eyebrow as="time" dateTime={article.date} decorate={false}>
-                        {format(article.date, 'd MMMM yyyy')}
-                    </Card.Eyebrow>
-                    <Views
-                        slug={article.slug}
-                        title={article.title}
-                        className="text-sm text-zinc-500 dark:text-zinc-400"
-                        shouldUpdateViews={false}
-                    />
-                </p>
-            </Card>
-        </article>
+        <Section title={year}>
+            {children}
+        </Section>
+    )
+}
+
+function ArticleList({articles}: { articles: Article[] }) {
+    return (
+        <ul role="list" className="space-y-16">
+            {articles.map((article) => (
+                <Card key={article.slug} as="li">
+                    <Card.Title href={`/writing/${article.slug}`}>{article.title}</Card.Title>
+                    <p className="flex order-first space-x-1 z-10 mb-3">
+                        <Card.Eyebrow as="time" dateTime={article.date} decorate={false}>
+                            {format(article.date, 'd MMMM yyyy')}
+                        </Card.Eyebrow>
+                        <Views
+                            slug={article.slug}
+                            title={article.title}
+                            className="text-sm text-zinc-500 dark:text-zinc-400"
+                            shouldUpdateViews={false}
+                        />
+                    </p>
+                </Card>
+            ))}
+        </ul>
     )
 }
 
 export default async function Writing() {
-    const articles = (await getAllArticles()).map(({component, ...meta}) => meta)
+    const groupedArticles = await groupArticlesByYear()
 
     return (
         <SimpleLayout
@@ -65,12 +74,16 @@ export default async function Writing() {
             description={meta.description}
             gradient="bg-gradient-to-r from-pink-500 to-violet-500"
         >
-            <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none">
-                <div className="max-w-3xl space-y-16 mt-6">
-                    {articles.map((article) => (
-                        <Article key={article.slug} article={article}/>
-                    ))}
-                </div>
+            <div className="space-y-20">
+                {Object.entries(groupedArticles)
+                    .sort(([a], [b]) => parseInt(b) - parseInt(a))
+                    .map(([year, articles]) => (
+                            <ArticleSection year={year} key={year}>
+                                <ArticleList articles={articles}/>
+                            </ArticleSection>
+                        )
+                    )
+                }
             </div>
         </SimpleLayout>
     )
