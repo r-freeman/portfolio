@@ -1,0 +1,143 @@
+import Image from 'next/image'
+import {ArticleLayout} from '../../../components/layouts/ArticleLayout'
+import {createSlug} from '../../../lib/createSlug'
+import {metadata as _metadata} from '../../../lib/generateMetadata'
+import cloud from './getty-images-ZGvS7H9nYbk-unsplash.jpg'
+import cfTunnel from './cloudflare-tunnel-diagram.png'
+import cfTunnelAlternative from './cloudflare-tunnel-alternative-using-vps.png'
+
+export const meta = {
+    authors: 'Ryan Freeman',
+    title: 'Cheap VPS: A Cost-Effective Alternative to Cloudflare Tunnels',
+    date: '2025-05-10',
+    description: 'In my previous article on migrating this website from Vercel to Raspberry Pi 5, one of the key steps in replacing Vercel was making this website accessible to the Internet. For convenience, I decided to use Cloudflare Tunnels, however this setup comes with some trade-offs.',
+    alternates: {
+        canonical: `/writing/${createSlug('Cheap VPS: A Cost-Effective Alternative to Cloudflare Tunnels')}`
+    },
+    images: [
+        {
+            url: `/images/getty-images-ZGvS7H9nYbk-unsplash.jpg`,
+            width: 1200,
+            height: 600,
+            alt: 'Cheap VPS: A Cost-Effective Alternative to Cloudflare Tunnels',
+            type: 'image/jpg'
+        }
+    ]
+}
+
+export const metadata = _metadata({
+    title: meta.title,
+    heading: meta.title,
+    description: meta.description,
+    type: 'article',
+    alternates: meta.alternates,
+    images: meta.images
+})
+
+export default (props) => <ArticleLayout
+    title={meta.title}
+    date={meta.date}
+    description={meta.description}
+    slug={createSlug(meta.title)}
+    {...props} />
+
+<Image width={1920} height={1280} src={cloud} alt="" priority={true} placeholder={'blur'}
+       blurDataURL={'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='}/>
+
+In my previous article on [migrating this website from Vercel to Raspberry Pi 5](/writing/migrating-from-vercel-to-raspberry-pi-5), one of the key steps in replacing Vercel was making this website accessible to the Internet. For convenience, I decided to use [Cloudflare Tunnels](/writing/migrating-from-vercel-to-raspberry-pi-5#wrapping-it-all-up), however this setup comes with some trade-offs.
+
+In this article, I'll explain the advantages and disadvantages of Cloudflare Tunnels and how I replaced it with a low-cost VPS for exposing my apps to the Internet. First, let's take a look at how Cloudflare Tunnels work.
+
+## How Cloudflare Tunnels work
+
+Cloudflare Tunnels provide a straightforward way to expose websites and apps to the Internet without having to open ports or expose your IP address.
+
+<Image src={cfTunnel} alt=""/>
+
+It works by installing a connector on the host machine called `cloudflared` which establishes a secure reverse tunnel to the Cloudflare network. You can then map domains or subdomains residing in Cloudflare to services that are running locally.
+
+For example, let's say you have a node application running on port 3000. Using [public hostnames](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/routing-to-tunnel/#:~:text=With%20Cloudflare%20Tunnel%2C%20you%20can,com%20in%20their%20web%20browser.) you can map https://yourdomain.com to http://localhost:3000 which allows the Internet to access your application.
+
+Now that we have a high-level understanding of how Cloudflare Tunnels work, let's examine some of the advantages of using them.
+
+## Advantages of Cloudflare Tunnels
+
+* Cloudflare Tunnels are a managed service meaning you don't need to worry about installing updates or patching vulnerabilities in the Cloudflare software or infrastructure because this is taken care of by Cloudflare.
+
+* An added benefit of using Cloudflare Tunnels is the extra layer of security provided by Cloudflare's Web Application Firewall (WAF) and Distributed Denial of Service (DDoS) protection.
+
+* Since Cloudflare manages our DNS and TLS, we don't have to worry about obtaining and renewing SSL certificates or setting up and maintaining a DNS server.
+
+* Cloudflare Tunnels are straightforward to set up, your website or application can be online within a few minutes.
+
+While Cloudflare Tunnels provide a convenient way to expose your applications to the Internet, there are some disadvantages to using Cloudflare Tunnels that you should be aware of.
+
+## Disadvantages of Cloudflare Tunnels
+
+Some of the main disadvantages with Cloudflare Tunnels are related to privacy, dependency on yet another third-party service, the risk of service termination at any time, and bandwidth limitations.
+
+### Privacy concerns
+
+When you use Cloudflare Tunnels, Cloudflare is acting as the SSL/TLS provider which means that they have the capability to decrypt the traffic between your applications and the Cloudflare network.
+
+With this capability, Cloudflare may be able to see transmissions from the browser to your locally running service, which could include cookies, credentials or other metadata associated with this connection.
+
+Cloudflare is essentially acting as the Man-in-the-Middle, which should be a huge red flag for anyone who is concerned about privacy.
+
+### Third-party dependence
+
+By setting up Cloudflare Tunnels to expose your websites or applications to the Internet you become dependent on Cloudflare for providing ongoing availability and stability of that service.
+
+As the provider, Cloudflare could discontinue this service at any point in the future, rendering your applications or websites inaccessible. If you are keen self-hoster like me, your goal is to reduce your dependence on third-parties as much as possible.
+
+### Bandwidth limitations
+
+If you want to host a video streaming service such as Plex you must abide by Cloudflare's bandwidth limitations. Cloudflare reserves the right to suspend or terminate your access to this service if you are in breach of their bandwidth limitations.
+
+Ultimately, it's up to you to weigh the advantages and disadvantages of using Cloudflare Tunnels and decide what's right for you. However, in the next section I'll discuss some alternatives to Cloudflare Tunnels.
+
+## Cloudflare Tunnel Alternatives
+
+There are [many ways to expose your applications to the Internet](https://github.com/anderspitman/awesome-tunneling) without relying on Cloudflare Tunnels, let's take a look at a few alternatives.
+
+### ngrok
+
+[ngrok](https://ngrok.com/pricing) allows you to expose your applications to the Internet. However, if you want to use a custom domain you need to subscribe to a paid plan, as the free tier only includes random, temporary domain names for testing.
+
+### Tailscale Funnel
+
+Similar to ngrok, [Tailscale Funnel](https://tailscale.com/kb/1223/funnel) doesn't allow you to use your custom domain when exposing your app to the Internet. Instead, the url used to access your application will end with `ts.net`. Keep in mind Tailscale Funnel is still in beta, so it may not be suitable in production.
+
+### Dynamic DNS (DDNS) with port forwarding
+
+If you're self-hosting from home and don't have a static IP address, DDNS with port forwarding might be a viable option. This involves running a process on the host machine like [cloudflare-ddns](https://github.com/timothymiller/cloudflare-ddns) which routinely updates the DNS records with your IP address.
+
+Then you can set up port forwarding to expose ports 80 and 443, directing traffic to a reverse proxy on the host machine. This approach carries more risk, as it exposes your IP address and makes you vulnerable to DDoS attacks.
+
+In reality, none of the alternatives mentioned above are a true replacement for Cloudflare Tunnels, so what are our options?
+
+## Use a VPS
+
+Another option which is popular among self-hosters is to use a Virtual Private Server (VPS), combined with a reverse proxy such as nginx. This allows you to expose your applications to the Internet, using your own domain name and with fewer limitations.
+
+There are dozens of VPS providers to choose from such as [DigitalOcean](https://www.digitalocean.com/), [Linode](https://www.linode.com/) and [Hetzner](https://www.hetzner.com/) to name a few. However, for my use case I decided to go with RackNerd.
+
+At the time of writing this post [RackNerd had a generous offer available](https://my.racknerd.com/aff.php?aff=14452) for a KVM VPS with 2GB RAM, 1 vCPU, 40GB SSD and 3500GB monthly bandwidth for $18.29 per year.
+
+### Infrastructure diagram
+
+Let's take a look how the infrastructure looks when we replace Cloudflare Tunnels with a VPS for exposing our apps to the Internet.
+
+<Image src={cfTunnelAlternative} alt=""/>
+
+In summary, the user requests access to our publicly hosted website or app in the browser, and Cloudflare acting as the DNS provider resolves the domain name to the IP address of my VPS.
+
+The VPS is running a reverse proxy (listening on ports 80/443) which maps the requested domain or subdomain to a service running locally in a separate Tailscale node in my tailnet.
+
+The advantage of this architecture is that we have better control over the infrastructure, which is important for self-hosters who value privacy. However, since we are no longer relying on Cloudflare Tunnels we are missing some WAF features which a managed service like Cloudflare provides. This is where an intrusion prevent system such as [CrowdSec](https://doc.crowdsec.net/u/getting_started/intro) could fill the gap.
+
+## Conclusion
+
+In this post I outlined some advantages and disadvantages of Cloudflare Tunnels for exposing websites and apps to the Internet, and explained some alternatives such as using a VPS to replace the role of Cloudflare Tunnels.
+
+Look out for an upcoming post where I'll walk you through how I set up my VPS with [Pangolin](https://docs.fossorial.io/Getting%20Started/overview) and CrowdSec.
