@@ -20,8 +20,8 @@ export async function getAllArticles(dateDesc = true) {
 
     let articles = await Promise.all(articleFilenames.map(importArticle))
 
-    return dateDesc ? articles.sort((a, z) => a.date < z.date ? 1 : -1)
-        : articles.sort((a, z) => a.date > z.date ? 1 : -1)
+    return dateDesc ? articles.sort((a, b) => a.date < b.date ? 1 : -1)
+        : articles.sort((a, b) => a.date > b.date ? 1 : -1)
 }
 
 export async function groupArticlesByYear() {
