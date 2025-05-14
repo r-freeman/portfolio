@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useActionState, useEffect, useState} from 'react'
+import React, {useActionState, useEffect, useMemo, useState} from 'react'
 import {useSession} from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -11,6 +11,7 @@ import {GitHubIcon} from '@/components/icons/SocialIcons'
 import {ArrowLeftIcon} from '@/components/icons/ArrowLeftIcon'
 import {StatusMessage} from '@/components/ui/StatusMessage'
 import {getShortDurationFromNow} from '@/lib/dateFns'
+import {getCommentCount} from '@/lib/comments'
 import fetcher from '@/lib/fetcher'
 import CommentFormProvider, {useCommentFormContext} from '@/app/context/CommentFormProvider'
 import useSWR from 'swr'
@@ -27,9 +28,6 @@ Comments.ReplyButton = function ReplyButton({comment}: ReplyButton) {
 
     const handleReplyButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        if (!session) {
-            await loginWithGitHub()
-        }
         commentFormContext?.setCommentLength(0)
         commentFormContext?.commentFormRef?.current?.form?.reset()
         commentFormContext?.setReplyTo(comment);
@@ -52,6 +50,8 @@ Comments.Comment = function Comment({comment, isReply = false, className}: {
     isReply?: boolean
     className?: string
 }) {
+    const {data: session} = useSession()
+
     return (
         <>
             <article
@@ -70,7 +70,9 @@ Comments.Comment = function Comment({comment, isReply = false, className}: {
                         </p>
                     </div>
                     <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400 max-w-xl">{comment.content}</p>
-                    <Comments.ReplyButton comment={comment}/>
+                    {session &&
+                        <Comments.ReplyButton comment={comment}/>
+                    }
                 </div>
             </article>
         </>
@@ -82,27 +84,27 @@ type CommentsListProps = {
 }
 
 Comments.List = function List({comments}: CommentsListProps) {
+    const commentCount = useMemo(() => getCommentCount(comments),
+        [comments]
+    )
+
     return (
-        <>
-            {comments.length > 0 &&
-                <section>
-                    <h3 className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100 mb-4">
-                        Comments
-                    </h3>
-                    {comments.map((comment) => (
-                        <React.Fragment key={comment.id}>
-                            <Comments.Comment comment={comment}/>
-                            {(typeof comment.replies !== 'undefined' && comment.replies.length > 0) ?
-                                comment.replies.map((reply, i) => (
-                                    <Comments.Comment key={reply.id} comment={reply} isReply={true}
-                                                      className={`${i + 1 === comment.replies?.length ? 'mb-6' : ''}`}/>
-                                )) : null
-                            }
-                        </React.Fragment>
-                    ))}
-                </section>
-            }
-        </>
+        <section>
+            <h3 className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100 mb-4">
+                {commentCount > 0 ? `${commentCount} comment${commentCount > 1 ? 's' : ''}` : 'No comments'}
+            </h3>
+            {comments.map((comment) => (
+                <React.Fragment key={comment.id}>
+                    <Comments.Comment comment={comment}/>
+                    {(typeof comment.replies !== 'undefined' && comment.replies.length > 0) ?
+                        comment.replies.map((reply, i) => (
+                            <Comments.Comment key={reply.id} comment={reply} isReply={true}
+                                              className={`${i + 1 === comment.replies?.length ? 'mb-6' : ''}`}/>
+                        )) : null
+                    }
+                </React.Fragment>
+            ))}
+        </section>
     )
 }
 
@@ -141,7 +143,11 @@ Comments.Form = function Form({slug}: { slug: string }) {
         }
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        if (!session) {
+            e.preventDefault()
+            await loginWithGitHub()
+        }
         commentFormContext?.setReplyTo(null)
         commentFormContext?.setCommentLength(0)
     }
@@ -154,20 +160,15 @@ Comments.Form = function Form({slug}: { slug: string }) {
 
     return (
         <div className="mt-16">
-            {!session ?
-                <form action={async () => await loginWithGitHub()}>
-                    <Button variant="secondary">
-                        <GitHubIcon className="w-6 h-6 dark:fill-white"/>Sign in to comment
-                    </Button>
-                </form> :
-                <form action={formAction} onSubmit={handleSubmit}>
-                    <div className="flex gap-x-4">
-                        {session?.user?.image !== null &&
-                            <Image className="size-12 rounded-full" src={session?.user?.image ?? ''}
-                                   alt={session?.user?.name ?? ''}
-                                   width={64} height={64}/>
-                        }
-                        <div className="flex-1">
+            <form action={formAction} onSubmit={handleSubmit}>
+                <div className="flex gap-x-4">
+                    {session &&
+                        <Image className="size-12 rounded-full"
+                               src={session?.user?.image ?? ''}
+                               alt={session?.user?.name ?? ''}
+                               width={64} height={64}/>
+                    }
+                    <div className="flex-1">
                             <textarea
                                 id="comment"
                                 name="comment"
@@ -175,35 +176,39 @@ Comments.Form = function Form({slug}: { slug: string }) {
                                 className="resize-none block w-full rounded-md px-3 py-1.5 text-base text-zinc-600 dark:text-zinc-400 bg-[#fafafa] dark:bg-[#121212] border-[1px] dark:border-zinc-700/40 -outline-offset-1 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 focus:dark:outline-indigo-600"
                                 onKeyDown={handleKeyDown}
                                 onChange={(e) => commentFormContext?.setCommentLength(e.target.value.length ?? 0)}
-                                disabled={pending}
+                                disabled={pending || !session}
                                 defaultValue={''}
                                 maxLength={commentFormContext?.commentMaxLength}
                                 ref={commentFormRef}
-                                placeholder={`${commentFormContext?.replyTo ? `Reply to ${commentFormContext.replyTo.user.name}` : 'Add a comment'}`}
-                                required
+                                placeholder={`${!session ? 'Sign in to comment' : commentFormContext?.replyTo ? `Reply to ${commentFormContext.replyTo.user.name}` : 'Add a comment'}`}
+                                required={!!session}
                             />
-                            <input type="hidden" name="parent_id" value={parentId ?? ''}/>
-                            <input type="hidden" name="slug" value={slug}/>
-                            <div className="mt-2 flex justify-between items-center gap-x-4">
-                                <p className="text-sm text-zinc-600 dark:text-zinc-400">{`${commentFormContext?.commentLength} / ${commentFormContext?.commentMaxLength}`}</p>
-                                <div className="flex gap-x-4">
-                                    {commentFormContext?.replyTo &&
-                                        <button
-                                            className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 hover:dark:text-zinc-50"
-                                            onClick={handleCancel}>Cancel</button>
-                                    }
+                        <input type="hidden" name="parent_id" value={parentId ?? ''}/>
+                        <input type="hidden" name="slug" value={slug}/>
+                        <div className="mt-2 flex justify-between items-center gap-x-4">
+                            <p className="text-sm text-zinc-600 dark:text-zinc-400">{`${commentFormContext?.commentLength} / ${commentFormContext?.commentMaxLength}`}</p>
+                            <div className="flex gap-x-4">
+                                {commentFormContext?.replyTo &&
+                                    <button
+                                        className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 hover:dark:text-zinc-50"
+                                        onClick={handleCancel}>Cancel</button>
+                                }
+                                {session ?
                                     <Button variant="secondary" disabled={pending}>
                                         Comment
+                                    </Button> :
+                                    <Button variant="secondary">
+                                        <GitHubIcon className="w-6 h-6 dark:fill-white"/>Sign in with GitHub
                                     </Button>
-                                </div>
+                                }
                             </div>
-                            <StatusMessage className="mt-2">
-                                {state.message}
-                            </StatusMessage>
                         </div>
+                        <StatusMessage className="mt-2">
+                            {state.message}
+                        </StatusMessage>
                     </div>
-                </form>
-            }
+                </div>
+            </form>
         </div>
     )
 }

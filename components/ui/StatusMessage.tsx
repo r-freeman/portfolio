@@ -17,7 +17,7 @@ export function StatusMessage({children, className, errorConditions}: StatusMess
         <>
             {children &&
                 <div
-                    className={clsx(`flex items-start sm:items-center ${className ?? ''}, ${isError ? 'text-red-800 dark:text-red-600' : 'text-green-800 dark:text-green-600'}`)}>
+                    className={clsx(`flex items-start sm:items-center ${className ?? ''}, ${isError ? 'text-red-800 dark:text-red-500' : 'text-green-800 dark:text-green-500'}`)}>
                     {!isError ? <CheckIcon className="size-5 mt-0.5 sm:mt-0 mr-1"/>
                         : <CrossIcon className="size-5 mt-0.5 sm:mt-0 mr-1 "/>}
                     <p aria-live="polite" role="status"
