@@ -34,29 +34,17 @@ jobs:
           LISTMONK_USERNAME: ${{ secrets.LISTMONK_USERNAME }}
           LISTMONK_TOKEN: ${{ secrets.LISTMONK_TOKEN }}
 
-      - name: Use Node.js
-        uses: https://github.com/actions/setup-node@v3
-        with:
-          node-version: '18.17.0'
+      - name: Create docker compose
+        run: ./docker_compose.sh
+        env:
+          SERVER_IP: ${{ vars.SERVER_IP }}
 
-      - name: Build Docker image
-        uses: https://github.com/docker/build-push-action@v6
-        with:
-          context: .
-          file: ./Dockerfile
-          push: false
-          tags: ${{vars.REPO_NAME}}:latest
-
-      - name: Stop and remove old Docker container
+      - name: Stop container and remove old images
         continue-on-error: true
         run: |
-          sudo docker stop ${{vars.REPO_NAME}}
-          sudo docker rm ${{vars.REPO_NAME}}
+          sudo docker compose down
+          sudo docker image rm portfolio/frontend
 
-      - name: Pull new image and start Docker container
+      - name: Docker compose up
         run: |
-          sudo docker run -d --restart unless-stopped \
-          --env-file ./.env \
-          --name ${{vars.REPO_NAME}} \
-          -p ${{vars.SERVER_IP}}:3000:3000 \
-          ${{vars.REPO_NAME}}:latest
+          sudo docker compose up -d
