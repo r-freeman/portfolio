@@ -1,8 +1,6 @@
 name: Build And Publish
 run-name: ${{ gitea.actor }} runs ci pipeline
 on:
-#  schedule:
-#    - cron: '59 23 * * *'
   push:
     branches:
       - 'main'
@@ -14,36 +12,40 @@ jobs:
       - name: Checkout code
         uses: https://github.com/actions/checkout@v4
 
+      - name: Generate env
+        run: ./generate_env.sh
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          GITHUB_ACCESS_TOKEN: ${{ secrets._GITHUB_ACCESS_TOKEN }}
+          GITHUB_USER_ID: ${{ secrets._GITHUB_USER_ID }}
+          GITHUB_USERNAME: ${{ secrets._GITHUB_USERNAME }}
+          GITHUB_CLIENT_ID: ${{ secrets._GITHUB_CLIENT_ID }}
+          GITHUB_SECRET: ${{ secrets._GITHUB_SECRET }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          AUTH_TRUST_HOST: ${{ secrets.AUTH_TRUST_HOST }}
+          AUTH_REDIRECT_PROXY_URL: ${{ secrets.AUTH_REDIRECT_PROXY_URL }}
+          NTFY_URL: ${{ secrets.NTFY_URL }}
+          NTFY_TOKEN: ${{ secrets.NTFY_TOKEN }}
+          LISTMONK_URL: ${{ secrets.LISTMONK_URL }}
+          LISTMONK_LIST_ID: ${{ secrets.LISTMONK_LIST_ID }}
+          LISTMONK_USERNAME: ${{ secrets.LISTMONK_USERNAME }}
+          LISTMONK_TOKEN: ${{ secrets.LISTMONK_TOKEN }}
+
       - name: Use Node.js
         uses: https://github.com/actions/setup-node@v3
         with:
           node-version: '18.17.0'
 
-      - name: Decrypt secrets
-        run: ./decrypt_secrets.sh
-        env:
-          SECRET_PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE }}
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{secrets.DOCKER_HUB_USERNAME}}
-          password: ${{secrets.DOCKER_HUB_PASSWORD}}
-
-      - name: Set up Docker Buildx
-        uses: https://github.com/docker/setup-buildx-action@v3
-        with:
-          config-inline: |
-            [registry."docker.io"]
-              mirrors = ["mirror.gcr.io"]            
-
-      - name: Build and push Docker image
+      - name: Build Docker image
         uses: https://github.com/docker/build-push-action@v6
         with:
           context: .
           file: ./Dockerfile
-          push: true
-          tags: ${{secrets.DOCKER_HUB_USERNAME}}/${{vars.REPO_NAME}}:latest
+          push: false
+          tags: ${{vars.REPO_NAME}}:latest
 
       - name: Stop and remove old Docker container
         continue-on-error: true
@@ -53,9 +55,8 @@ jobs:
 
       - name: Pull new image and start Docker container
         run: |
-          sudo docker pull ${{secrets.DOCKER_HUB_USERNAME}}/${{vars.REPO_NAME}}:latest
           sudo docker run -d --restart unless-stopped \
           --env-file ./.env \
           --name ${{vars.REPO_NAME}} \
           -p ${{vars.SERVER_IP}}:3000:3000 \
-          ${{secrets.DOCKER_HUB_USERNAME}}/${{vars.REPO_NAME}}:latest
+          ${{vars.REPO_NAME}}:latest
