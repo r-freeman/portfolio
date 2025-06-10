@@ -38,6 +38,7 @@ jobs:
         run: ./compose.sh
         env:
           SERVER_IP: ${{ vars.SERVER_IP }}
+          SERVER_PORT: ${{ vars.SERVER_PORT }}
 
       - name: Stop container and remove old images
         continue-on-error: true
