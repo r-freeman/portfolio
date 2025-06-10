@@ -35,7 +35,7 @@ jobs:
           LISTMONK_TOKEN: ${{ secrets.LISTMONK_TOKEN }}
 
       - name: Create docker compose override for prod
-        run: ./docker_compose.sh
+        run: ./compose.sh
         env:
           SERVER_IP: ${{ vars.SERVER_IP }}
 
@@ -47,4 +47,4 @@ jobs:
 
       - name: Docker compose up
         run: |
-          sudo docker compose -f docker-compose.prod.yaml up -d
+          sudo docker compose -f compose.yaml -f compose.prod.yaml up -d
