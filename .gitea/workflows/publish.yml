@@ -34,7 +34,7 @@ jobs:
           LISTMONK_USERNAME: ${{ secrets.LISTMONK_USERNAME }}
           LISTMONK_TOKEN: ${{ secrets.LISTMONK_TOKEN }}
 
-      - name: Create docker compose
+      - name: Create docker compose override for prod
         run: ./docker_compose.sh
         env:
           SERVER_IP: ${{ vars.SERVER_IP }}
@@ -47,4 +47,4 @@ jobs:
 
       - name: Docker compose up
         run: |
-          sudo docker compose up -d
+          sudo docker compose -f docker-compose.prod.yaml up -d
