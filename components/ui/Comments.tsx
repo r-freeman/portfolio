@@ -185,8 +185,10 @@ Comments.Form = function Form({slug}: { slug: string }) {
                             />
                         <input type="hidden" name="parent_id" value={parentId ?? ''}/>
                         <input type="hidden" name="slug" value={slug}/>
-                        <div className="mt-2 flex justify-between items-center gap-x-4">
-                            <p className="text-sm text-zinc-600 dark:text-zinc-400">{`${commentFormContext?.commentLength} / ${commentFormContext?.commentMaxLength}`}</p>
+                        <div className={clsx('mt-2 flex justify-end items-center gap-x-4', session && 'justify-between')}>
+                            {session &&
+                                <p className="text-sm text-zinc-600 dark:text-zinc-400">{`${commentFormContext?.commentLength} / ${commentFormContext?.commentMaxLength}`}</p>
+                            }
                             <div className="flex gap-x-4">
                                 {commentFormContext?.replyTo &&
                                     <button
