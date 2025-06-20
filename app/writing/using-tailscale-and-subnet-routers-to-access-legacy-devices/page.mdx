@@ -1,0 +1,79 @@
+import {ArticleLayout} from '../../../components/layouts/ArticleLayout'
+import {createSlug} from '../../../lib/createSlug'
+import {metadata as _metadata} from '../../../lib/generateMetadata'
+import enableSubnetRoutes from './enable-subnet-routes.png'
+import Image from 'next/image'
+
+export const meta = {
+    authors: 'Ryan Freeman',
+    title: 'Using Tailscale and subnet routers to access legacy devices',
+    date: '2025-06-18',
+    description: 'Recently, I ran into some trouble accessing an old CCTV system on my network. The P2P feature stopped working, which meant I could no longer connect to it remotely.',
+    alternates: {
+        canonical: `/writing/${createSlug('Using Tailscale and subnet routers to access legacy devices')}`
+    }
+}
+
+export const metadata = _metadata({
+    title: meta.title,
+    heading: meta.title,
+    description: meta.description,
+    type: 'article',
+    alternates: meta.alternates
+})
+
+export default (props) => <ArticleLayout
+    title={meta.title}
+    date={meta.date}
+    description={meta.description}
+    slug={createSlug(meta.title)}
+    {...props} />
+
+
+Recently, I ran into some trouble accessing an old CCTV system on my network. The P2P feature stopped working, which meant I could no longer connect to it remotely.
+
+I considered setting up port forwarding and dynamic DNS to regain access on the go. However, this would involve exposing the system to the Internet and given how vulnerable these devices can be, I didn't want to take that risk.
+
+So what were my options? Well I thought about installing the Tailscale client on the system, in this way I could access it securely from anywhere. However, I couldn't SSH into the device, so this wasn't an option.
+
+## Subnet routers
+
+After some more research, I discovered a Tailscale feature called [subnet routers](https://tailscale.com/kb/1019/subnets). This feature allows you to configure a device in your Tailscale network to act as a gateway for routing traffic to devices located in other subnets.
+
+This was the perfect solution as it allows you to access services on legacy devices without installing the Tailscale client. Furthermore, I could access the CCTV system securely via Tailscale without having to expose it to the Internet.
+
+### Setting it up
+
+Setting up the subnet router was straightforward, I chose an existing device in my Tailscale network which was running Ubuntu server. The first step was to enable IP forwarding on the device, essentially this allows the system to forward packets between different interfaces.
+
+```bash
+echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf
+echo 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf
+sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
+```
+
+This command works for most Debian-based Linux distributions, but check the Tailscale documentation if it doesn't work for you.
+
+### Advertise subnet routes
+
+Next up, I used the Tailscale cli on the same device to advertise what subnets it's going to route traffic to.
+
+```bash
+sudo tailscale set --advertise-routes=192.168.178.0/24
+```
+
+If you want your subnet router to route traffic to more than one subnet you should provide a comma-separated list of subnets.
+
+### Enable subnet routes from the admin console
+
+Finally, I went to the [Tailscale admin console](https://login.tailscale.com/welcome) and enabled the subnet routes for my device. It should look similar to the screenshot below.
+
+<Image src={enableSubnetRoutes} alt=""/>
+
+And that's it, with the subnet router properly configured I am able to access the CCTV system from anywhere as long as I'm connected to the Tailscale network.
+
+As an aside, you may want to disable key expiry on the subnet router via the admin console, so that you don't lose access to your legacy device when the key expires.
+
+## Conclusion
+
+In this article, I talked about how I used a Tailscale feature called subnet routers, which enabled me to configure a device in my Tailscale network to forward traffic to a legacy device that was unable to connect directly to Tailscale.

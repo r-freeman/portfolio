@@ -19,7 +19,7 @@ export function Code({children}: { children: ReactNode }) {
     return (
         <pre className="relative group" ref={preRef}>
                 <button
-                    className="absolute top-0 right-0 m-5 text-zinc-400 rounded-lg hover:bg-[#121212] p-2"
+                    className="absolute top-0 right-0 m-5 text-zinc-400"
                     onClick={handleCopy} aria-label={`${!copied ? 'Copy this code' : 'Copied!'}`}>
                     <div className="relative size-5">
                         <CheckIcon
